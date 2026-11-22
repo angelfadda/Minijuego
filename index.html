@@ -2168,7 +2168,7 @@ function calcClickGain(factor = 1) {
         return;
       }
       cat.energy = Math.max(0, cat.energy - 2);
-      cat.hunger = Math.max(0, cat.hunger - 8);
+      cat.hunger = Math.max(0, cat.hunger - 2);
       cat.happy = Math.min(100, cat.happy + calcClickGain());
       const reward = 14 + cat.bondLv * 3;
       state.coins += reward;
