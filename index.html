@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Colección michis</title>
+  <title>Colección Michu</title>
   <style>
     :root {
       --bg: #f3f0ea;
@@ -171,8 +171,8 @@
     }
 
     .card svg {
-      width: 154px;
-      height: 154px;
+      width: 158px;
+      height: 158px;
       display: block;
     }
 
@@ -209,7 +209,7 @@
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 18px;
-      max-width: 495px;
+      max-width: 510px;
       width: calc(100% - 22px);
       margin: auto;
       background: var(--card);
@@ -253,8 +253,8 @@
     }
 
     .stage svg {
-      width: 196px;
-      height: 196px;
+      width: 212px;
+      height: 212px;
       transform-origin: 50% 88%;
       transition: transform 0.15s ease;
     }
@@ -351,22 +351,10 @@
     }
 
     @keyframes heartFloat {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.25) rotate(0deg);
-      }
-      18% {
-        opacity: 1;
-        transform: translate(calc(-50% + var(--dx1)), calc(-50% - 22px)) scale(1.18) rotate(var(--rot1));
-      }
-      62% {
-        opacity: 0.95;
-        transform: translate(calc(-50% + var(--dx2)), calc(-50% - 62px)) scale(1.0) rotate(var(--rot2));
-      }
-      100% {
-        opacity: 0;
-        transform: translate(calc(-50% + var(--dx3)), calc(-50% - 102px)) scale(0.75) rotate(var(--rot3));
-      }
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.25) rotate(0deg); }
+      18% { opacity: 1; transform: translate(calc(-50% + var(--dx1)), calc(-50% - 22px)) scale(1.18) rotate(var(--rot1)); }
+      62% { opacity: 0.95; transform: translate(calc(-50% + var(--dx2)), calc(-50% - 62px)) scale(1.0) rotate(var(--rot2)); }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--dx3)), calc(-50% - 102px)) scale(0.75) rotate(var(--rot3)); }
     }
 
     .stats-grid {
@@ -475,17 +463,17 @@
 
     .acc-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
-      gap: 7px;
-      max-height: 245px;
+      grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+      gap: 8px;
+      max-height: 265px;
       overflow-y: auto;
       padding-right: 2px;
     }
 
     .acc-item {
       border: 1px solid var(--border);
-      border-radius: 11px;
-      padding: 8px 5px;
+      border-radius: 12px;
+      padding: 7px 6px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -503,14 +491,26 @@
     }
 
     .acc-item.locked {
-      opacity: 0.58;
+      opacity: 0.6;
       background: #f8f7f4;
     }
 
-    .acc-emoji {
-      font-size: 1.85rem;
-      line-height: 1.2;
-      margin-bottom: 4px;
+    .acc-thumb {
+      width: 66px;
+      height: 50px;
+      background: var(--bg);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      overflow: hidden;
+    }
+
+    .acc-thumb svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     .acc-name {
@@ -677,7 +677,7 @@
 
   <main id="grid" class="grid"></main>
 
-  <!-- Modal Interacción & Accesorios (Nombre fijo, sin edición) -->
+  <!-- Modal Interacción & Accesorios -->
   <dialog id="catModal">
     <div class="modal-head">
       <div class="modal-title">
@@ -727,7 +727,7 @@
     </div>
 
     <div class="wardrobe-head">
-      <div class="wardrobe-title">🎒 Accesorios (<span id="ownedCount">0</span>/200)</div>
+      <div class="wardrobe-title">🎒 Accesorios (<span id="ownedCount">0</span>/<span id="totalAccCount">0</span>)</div>
       <input type="text" class="search-input" id="searchAcc" placeholder="🔍 Buscar..." />
     </div>
 
@@ -736,16 +736,16 @@
       <button type="button" class="tab" data-filter="owned">✅ Míos</button>
       <button type="button" class="tab" data-filter="head">👑 Cabeza</button>
       <button type="button" class="tab" data-filter="eyes">👓 Cara</button>
-      <button type="button" class="tab" data-filter="neck">🔔 Cuello</button>
+      <button type="button" class="tab" data-filter="neck">🧣 Cuello</button>
       <button type="button" class="tab" data-filter="body">👕 Cuerpo</button>
-      <button type="button" class="tab" data-filter="food">🍣 Comidas</button>
-      <button type="button" class="tab" data-filter="flag">🇦🇷 Banderas</button>
+      <button type="button" class="tab" data-filter="paws">🧦 Patitas</button>
+      <button type="button" class="tab" data-filter="side">🧉 Al lado</button>
     </div>
 
     <div class="acc-grid" id="accGrid"></div>
   </dialog>
 
-  <!-- Modal Adoptar Gato (Colores aleatorios + Nombres argentinos únicos) -->
+  <!-- Modal Adoptar Gato -->
   <dialog id="adoptModal">
     <div class="modal-head">
       <div class="modal-title">🐾 Adoptar Nuevo Gato</div>
@@ -797,9 +797,9 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = "michu_collection_arg_v3";
+    const STORAGE_KEY = "michu_collection_arg_v4";
 
-    // Amplia gama de 18 pelajes calibrados (ojos #080808 siempre legibles y cuerpos definidos sobre fondo claro)
+    // 18 pelajes calibrados
     const COATS = {
       classic:      { label: "Clásico Café",     bg: "#efe6dd", pattern: "spot",    body: "#79584c", mark: "#2c2b29", ear: "#864e41", tail: "#efeae1", swatch: "linear-gradient(135deg,#79584c 65%,#2c2b29 65%)" },
       calico:       { label: "Calicó Clásico",   bg: "#f2ebe1", pattern: "calico",  body: "#ddd5c7", mark: "#d97b38", mark2: "#4a4e54", ear: "#d97b38", ear2: "#4a4e54", tail: "#4a4e54", swatch: "linear-gradient(135deg,#ddd5c7 45%,#d97b38 45%,#d97b38 75%,#4a4e54 75%)" },
@@ -823,16 +823,6 @@
 
     const COAT_KEYS = Object.keys(COATS);
 
-    // Escala ampliada de accesorios emoji
-    const SLOT_DEFAULTS = {
-      head: { x: 150, y: 8,   size: 54 },
-      eyes: { x: 150, y: 68,  size: 86 },
-      neck: { x: 150, y: 136, size: 46 },
-      body: { x: 150, y: 186, size: 60 },
-      food: { x: 26,  y: 244, size: 48 },
-      flag: { x: 300, y: 226, size: 52 }
-    };
-
     const RARITY_COLOR = {
       "Común": "#7a756c",
       "Poco común": "#3b7a56",
@@ -841,10 +831,325 @@
       "Legendario": "#b87a28"
     };
 
-    const ACCESSORIES = [{"id": 1, "name": "Moño Rosa", "emoji": "🎀", "slot": "head", "minLevel": 1, "price": 30, "rarity": "Común"}, {"id": 2, "name": "Pescadito", "emoji": "🐟", "slot": "food", "minLevel": 1, "price": 40, "rarity": "Común"}, {"id": 3, "name": "Bandera Argentina", "emoji": "🇦🇷", "slot": "flag", "minLevel": 1, "price": 50, "rarity": "Común"}, {"id": 4, "name": "Cascabel Dorado", "emoji": "🔔", "slot": "neck", "minLevel": 1, "price": 60, "rarity": "Común"}, {"id": 5, "name": "Remera Celeste", "emoji": "👕", "slot": "body", "minLevel": 1, "price": 30, "rarity": "Común"}, {"id": 6, "name": "Anteojos Clásicos", "emoji": "👓", "slot": "eyes", "minLevel": 1, "price": 40, "rarity": "Común"}, {"id": 7, "name": "Flor de Cerezo", "emoji": "🌸", "slot": "head", "minLevel": 1, "price": 50, "rarity": "Común"}, {"id": 8, "name": "Pez Tropical", "emoji": "🐠", "slot": "food", "minLevel": 1, "price": 60, "rarity": "Común"}, {"id": 9, "name": "Bandera Japón", "emoji": "🇯🇵", "slot": "flag", "minLevel": 1, "price": 30, "rarity": "Común"}, {"id": 10, "name": "Lazo Honor", "emoji": "🎗️", "slot": "neck", "minLevel": 1, "price": 40, "rarity": "Común"}, {"id": 11, "name": "Chaleco Seguridad", "emoji": "🦺", "slot": "body", "minLevel": 1, "price": 50, "rarity": "Común"}, {"id": 12, "name": "Lentes de Sol", "emoji": "🕶️", "slot": "eyes", "minLevel": 1, "price": 60, "rarity": "Común"}, {"id": 13, "name": "Margarita", "emoji": "🌼", "slot": "head", "minLevel": 2, "price": 30, "rarity": "Común"}, {"id": 14, "name": "Pez Globo", "emoji": "🐡", "slot": "food", "minLevel": 2, "price": 40, "rarity": "Común"}, {"id": 15, "name": "Bandera Brasil", "emoji": "🇧🇷", "slot": "flag", "minLevel": 2, "price": 50, "rarity": "Común"}, {"id": 16, "name": "Moñito Cuello", "emoji": "🎀", "slot": "neck", "minLevel": 2, "price": 60, "rarity": "Común"}, {"id": 17, "name": "Abrigo Elegante", "emoji": "🧥", "slot": "body", "minLevel": 2, "price": 30, "rarity": "Común"}, {"id": 18, "name": "Antiparras", "emoji": "🥽", "slot": "eyes", "minLevel": 2, "price": 40, "rarity": "Común"}, {"id": 19, "name": "Girasol", "emoji": "🌻", "slot": "head", "minLevel": 2, "price": 50, "rarity": "Común"}, {"id": 20, "name": "Camarón", "emoji": "🦐", "slot": "food", "minLevel": 2, "price": 60, "rarity": "Común"}, {"id": 21, "name": "Bandera Uruguay", "emoji": "🇺🇾", "slot": "flag", "minLevel": 3, "price": 30, "rarity": "Común"}, {"id": 22, "name": "Corbata Ejecutiva", "emoji": "👔", "slot": "neck", "minLevel": 3, "price": 40, "rarity": "Común"}, {"id": 23, "name": "Vestido Celeste", "emoji": "👗", "slot": "body", "minLevel": 3, "price": 50, "rarity": "Común"}, {"id": 24, "name": "Lupa Detective", "emoji": "🔍", "slot": "eyes", "minLevel": 3, "price": 60, "rarity": "Común", "x": 182, "y": 68, "size": 44}, {"id": 25, "name": "Hibisco", "emoji": "🌺", "slot": "head", "minLevel": 3, "price": 30, "rarity": "Común"}, {"id": 26, "name": "Langosta", "emoji": "🦞", "slot": "food", "minLevel": 3, "price": 40, "rarity": "Común"}, {"id": 27, "name": "Bandera Chile", "emoji": "🇨🇱", "slot": "flag", "minLevel": 3, "price": 50, "rarity": "Común"}, {"id": 28, "name": "Bufanda Invernal", "emoji": "🧣", "slot": "neck", "minLevel": 3, "price": 60, "rarity": "Común"}, {"id": 29, "name": "Kimono", "emoji": "👘", "slot": "body", "minLevel": 4, "price": 140, "rarity": "Poco común"}, {"id": 30, "name": "Lupa Invertida", "emoji": "🔎", "slot": "eyes", "minLevel": 4, "price": 160, "rarity": "Poco común", "x": 118, "y": 68, "size": 44}, {"id": 31, "name": "Tulipán", "emoji": "🌷", "slot": "head", "minLevel": 4, "price": 80, "rarity": "Poco común"}, {"id": 32, "name": "Cangrejo", "emoji": "🦀", "slot": "food", "minLevel": 4, "price": 100, "rarity": "Poco común"}, {"id": 33, "name": "Bandera Perú", "emoji": "🇵🇪", "slot": "flag", "minLevel": 4, "price": 120, "rarity": "Poco común"}, {"id": 34, "name": "Collar de Cuentas", "emoji": "📿", "slot": "neck", "minLevel": 4, "price": 140, "rarity": "Poco común"}, {"id": 35, "name": "Sari Festivo", "emoji": "🥻", "slot": "body", "minLevel": 4, "price": 160, "rarity": "Poco común"}, {"id": 36, "name": "Burbujas", "emoji": "🫧", "slot": "eyes", "minLevel": 4, "price": 80, "rarity": "Poco común", "x": 214, "y": 46, "size": 38}, {"id": 37, "name": "Rosa Roja", "emoji": "🌹", "slot": "head", "minLevel": 5, "price": 100, "rarity": "Poco común"}, {"id": 38, "name": "Calamar", "emoji": "🦑", "slot": "food", "minLevel": 5, "price": 120, "rarity": "Poco común"}, {"id": 39, "name": "Bandera Colombia", "emoji": "🇨🇴", "slot": "flag", "minLevel": 5, "price": 140, "rarity": "Poco común"}, {"id": 40, "name": "Medalla Mérito", "emoji": "🏅", "slot": "neck", "minLevel": 5, "price": 160, "rarity": "Poco común"}, {"id": 41, "name": "Malla Deportiva", "emoji": "🩱", "slot": "body", "minLevel": 5, "price": 80, "rarity": "Poco común"}, {"id": 42, "name": "Confeti Festivo", "emoji": "🎉", "slot": "eyes", "minLevel": 5, "price": 100, "rarity": "Poco común", "x": 214, "y": 44, "size": 38}, {"id": 43, "name": "Flor de Loto", "emoji": "🪷", "slot": "head", "minLevel": 5, "price": 120, "rarity": "Poco común"}, {"id": 44, "name": "Ostra", "emoji": "🦪", "slot": "food", "minLevel": 5, "price": 140, "rarity": "Poco común"}, {"id": 45, "name": "Bandera México", "emoji": "🇲🇽", "slot": "flag", "minLevel": 6, "price": 160, "rarity": "Poco común"}, {"id": 46, "name": "Medalla Oro", "emoji": "🥇", "slot": "neck", "minLevel": 6, "price": 80, "rarity": "Poco común"}, {"id": 47, "name": "Mochila Escolar", "emoji": "🎒", "slot": "body", "minLevel": 6, "price": 100, "rarity": "Poco común"}, {"id": 48, "name": "Sueñito", "emoji": "💤", "slot": "eyes", "minLevel": 6, "price": 120, "rarity": "Poco común", "x": 212, "y": 40, "size": 38}, {"id": 49, "name": "Trébol Suerte", "emoji": "🍀", "slot": "head", "minLevel": 6, "price": 140, "rarity": "Poco común"}, {"id": 50, "name": "Sushi", "emoji": "🍣", "slot": "food", "minLevel": 6, "price": 160, "rarity": "Poco común"}, {"id": 51, "name": "Bandera España", "emoji": "🇪🇸", "slot": "flag", "minLevel": 6, "price": 80, "rarity": "Poco común"}, {"id": 52, "name": "Medalla Plata", "emoji": "🥈", "slot": "neck", "minLevel": 6, "price": 100, "rarity": "Poco común"}, {"id": 53, "name": "Escudo Caballero", "emoji": "🛡️", "slot": "body", "minLevel": 7, "price": 120, "rarity": "Poco común"}, {"id": 54, "name": "Corazones", "emoji": "💕", "slot": "eyes", "minLevel": 7, "price": 140, "rarity": "Poco común", "x": 212, "y": 42, "size": 36}, {"id": 55, "name": "Hoja de Otoño", "emoji": "🍁", "slot": "head", "minLevel": 7, "price": 160, "rarity": "Poco común"}, {"id": 56, "name": "Tempura", "emoji": "🍤", "slot": "food", "minLevel": 7, "price": 80, "rarity": "Poco común"}, {"id": 57, "name": "Bandera Italia", "emoji": "🇮🇹", "slot": "flag", "minLevel": 7, "price": 100, "rarity": "Poco común"}, {"id": 58, "name": "Medalla Bronce", "emoji": "🥉", "slot": "neck", "minLevel": 7, "price": 120, "rarity": "Poco común"}, {"id": 59, "name": "Espadas Cruzadas", "emoji": "⚔️", "slot": "body", "minLevel": 7, "price": 140, "rarity": "Poco común"}, {"id": 60, "name": "Corazón Brillante", "emoji": "💖", "slot": "eyes", "minLevel": 8, "price": 350, "rarity": "Raro", "x": 212, "y": 42, "size": 36}, {"id": 61, "name": "Hongo Mágico", "emoji": "🍄", "slot": "head", "minLevel": 8, "price": 190, "rarity": "Raro"}, {"id": 62, "name": "Narutomaki", "emoji": "🍥", "slot": "food", "minLevel": 8, "price": 222, "rarity": "Raro"}, {"id": 63, "name": "Bandera Francia", "emoji": "🇫🇷", "slot": "flag", "minLevel": 8, "price": 254, "rarity": "Raro"}, {"id": 64, "name": "Copa Campeón", "emoji": "🏆", "slot": "neck", "minLevel": 8, "price": 286, "rarity": "Raro"}, {"id": 65, "name": "Arco y Flecha", "emoji": "🏹", "slot": "body", "minLevel": 8, "price": 318, "rarity": "Raro"}, {"id": 66, "name": "Enojito", "emoji": "💢", "slot": "eyes", "minLevel": 8, "price": 350, "rarity": "Raro", "x": 212, "y": 40, "size": 36}, {"id": 67, "name": "Gorra Azul", "emoji": "🧢", "slot": "head", "minLevel": 8, "price": 190, "rarity": "Raro"}, {"id": 68, "name": "Onigiri", "emoji": "🍙", "slot": "food", "minLevel": 9, "price": 222, "rarity": "Raro"}, {"id": 69, "name": "Bandera Alemania", "emoji": "🇩🇪", "slot": "flag", "minLevel": 9, "price": 254, "rarity": "Raro"}, {"id": 70, "name": "Llave Antigua", "emoji": "🔑", "slot": "neck", "minLevel": 9, "price": 286, "rarity": "Raro"}, {"id": 71, "name": "Búmeran", "emoji": "🪃", "slot": "body", "minLevel": 9, "price": 318, "rarity": "Raro"}, {"id": 72, "name": "Gotita", "emoji": "💦", "slot": "eyes", "minLevel": 9, "price": 350, "rarity": "Raro", "x": 212, "y": 42, "size": 36}, {"id": 73, "name": "Sombrero de Copa", "emoji": "🎩", "slot": "head", "minLevel": 9, "price": 190, "rarity": "Raro"}, {"id": 74, "name": "Galleta Arroz", "emoji": "🍘", "slot": "food", "minLevel": 9, "price": 222, "rarity": "Raro"}, {"id": 75, "name": "Bandera Reino Unido", "emoji": "🇬🇧", "slot": "flag", "minLevel": 9, "price": 254, "rarity": "Raro"}, {"id": 76, "name": "Llave Maestra", "emoji": "🗝️", "slot": "neck", "minLevel": 10, "price": 286, "rarity": "Raro"}, {"id": 77, "name": "Osito Peluche", "emoji": "🧸", "slot": "body", "minLevel": 10, "price": 318, "rarity": "Raro"}, {"id": 78, "name": "Nota Musical", "emoji": "🎵", "slot": "eyes", "minLevel": 10, "price": 350, "rarity": "Raro", "x": 212, "y": 40, "size": 36}, {"id": 79, "name": "Birrete", "emoji": "🎓", "slot": "head", "minLevel": 10, "price": 190, "rarity": "Raro"}, {"id": 80, "name": "Caja Bento", "emoji": "🍱", "slot": "food", "minLevel": 10, "price": 222, "rarity": "Raro"}, {"id": 81, "name": "Bandera EE.UU.", "emoji": "🇺🇸", "slot": "flag", "minLevel": 10, "price": 254, "rarity": "Raro"}, {"id": 82, "name": "Imán", "emoji": "🧲", "slot": "neck", "minLevel": 10, "price": 286, "rarity": "Raro"}, {"id": 83, "name": "Ovillo de Lana", "emoji": "🧶", "slot": "body", "minLevel": 10, "price": 318, "rarity": "Raro"}, {"id": 84, "name": "Melodía", "emoji": "🎶", "slot": "eyes", "minLevel": 11, "price": 350, "rarity": "Raro", "x": 212, "y": 40, "size": 36}, {"id": 85, "name": "Sombrero de Playa", "emoji": "👒", "slot": "head", "minLevel": 11, "price": 190, "rarity": "Raro"}, {"id": 86, "name": "Ramen Caliente", "emoji": "🍜", "slot": "food", "minLevel": 11, "price": 222, "rarity": "Raro"}, {"id": 87, "name": "Bandera Canadá", "emoji": "🇨🇦", "slot": "flag", "minLevel": 11, "price": 254, "rarity": "Raro"}, {"id": 88, "name": "Brújula", "emoji": "🧭", "slot": "neck", "minLevel": 11, "price": 286, "rarity": "Raro"}, {"id": 89, "name": "Pelota Fútbol", "emoji": "⚽", "slot": "body", "minLevel": 11, "price": 318, "rarity": "Raro"}, {"id": 90, "name": "Globo de Texto", "emoji": "💬", "slot": "eyes", "minLevel": 11, "price": 350, "rarity": "Raro", "x": 214, "y": 38, "size": 38}, {"id": 91, "name": "Casco Rescate", "emoji": "⛑️", "slot": "head", "minLevel": 11, "price": 190, "rarity": "Raro"}, {"id": 92, "name": "Espagueti", "emoji": "🍝", "slot": "food", "minLevel": 12, "price": 222, "rarity": "Raro"}, {"id": 93, "name": "Bandera Corea del Sur", "emoji": "🇰🇷", "slot": "flag", "minLevel": 12, "price": 254, "rarity": "Raro"}, {"id": 94, "name": "Cronómetro", "emoji": "⏱️", "slot": "neck", "minLevel": 12, "price": 286, "rarity": "Raro"}, {"id": 95, "name": "Pelota Básquet", "emoji": "🏀", "slot": "body", "minLevel": 12, "price": 318, "rarity": "Raro"}, {"id": 96, "name": "Pensamiento", "emoji": "💭", "slot": "eyes", "minLevel": 12, "price": 350, "rarity": "Raro", "x": 214, "y": 38, "size": 38}, {"id": 97, "name": "Casco Explorador", "emoji": "🪖", "slot": "head", "minLevel": 12, "price": 190, "rarity": "Raro"}, {"id": 98, "name": "Arroz con Curry", "emoji": "🍛", "slot": "food", "minLevel": 12, "price": 222, "rarity": "Raro"}, {"id": 99, "name": "Bandera China", "emoji": "🇨🇳", "slot": "flag", "minLevel": 12, "price": 254, "rarity": "Raro"}, {"id": 100, "name": "Cámara Fotos", "emoji": "📷", "slot": "neck", "minLevel": 13, "price": 615, "rarity": "Épico"}, {"id": 101, "name": "Balón Ovalado", "emoji": "🏈", "slot": "body", "minLevel": 13, "price": 680, "rarity": "Épico"}, {"id": 102, "name": "Corazón en Llamas", "emoji": "❤️‍🔥", "slot": "eyes", "minLevel": 13, "price": 745, "rarity": "Épico", "x": 212, "y": 42, "size": 36}, {"id": 103, "name": "Corona Real", "emoji": "👑", "slot": "head", "minLevel": 13, "price": 420, "rarity": "Épico"}, {"id": 104, "name": "Guiso Casero", "emoji": "🍲", "slot": "food", "minLevel": 13, "price": 485, "rarity": "Épico"}, {"id": 105, "name": "Bandera Taiwán", "emoji": "🇹🇼", "slot": "flag", "minLevel": 13, "price": 550, "rarity": "Épico"}, {"id": 106, "name": "Guitarra Eléctrica", "emoji": "🎸", "slot": "neck", "minLevel": 13, "price": 615, "rarity": "Épico"}, {"id": 107, "name": "Pelota Béisbol", "emoji": "⚾", "slot": "body", "minLevel": 14, "price": 680, "rarity": "Épico"}, {"id": 108, "name": "Amuleto Ojo", "emoji": "🧿", "slot": "eyes", "minLevel": 14, "price": 745, "rarity": "Épico", "x": 212, "y": 42, "size": 34}, {"id": 109, "name": "Tridente Dorado", "emoji": "🔱", "slot": "head", "minLevel": 14, "price": 420, "rarity": "Épico"}, {"id": 110, "name": "Empanadilla", "emoji": "🥟", "slot": "food", "minLevel": 14, "price": 485, "rarity": "Épico"}, {"id": 111, "name": "Bandera India", "emoji": "🇮🇳", "slot": "flag", "minLevel": 14, "price": 550, "rarity": "Épico"}, {"id": 112, "name": "Violín", "emoji": "🎻", "slot": "neck", "minLevel": 14, "price": 615, "rarity": "Épico"}, {"id": 113, "name": "Pelota Tenis", "emoji": "🎾", "slot": "body", "minLevel": 14, "price": 680, "rarity": "Épico"}, {"id": 114, "name": "Bola de Cristal", "emoji": "🔮", "slot": "eyes", "minLevel": 14, "price": 745, "rarity": "Épico", "x": 212, "y": 42, "size": 34}, {"id": 115, "name": "Varita Estelar", "emoji": "🪄", "slot": "head", "minLevel": 15, "price": 420, "rarity": "Épico"}, {"id": 116, "name": "Brocheta Oden", "emoji": "🍢", "slot": "food", "minLevel": 15, "price": 485, "rarity": "Épico"}, {"id": 117, "name": "Bandera Australia", "emoji": "🇦🇺", "slot": "flag", "minLevel": 15, "price": 550, "rarity": "Épico"}, {"id": 118, "name": "Trompeta", "emoji": "🎺", "slot": "neck", "minLevel": 15, "price": 615, "rarity": "Épico"}, {"id": 119, "name": "Pelota Vóley", "emoji": "🏐", "slot": "body", "minLevel": 15, "price": 680, "rarity": "Épico"}, {"id": 120, "name": "Moneda Suerte", "emoji": "🪙", "slot": "eyes", "minLevel": 15, "price": 745, "rarity": "Épico", "x": 212, "y": 42, "size": 34}, {"id": 121, "name": "Estrella Fugaz", "emoji": "💫", "slot": "head", "minLevel": 15, "price": 420, "rarity": "Épico"}, {"id": 122, "name": "Dango Dulce", "emoji": "🍡", "slot": "food", "minLevel": 15, "price": 485, "rarity": "Épico"}, {"id": 123, "name": "Bandera Nueva Zelanda", "emoji": "🇳🇿", "slot": "flag", "minLevel": 16, "price": 550, "rarity": "Épico"}, {"id": 124, "name": "Saxofón", "emoji": "🎷", "slot": "neck", "minLevel": 16, "price": 615, "rarity": "Épico"}, {"id": 125, "name": "Bola 8", "emoji": "🎱", "slot": "body", "minLevel": 16, "price": 680, "rarity": "Épico"}, {"id": 126, "name": "Diamante", "emoji": "💎", "slot": "eyes", "minLevel": 16, "price": 745, "rarity": "Épico", "x": 212, "y": 42, "size": 34}, {"id": 127, "name": "Estrella Dorada", "emoji": "⭐", "slot": "head", "minLevel": 16, "price": 420, "rarity": "Épico"}, {"id": 128, "name": "Bife Jugoso", "emoji": "🥩", "slot": "food", "minLevel": 16, "price": 485, "rarity": "Épico"}, {"id": 129, "name": "Bandera Sudáfrica", "emoji": "🇿🇦", "slot": "flag", "minLevel": 16, "price": 550, "rarity": "Épico"}, {"id": 130, "name": "Tambor", "emoji": "🥁", "slot": "neck", "minLevel": 16, "price": 615, "rarity": "Épico"}, {"id": 131, "name": "Joystick", "emoji": "🎮", "slot": "body", "minLevel": 17, "price": 680, "rarity": "Épico"}, {"id": 132, "name": "Destello Ojo", "emoji": "✴️", "slot": "eyes", "minLevel": 17, "price": 745, "rarity": "Épico", "x": 182, "y": 68, "size": 32}, {"id": 133, "name": "Estrella Brillante", "emoji": "🌟", "slot": "head", "minLevel": 17, "price": 420, "rarity": "Épico"}, {"id": 134, "name": "Pata de Pollo", "emoji": "🍗", "slot": "food", "minLevel": 17, "price": 485, "rarity": "Épico"}, {"id": 135, "name": "Bandera Egipto", "emoji": "🇪🇬", "slot": "flag", "minLevel": 17, "price": 550, "rarity": "Épico"}, {"id": 136, "name": "Banjo", "emoji": "🪕", "slot": "neck", "minLevel": 17, "price": 615, "rarity": "Épico"}, {"id": 137, "name": "Control Arcade", "emoji": "🕹️", "slot": "body", "minLevel": 17, "price": 680, "rarity": "Épico"}, {"id": 138, "name": "Destellos", "emoji": "✨", "slot": "head", "minLevel": 17, "price": 745, "rarity": "Épico"}, {"id": 139, "name": "Costilla", "emoji": "🍖", "slot": "food", "minLevel": 18, "price": 420, "rarity": "Épico"}, {"id": 140, "name": "Bandera Grecia", "emoji": "🇬🇷", "slot": "flag", "minLevel": 18, "price": 485, "rarity": "Épico"}, {"id": 141, "name": "Auriculares", "emoji": "🎧", "slot": "neck", "minLevel": 18, "price": 550, "rarity": "Épico"}, {"id": 142, "name": "Cohete Espacial", "emoji": "🚀", "slot": "body", "minLevel": 18, "price": 615, "rarity": "Épico"}, {"id": 143, "name": "Llama Ardiente", "emoji": "🔥", "slot": "head", "minLevel": 18, "price": 680, "rarity": "Épico"}, {"id": 144, "name": "Panceta", "emoji": "🥓", "slot": "food", "minLevel": 18, "price": 745, "rarity": "Épico"}, {"id": 145, "name": "Bandera Turquía", "emoji": "🇹🇷", "slot": "flag", "minLevel": 18, "price": 420, "rarity": "Épico"}, {"id": 146, "name": "Micrófono", "emoji": "🎤", "slot": "neck", "minLevel": 18, "price": 485, "rarity": "Épico"}, {"id": 147, "name": "Platillo Volador", "emoji": "🛸", "slot": "body", "minLevel": 19, "price": 1510, "rarity": "Legendario"}, {"id": 148, "name": "Copo de Nieve", "emoji": "❄️", "slot": "head", "minLevel": 19, "price": 850, "rarity": "Legendario"}, {"id": 149, "name": "Hamburguesa", "emoji": "🍔", "slot": "food", "minLevel": 19, "price": 960, "rarity": "Legendario"}, {"id": 150, "name": "Bandera Suecia", "emoji": "🇸🇪", "slot": "flag", "minLevel": 19, "price": 1070, "rarity": "Legendario"}, {"id": 151, "name": "Radio Retro", "emoji": "📻", "slot": "neck", "minLevel": 19, "price": 1180, "rarity": "Legendario"}, {"id": 152, "name": "Ancla Marina", "emoji": "⚓", "slot": "body", "minLevel": 19, "price": 1290, "rarity": "Legendario"}, {"id": 153, "name": "Rayo Eléctrico", "emoji": "⚡", "slot": "head", "minLevel": 19, "price": 1400, "rarity": "Legendario"}, {"id": 154, "name": "Papas Fritas", "emoji": "🍟", "slot": "food", "minLevel": 20, "price": 1510, "rarity": "Legendario"}, {"id": 155, "name": "Bandera Noruega", "emoji": "🇳🇴", "slot": "flag", "minLevel": 20, "price": 850, "rarity": "Legendario"}, {"id": 156, "name": "Corazón Rojo", "emoji": "❤️", "slot": "body", "minLevel": 20, "price": 960, "rarity": "Legendario"}, {"id": 157, "name": "Arcoíris", "emoji": "🌈", "slot": "head", "minLevel": 20, "price": 1070, "rarity": "Legendario"}, {"id": 158, "name": "Porción Pizza", "emoji": "🍕", "slot": "food", "minLevel": 20, "price": 1180, "rarity": "Legendario"}, {"id": 159, "name": "Bandera Finlandia", "emoji": "🇫🇮", "slot": "flag", "minLevel": 20, "price": 1290, "rarity": "Legendario"}, {"id": 160, "name": "Pata de Gato", "emoji": "🐾", "slot": "body", "minLevel": 20, "price": 1400, "rarity": "Legendario"}, {"id": 161, "name": "Nubecita", "emoji": "☁️", "slot": "head", "minLevel": 20, "price": 1510, "rarity": "Legendario"}, {"id": 162, "name": "Pancho", "emoji": "🌭", "slot": "food", "minLevel": 21, "price": 850, "rarity": "Legendario"}, {"id": 163, "name": "Bandera Islandia", "emoji": "🇮🇸", "slot": "flag", "minLevel": 21, "price": 960, "rarity": "Legendario"}, {"id": 164, "name": "Luna Creciente", "emoji": "🌙", "slot": "head", "minLevel": 21, "price": 1070, "rarity": "Legendario"}, {"id": 165, "name": "Sándwich", "emoji": "🥪", "slot": "food", "minLevel": 21, "price": 1180, "rarity": "Legendario"}, {"id": 166, "name": "Bandera Suiza", "emoji": "🇨🇭", "slot": "flag", "minLevel": 21, "price": 1290, "rarity": "Legendario"}, {"id": 167, "name": "Sol Radiante", "emoji": "☀️", "slot": "head", "minLevel": 21, "price": 1400, "rarity": "Legendario"}, {"id": 168, "name": "Taco", "emoji": "🌮", "slot": "food", "minLevel": 21, "price": 1510, "rarity": "Legendario"}, {"id": 169, "name": "Bandera Países Bajos", "emoji": "🇳🇱", "slot": "flag", "minLevel": 21, "price": 850, "rarity": "Legendario"}, {"id": 170, "name": "Planeta Saturno", "emoji": "🪐", "slot": "head", "minLevel": 22, "price": 960, "rarity": "Legendario"}, {"id": 171, "name": "Burrito", "emoji": "🌯", "slot": "food", "minLevel": 22, "price": 1070, "rarity": "Legendario"}, {"id": 172, "name": "Bandera Bélgica", "emoji": "🇧🇪", "slot": "flag", "minLevel": 22, "price": 1180, "rarity": "Legendario"}, {"id": 173, "name": "Cometa Cósmico", "emoji": "☄️", "slot": "head", "minLevel": 22, "price": 1290, "rarity": "Legendario"}, {"id": 174, "name": "Huevo", "emoji": "🥚", "slot": "food", "minLevel": 22, "price": 1400, "rarity": "Legendario"}, {"id": 175, "name": "Bandera Portugal", "emoji": "🇵🇹", "slot": "flag", "minLevel": 22, "price": 1510, "rarity": "Legendario"}, {"id": 176, "name": "Mariposa Azul", "emoji": "🦋", "slot": "head", "minLevel": 22, "price": 850, "rarity": "Legendario"}, {"id": 177, "name": "Huevo Frito", "emoji": "🍳", "slot": "food", "minLevel": 22, "price": 960, "rarity": "Legendario"}, {"id": 178, "name": "Bandera Irlanda", "emoji": "🇮🇪", "slot": "flag", "minLevel": 23, "price": 1070, "rarity": "Legendario"}, {"id": 179, "name": "Abejita", "emoji": "🐝", "slot": "head", "minLevel": 23, "price": 1180, "rarity": "Legendario"}, {"id": 180, "name": "Queso", "emoji": "🧀", "slot": "food", "minLevel": 23, "price": 1290, "rarity": "Legendario"}, {"id": 181, "name": "Bandera Polonia", "emoji": "🇵🇱", "slot": "flag", "minLevel": 23, "price": 1400, "rarity": "Legendario"}, {"id": 182, "name": "Vaquita de San Antonio", "emoji": "🐞", "slot": "head", "minLevel": 23, "price": 1510, "rarity": "Legendario"}, {"id": 183, "name": "Medialuna", "emoji": "🥐", "slot": "food", "minLevel": 23, "price": 850, "rarity": "Legendario"}, {"id": 184, "name": "Bandera Ucrania", "emoji": "🇺🇦", "slot": "flag", "minLevel": 23, "price": 960, "rarity": "Legendario"}, {"id": 185, "name": "Pollito", "emoji": "🐣", "slot": "head", "minLevel": 23, "price": 1070, "rarity": "Legendario"}, {"id": 186, "name": "Baguette", "emoji": "🥖", "slot": "food", "minLevel": 24, "price": 1180, "rarity": "Legendario"}, {"id": 187, "name": "Bandera Tailandia", "emoji": "🇹🇭", "slot": "flag", "minLevel": 24, "price": 1290, "rarity": "Legendario"}, {"id": 188, "name": "Globo Rojo", "emoji": "🎈", "slot": "head", "minLevel": 24, "price": 1400, "rarity": "Legendario"}, {"id": 189, "name": "Pretzel", "emoji": "🥨", "slot": "food", "minLevel": 24, "price": 1510, "rarity": "Legendario"}, {"id": 190, "name": "Bandera Vietnam", "emoji": "🇻🇳", "slot": "flag", "minLevel": 24, "price": 850, "rarity": "Legendario"}, {"id": 191, "name": "Panqueques", "emoji": "🥞", "slot": "food", "minLevel": 24, "price": 960, "rarity": "Legendario"}, {"id": 192, "name": "Bandera Filipinas", "emoji": "🇵🇭", "slot": "flag", "minLevel": 24, "price": 1070, "rarity": "Legendario"}, {"id": 193, "name": "Waffle", "emoji": "🧇", "slot": "food", "minLevel": 24, "price": 1180, "rarity": "Legendario"}, {"id": 194, "name": "Bandera a Cuadros", "emoji": "🏁", "slot": "flag", "minLevel": 25, "price": 1290, "rarity": "Legendario"}, {"id": 195, "name": "Dona Glaseada", "emoji": "🍩", "slot": "food", "minLevel": 25, "price": 1400, "rarity": "Legendario"}, {"id": 196, "name": "Galletita", "emoji": "🍪", "slot": "food", "minLevel": 25, "price": 1510, "rarity": "Legendario"}, {"id": 197, "name": "Torta Cumpleaños", "emoji": "🎂", "slot": "food", "minLevel": 25, "price": 850, "rarity": "Legendario"}, {"id": 198, "name": "Porción Torta", "emoji": "🍰", "slot": "food", "minLevel": 25, "price": 960, "rarity": "Legendario"}, {"id": 199, "name": "Cupcake", "emoji": "🧁", "slot": "food", "minLevel": 25, "price": 1070, "rarity": "Legendario"}, {"id": 200, "name": "Vaso de Leche", "emoji": "🥛", "slot": "food", "minLevel": 25, "price": 1180, "rarity": "Legendario"}];
+    // --- Helpers paramétricos para accesorios SVG perfectamente ajustados al gato ---
+    // Cabeza: arco r=94 en (150,114) | Ojos: (118,68) y (182,68) | Cuello: y=114..123, x=56..244
+    // Cuerpo: x=56..244, y=123..238 | Patas: x=56..87, 100..131, 169..200, 213..244, y=238..269
+
+    function svgEarBow(main, dark, center) {
+      return `
+        <g transform="translate(103, 27) rotate(-24)">
+          <path d="M 0 0 C -14 -13, -26 -8, -23 3 C -20 13, -10 11, 0 2 Z" fill="${main}" stroke="${dark}" stroke-width="1.5"/>
+          <path d="M 0 0 C 14 -13, 26 -8, 23 3 C 20 13, 10 11, 0 2 Z" fill="${main}" stroke="${dark}" stroke-width="1.5"/>
+          <rect x="-4.5" y="-5" width="9" height="10" rx="4" fill="${center}" stroke="${dark}" stroke-width="1.5"/>
+        </g>`;
+    }
+
+    function svgHeadBow(main, dark, center) {
+      return `
+        <g transform="translate(150, 21)">
+          <path d="M 0 0 C -18 -17, -34 -10, -30 4 C -26 16, -13 13, 0 2 Z" fill="${main}" stroke="${dark}" stroke-width="1.6"/>
+          <path d="M 0 0 C 18 -17, 34 -10, 30 4 C 26 16, 13 13, 0 2 Z" fill="${main}" stroke="${dark}" stroke-width="1.6"/>
+          <rect x="-6" y="-6" width="12" height="12" rx="5" fill="${center}" stroke="${dark}" stroke-width="1.6"/>
+        </g>`;
+    }
+
+    function svgBeanie(main, stripe, pom) {
+      return `
+        <g>
+          <path d="M 103 33 A 60 44 0 0 1 197 33 Q 150 40 103 33 Z" fill="${main}" stroke="rgba(0,0,0,0.22)" stroke-width="1.5"/>
+          <path d="M 103 28 Q 150 35 197 28 L 199 35 Q 150 42 101 35 Z" fill="${stripe}"/>
+          <circle cx="150" cy="-12" r="9" fill="${pom}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+        </g>`;
+    }
+
+    function svgCap(crown, visor, button) {
+      return `
+        <g>
+          <path d="M 105 32 A 54 34 0 0 1 195 32 Q 150 38 105 32 Z" fill="${crown}" stroke="rgba(0,0,0,0.22)" stroke-width="1.5"/>
+          <path d="M 116 32 Q 155 43 206 34 Q 186 24 148 26 Z" fill="${visor}" stroke="rgba(0,0,0,0.22)" stroke-width="1.5"/>
+          <circle cx="150" cy="-2" r="3" fill="${button}"/>
+        </g>`;
+    }
+
+    function svgRoundGlasses(frame, lens, opacity = 0.22) {
+      return `
+        <g>
+          <path d="M 70 66 L 96 68 M 204 68 L 230 66" stroke="${frame}" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 140 67 Q 150 62 160 67" fill="none" stroke="${frame}" stroke-width="3.2" stroke-linecap="round"/>
+          <circle cx="118" cy="68" r="21" fill="${lens}" fill-opacity="${opacity}" stroke="${frame}" stroke-width="3.5"/>
+          <circle cx="182" cy="68" r="21" fill="${lens}" fill-opacity="${opacity}" stroke="${frame}" stroke-width="3.5"/>
+          <path d="M 106 60 L 114 54 M 170 60 L 178 54" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.7"/>
+        </g>`;
+    }
+
+    function svgWayfarer(frame, lens) {
+      return `
+        <g>
+          <path d="M 69 65 L 95 66 M 205 66 L 231 65" stroke="${frame}" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 94 56 H 142 L 138 80 Q 118 85 98 80 Z" fill="${lens}" stroke="${frame}" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M 158 56 H 206 L 202 80 Q 182 85 162 80 Z" fill="${lens}" stroke="${frame}" stroke-width="3" stroke-linejoin="round"/>
+          <rect x="141" y="58" width="18" height="5" rx="2" fill="${frame}"/>
+          <path d="M 103 61 L 113 75 M 167 61 L 177 75" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.35"/>
+        </g>`;
+    }
+
+    function svgCollar(strap, buckle, charmSvg = "") {
+      return `
+        <g>
+          <path d="M 54 114 Q 150 121 246 114 L 246 123 Q 150 130 54 123 Z" fill="${strap}" stroke="rgba(0,0,0,0.22)" stroke-width="1.4"/>
+          <rect x="142" y="116" width="16" height="11" rx="3" fill="none" stroke="${buckle}" stroke-width="2.4"/>
+          ${charmSvg}
+        </g>`;
+    }
+
+    function svgBowtie(main, dark) {
+      return `
+        <g transform="translate(150, 122)">
+          <polygon points="0,0 -20,-10 -20,10" fill="${main}" stroke="${dark}" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="0,0 20,-10 20,10" fill="${main}" stroke="${dark}" stroke-width="1.5" stroke-linejoin="round"/>
+          <rect x="-5" y="-6" width="10" height="12" rx="3" fill="${main}" stroke="${dark}" stroke-width="1.5"/>
+        </g>`;
+    }
+
+    function svgBandana(main, patternColor) {
+      return `
+        <g>
+          <path d="M 54 114 Q 150 121 246 114 L 246 122 Q 150 129 54 122 Z" fill="${main}" stroke="rgba(0,0,0,0.22)" stroke-width="1.4"/>
+          <polygon points="116,123 184,123 150,164" fill="${main}" stroke="rgba(0,0,0,0.22)" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="150" cy="138" r="3.5" fill="${patternColor}"/>
+          <circle cx="137" cy="131" r="2.2" fill="${patternColor}"/>
+          <circle cx="163" cy="131" r="2.2" fill="${patternColor}"/>
+        </g>`;
+    }
+
+    function svgScarf(main, stripe) {
+      return `
+        <g>
+          <rect x="92" y="121" width="22" height="54" rx="5" fill="${main}" stroke="rgba(0,0,0,0.2)" stroke-width="1.4"/>
+          <rect x="92" y="133" width="22" height="6" fill="${stripe}"/>
+          <rect x="92" y="151" width="22" height="6" fill="${stripe}"/>
+          <path d="M 95 175 V 183 M 103 175 V 184 M 111 175 V 183" stroke="${stripe}" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M 53 113 Q 150 121 247 113 L 247 125 Q 150 133 53 125 Z" fill="${main}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <path d="M 86 116 L 94 127 M 126 118 L 134 129 M 168 118 L 176 129 M 208 116 L 216 127" stroke="${stripe}" stroke-width="4.5"/>
+        </g>`;
+    }
+
+    function svgTshirt(base, trim, emblemSvg = "") {
+      return `
+        <g>
+          <path d="M 55 123 H 245 V 235 H 55 Z" fill="${base}" stroke="rgba(0,0,0,0.2)" stroke-width="1.6"/>
+          <path d="M 122 123 Q 150 140 178 123" fill="none" stroke="${trim}" stroke-width="5" stroke-linecap="round"/>
+          <rect x="55" y="228" width="190" height="7" fill="${trim}" opacity="0.85"/>
+          ${emblemSvg}
+        </g>`;
+    }
+
+    function svgPawsSocks(main, stripe) {
+      const xs = [56, 100, 169, 213];
+      return `<g>${xs.map(x => `
+        <rect x="${x - 0.5}" y="246" width="32" height="23.5" rx="3" fill="${main}" stroke="rgba(0,0,0,0.2)" stroke-width="1.3"/>
+        <rect x="${x - 0.5}" y="250" width="32" height="4" fill="${stripe}"/>
+      `).join("")}</g>`;
+    }
+
+    function svgPawsBoots(main, sole) {
+      const xs = [56, 100, 169, 213];
+      return `<g>${xs.map(x => `
+        <path d="M ${x - 1} 245 H ${x + 32} V 265 Q ${x + 32} 270 ${x + 26} 270 H ${x + 5} Q ${x - 1} 270 ${x - 1} 265 Z" fill="${main}" stroke="rgba(0,0,0,0.24)" stroke-width="1.4"/>
+        <rect x="${x - 1}" y="264" width="33" height="6" rx="2" fill="${sole}"/>
+      `).join("")}</g>`;
+    }
+
+    // Catálogo completo de accesorios adaptados geométricamente al gato
+    const ACCESSORIES = [
+      // === CABEZA Y OREJAS (head) ===
+      { id: 101, name: "Moño Oreja Rosa", slot: "head", minLevel: 1, price: 30, rarity: "Común",
+        svg: svgEarBow("#f06292", "#9c2754", "#fce4ec") },
+      { id: 102, name: "Moño Oreja Celeste", slot: "head", minLevel: 1, price: 35, rarity: "Común",
+        svg: svgEarBow("#4fc3f7", "#1e6b8f", "#e1f5fe") },
+      { id: 103, name: "Moño Gigante Rojo", slot: "head", minLevel: 2, price: 45, rarity: "Común",
+        svg: svgHeadBow("#e53935", "#8e1c1a", "#ffcdd2") },
+      { id: 104, name: "Brote de Hojitas", slot: "head", minLevel: 1, price: 40, rarity: "Común",
+        svg: `<g><path d="M 150 21 Q 148 5 153 -4" fill="none" stroke="#4e8c44" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="141" cy="-2" rx="11" ry="6" transform="rotate(-24 141 -2)" fill="#66bb6a" stroke="#38703a" stroke-width="1.4"/><ellipse cx="163" cy="-5" rx="11" ry="6" transform="rotate(20 163 -5)" fill="#81c784" stroke="#38703a" stroke-width="1.4"/></g>` },
+      { id: 105, name: "Flor de Cerezo", slot: "head", minLevel: 2, price: 50, rarity: "Común",
+        svg: `<g transform="translate(150, 21)"><circle cx="0" cy="-9" r="7" fill="#f8bbd0"/><circle cx="9" cy="-3" r="7" fill="#f8bbd0"/><circle cx="6" cy="7" r="7" fill="#f8bbd0"/><circle cx="-6" cy="7" r="7" fill="#f8bbd0"/><circle cx="-9" cy="-3" r="7" fill="#f8bbd0"/><circle cx="0" cy="0" r="4.5" fill="#f06292"/></g>` },
+      { id: 106, name: "Gorra Azul", slot: "head", minLevel: 3, price: 65, rarity: "Común",
+        svg: svgCap("#3b6e8c", "#26495e", "#f5c84c") },
+      { id: 107, name: "Gorra Roja", slot: "head", minLevel: 3, price: 65, rarity: "Común",
+        svg: svgCap("#c93b2b", "#8a2217", "#ffffff") },
+      { id: 108, name: "Bonete Cumpleaños", slot: "head", minLevel: 4, price: 85, rarity: "Poco común",
+        svg: `<g><polygon points="126,27 174,27 150,-28" fill="#5c6bc0" stroke="#283593" stroke-width="1.6" stroke-linejoin="round"/><path d="M 134 11 H 166 M 141 -4 H 159" stroke="#ffd54f" stroke-width="4"/><circle cx="150" cy="-31" r="7" fill="#ff7043"/></g>` },
+      { id: 109, name: "Gorro Lana Bordó", slot: "head", minLevel: 4, price: 95, rarity: "Poco común",
+        svg: svgBeanie("#8e2438", "#f4d06f", "#f4d06f") },
+      { id: 110, name: "Gorro Lana Celeste", slot: "head", minLevel: 5, price: 105, rarity: "Poco común",
+        svg: svgBeanie("#4a90b8", "#ffffff", "#ffffff") },
+      { id: 111, name: "Piluso Argentino", slot: "head", minLevel: 5, price: 120, rarity: "Poco común",
+        svg: `<g><path d="M 110 25 L 118 0 H 182 L 190 25 Z" fill="#6ec1e4" stroke="#2b5c73" stroke-width="1.5"/><rect x="114" y="10" width="72" height="7" fill="#ffffff"/><path d="M 96 29 Q 150 37 204 29 L 194 22 Q 150 28 106 22 Z" fill="#6ec1e4" stroke="#2b5c73" stroke-width="1.5"/></g>` },
+      { id: 112, name: "Boina Francesa", slot: "head", minLevel: 6, price: 135, rarity: "Poco común",
+        svg: `<g transform="translate(146, 17) rotate(-8)"><ellipse cx="0" cy="0" rx="44" ry="16" fill="#9c273b" stroke="#59121e" stroke-width="1.6"/><path d="M 0 -15 Q 6 -24 12 -21" fill="none" stroke="#59121e" stroke-width="3" stroke-linecap="round"/></g>` },
+      { id: 113, name: "Gorro de Chef", slot: "head", minLevel: 7, price: 150, rarity: "Poco común",
+        svg: `<g><rect x="115" y="11" width="70" height="17" rx="3" fill="#ffffff" stroke="#b8b2a6" stroke-width="1.6"/><path d="M 113 13 C 96 6, 102 -18, 125 -16 C 132 -29, 168 -29, 175 -16 C 198 -18, 204 6, 187 13 Z" fill="#ffffff" stroke="#b8b2a6" stroke-width="1.6"/></g>` },
+      { id: 114, name: "Corona de Flores", slot: "head", minLevel: 8, price: 210, rarity: "Raro",
+        svg: `<g><path d="M 80 48 Q 150 20 220 48" fill="none" stroke="#4f8a4b" stroke-width="5" stroke-linecap="round"/><circle cx="94" cy="41" r="7" fill="#f48fb1"/><circle cx="122" cy="31" r="7.5" fill="#fff176"/><circle cx="150" cy="28" r="8" fill="#ff8a65"/><circle cx="178" cy="31" r="7.5" fill="#ce93d8"/><circle cx="206" cy="41" r="7" fill="#81d4fa"/></g>` },
+      { id: 115, name: "Auriculares Gamer", slot: "head", minLevel: 9, price: 245, rarity: "Raro",
+        svg: `<g><path d="M 55 74 A 96 96 0 0 1 245 74" fill="none" stroke="#2d3138" stroke-width="8" stroke-linecap="round"/><path d="M 96 27 A 96 96 0 0 1 204 27" fill="none" stroke="#00e5ff" stroke-width="3"/><rect x="46" y="56" width="16" height="36" rx="8" fill="#2d3138" stroke="#00e5ff" stroke-width="2"/><rect x="238" y="56" width="16" height="36" rx="8" fill="#2d3138" stroke="#00e5ff" stroke-width="2"/></g>` },
+      { id: 116, name: "Galera Elegante", slot: "head", minLevel: 10, price: 280, rarity: "Raro",
+        svg: `<g><rect x="116" y="-22" width="68" height="48" rx="4" fill="#242226" stroke="#0e0d0f" stroke-width="1.6"/><rect x="116" y="13" width="68" height="8" fill="#b9382c"/><path d="M 96 26 Q 150 35 204 26 L 198 20 Q 150 28 102 20 Z" fill="#242226" stroke="#0e0d0f" stroke-width="1.6"/></g>` },
+      { id: 117, name: "Sombrero Vaquero", slot: "head", minLevel: 11, price: 310, rarity: "Raro",
+        svg: `<g><path d="M 116 24 L 123 -6 Q 150 2 177 -6 L 184 24 Z" fill="#8d5b3c" stroke="#52321e" stroke-width="1.6"/><rect x="118" y="15" width="64" height="5" fill="#3d2415"/><path d="M 88 18 Q 112 34 150 31 Q 188 34 212 18 Q 198 28 150 24 Q 102 28 88 18 Z" fill="#a36b48" stroke="#52321e" stroke-width="1.6"/></g>` },
+      { id: 118, name: "Sombrero de Bruja", slot: "head", minLevel: 13, price: 450, rarity: "Épico",
+        svg: `<g><path d="M 114 25 L 146 -32 L 176 -16 L 164 -10 L 186 25 Z" fill="#3c2a4d" stroke="#1f1429" stroke-width="1.6" stroke-linejoin="round"/><path d="M 117 17 Q 150 23 183 17 L 185 24 Q 150 30 115 24 Z" fill="#f5b041"/><rect x="144" y="16" width="12" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2"/><ellipse cx="150" cy="26" rx="60" ry="9" fill="#3c2a4d" stroke="#1f1429" stroke-width="1.6"/></g>` },
+      { id: 119, name: "Casco Vikingo", slot: "head", minLevel: 14, price: 510, rarity: "Épico",
+        svg: `<g><path d="M 106 30 A 48 36 0 0 1 194 30 Z" fill="#8e99a4" stroke="#454d54" stroke-width="1.6"/><path d="M 112 16 Q 82 6 88 -18 Q 98 2 116 6 Z" fill="#f5efe6" stroke="#5c5346" stroke-width="1.5"/><path d="M 188 16 Q 218 6 212 -18 Q 202 2 184 6 Z" fill="#f5efe6" stroke="#5c5346" stroke-width="1.5"/><rect x="104" y="25" width="92" height="6" rx="3" fill="#c99e48"/></g>` },
+      { id: 120, name: "Cuernitos Diablito", slot: "head", minLevel: 15, price: 580, rarity: "Épico",
+        svg: `<g><path d="M 118 27 Q 108 6 122 -8 Q 128 8 132 23 Z" fill="#c92a2a" stroke="#6e1111" stroke-width="1.5"/><path d="M 182 27 Q 192 6 178 -8 Q 172 8 168 23 Z" fill="#c92a2a" stroke="#6e1111" stroke-width="1.5"/></g>` },
+      { id: 121, name: "Aureola Angelical", slot: "head", minLevel: 17, price: 720, rarity: "Épico",
+        svg: `<g><ellipse cx="150" cy="-12" rx="34" ry="8" fill="none" stroke="#ffd54f" stroke-width="5"/><ellipse cx="150" cy="-12" rx="34" ry="8" fill="none" stroke="#fff9c4" stroke-width="1.8"/></g>` },
+      { id: 122, name: "Cuerno Unicornio", slot: "head", minLevel: 19, price: 960, rarity: "Legendario",
+        svg: `<g><polygon points="139,24 161,24 150,-32" fill="#ffd54f" stroke="#b87a28" stroke-width="1.6" stroke-linejoin="round"/><path d="M 142 12 L 158 7 M 144 0 L 156 -5 M 147 -12 L 153 -16" stroke="#f06292" stroke-width="2.6" stroke-linecap="round"/><circle cx="137" cy="24" r="5" fill="#f48fb1"/><circle cx="163" cy="24" r="5" fill="#81d4fa"/></g>` },
+      { id: 123, name: "Corona Real Dorada", slot: "head", minLevel: 21, price: 1250, rarity: "Legendario",
+        svg: `<g><path d="M 114 26 L 110 -6 L 131 11 L 150 -14 L 169 11 L 190 -6 L 186 26 Q 150 32 114 26 Z" fill="#f4b942" stroke="#8f5d14" stroke-width="1.8" stroke-linejoin="round"/><circle cx="150" cy="14" r="4" fill="#d32f2f"/><circle cx="128" cy="16" r="3" fill="#1976d2"/><circle cx="172" cy="16" r="3" fill="#388e3c"/></g>` },
+
+      // === CARA Y OJOS (eyes) ===
+      { id: 201, name: "Mejillas Sonrojadas", slot: "eyes", minLevel: 1, price: 30, rarity: "Común",
+        svg: `<g opacity="0.72"><ellipse cx="86" cy="84" rx="13" ry="7.5" fill="#f2849e"/><ellipse cx="214" cy="84" rx="13" ry="7.5" fill="#f2849e"/><path d="M 81 86 L 85 81 M 87 86 L 91 81 M 209 86 L 213 81 M 215 86 L 219 81" stroke="#d84367" stroke-width="1.8" stroke-linecap="round"/></g>` },
+      { id: 202, name: "Curita en Mejilla", slot: "eyes", minLevel: 1, price: 35, rarity: "Común",
+        svg: `<g transform="translate(206, 82) rotate(-25)"><rect x="-13" y="-5" width="26" height="10" rx="3" fill="#e6b88a" stroke="#9e6d40" stroke-width="1.3"/><rect x="-5" y="-5" width="10" height="10" fill="#f5dec6"/></g>` },
+      { id: 203, name: "Anteojos Redondos", slot: "eyes", minLevel: 2, price: 50, rarity: "Común",
+        svg: svgRoundGlasses("#3d352e", "#ffffff", 0.25) },
+      { id: 204, name: "Lentes de Sol Negros", slot: "eyes", minLevel: 3, price: 65, rarity: "Común",
+        svg: svgWayfarer("#1c1c1e", "#2b2d33") },
+      { id: 205, name: "Bigote Caballero", slot: "eyes", minLevel: 4, price: 85, rarity: "Poco común",
+        svg: `<g><path d="M 150 89 C 142 84, 128 86, 120 94 C 115 99, 122 103, 130 99 C 138 95, 146 94, 150 92 C 154 94, 162 95, 170 99 C 178 103, 185 99, 180 94 C 172 86, 158 84, 150 89 Z" fill="#2b2623"/></g>` },
+      { id: 206, name: "Anteojos Corazón", slot: "eyes", minLevel: 5, price: 110, rarity: "Poco común",
+        svg: `<g><path d="M 70 66 L 96 66 M 204 66 L 230 66 M 140 66 H 160" stroke="#c2185b" stroke-width="3"/><path d="M 118 85 C 94 70, 96 49, 118 60 C 140 49, 142 70, 118 85 Z" fill="#f48fb1" fill-opacity="0.55" stroke="#c2185b" stroke-width="2.8"/><path d="M 182 85 C 158 70, 160 49, 182 60 C 204 49, 206 70, 182 85 Z" fill="#f48fb1" fill-opacity="0.55" stroke="#c2185b" stroke-width="2.8"/></g>` },
+      { id: 207, name: "Lentes Celeste Verano", slot: "eyes", minLevel: 6, price: 130, rarity: "Poco común",
+        svg: svgWayfarer("#ffffff", "#4fc3f7") },
+      { id: 208, name: "Parche Pirata", slot: "eyes", minLevel: 8, price: 210, rarity: "Raro",
+        svg: `<g><path d="M 85 45 L 228 84" stroke="#222" stroke-width="4" stroke-linecap="round"/><path d="M 101 56 H 135 L 132 76 Q 118 84 104 76 Z" fill="#1e1e20" stroke="#000" stroke-width="1.5"/></g>` },
+      { id: 209, name: "Monóculo Dorado", slot: "eyes", minLevel: 10, price: 270, rarity: "Raro",
+        svg: `<g><circle cx="182" cy="68" r="20" fill="#fffde7" fill-opacity="0.25" stroke="#d49b27" stroke-width="3.4"/><path d="M 202 68 Q 214 88 218 112" fill="none" stroke="#d49b27" stroke-width="2" stroke-dasharray="3 2"/></g>` },
+      { id: 210, name: "Lentes Pixel Thug", slot: "eyes", minLevel: 12, price: 320, rarity: "Raro",
+        svg: `<g><path d="M 70 63 H 230 V 68 H 206 V 76 H 164 V 68 H 136 V 76 H 94 V 68 H 70 Z" fill="#111"/><rect x="100" y="67" width="6" height="4" fill="#fff"/><rect x="110" y="67" width="6" height="4" fill="#fff"/><rect x="170" y="67" width="6" height="4" fill="#fff"/><rect x="180" y="67" width="6" height="4" fill="#fff"/></g>` },
+      { id: 211, name: "Antifaz Superhéroe", slot: "eyes", minLevel: 14, price: 480, rarity: "Épico",
+        svg: `<g><path d="M 76 58 Q 118 46 150 56 Q 182 46 224 58 L 214 82 Q 182 88 150 76 Q 118 88 86 82 Z" fill="#283593" stroke="#1a237e" stroke-width="1.6"/><ellipse cx="118" cy="68" rx="14" ry="10" fill="#ffffff"/><ellipse cx="182" cy="68" rx="14" ry="10" fill="#ffffff"/><circle cx="118" cy="68" r="7" fill="#080808"/><circle cx="182" cy="68" r="7" fill="#080808"/></g>` },
+      { id: 212, name: "Gafas Steampunk", slot: "eyes", minLevel: 16, price: 620, rarity: "Épico",
+        svg: `<g><path d="M 68 65 H 95 M 205 65 H 232 M 141 66 H 159" stroke="#5d4037" stroke-width="5"/><circle cx="118" cy="68" r="22" fill="#80deea" fill-opacity="0.45" stroke="#b87a28" stroke-width="5"/><circle cx="182" cy="68" r="22" fill="#80deea" fill-opacity="0.45" stroke="#b87a28" stroke-width="5"/><circle cx="118" cy="68" r="17" fill="none" stroke="#6d4c41" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="182" cy="68" r="17" fill="none" stroke="#6d4c41" stroke-width="1.5" stroke-dasharray="3 3"/></g>` },
+      { id: 213, name: "Visor Cyber Neón", slot: "eyes", minLevel: 20, price: 1100, rarity: "Legendario",
+        svg: `<g><path d="M 72 56 Q 150 50 228 56 L 222 78 Q 150 84 78 78 Z" fill="#00e5ff" fill-opacity="0.62" stroke="#00838f" stroke-width="2.5"/><path d="M 88 62 L 130 72 M 170 62 L 212 72" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/></g>` },
+
+      // === CUELLO (neck) ===
+      { id: 301, name: "Collar Rojo Cascabel", slot: "neck", minLevel: 1, price: 35, rarity: "Común",
+        svg: svgCollar("#c93b2b", "#f4b942", `<circle cx="150" cy="131" r="8.5" fill="#f4b942" stroke="#8f5d14" stroke-width="1.5"/><circle cx="150" cy="132" r="2.2" fill="#5c3a09"/>`) },
+      { id: 302, name: "Collar Celeste Chapita", slot: "neck", minLevel: 1, price: 40, rarity: "Común",
+        svg: svgCollar("#3b82a6", "#cfd8dc", `<ellipse cx="150" cy="133" rx="9" ry="5.5" fill="#eceff1" stroke="#607d8b" stroke-width="1.4"/><polygon points="158,133 164,129 164,137" fill="#eceff1" stroke="#607d8b" stroke-width="1.2"/>`) },
+      { id: 303, name: "Collar Violeta Estrella", slot: "neck", minLevel: 2, price: 50, rarity: "Común",
+        svg: svgCollar("#754c8a", "#ffd54f", `<polygon points="150,124 153,130 160,131 155,135 156,142 150,138 144,142 145,135 140,131 147,130" fill="#ffd54f" stroke="#8f5d14" stroke-width="1.2"/>`) },
+      { id: 304, name: "Moñito Smoking Negro", slot: "neck", minLevel: 3, price: 60, rarity: "Común",
+        svg: svgBowtie("#262426", "#000000") },
+      { id: 305, name: "Moñito Rojo Gala", slot: "neck", minLevel: 3, price: 60, rarity: "Común",
+        svg: svgBowtie("#c93b2b", "#781b12") },
+      { id: 306, name: "Pañuelo Bandana Rojo", slot: "neck", minLevel: 4, price: 90, rarity: "Poco común",
+        svg: svgBandana("#d32f2f", "#ffffff") },
+      { id: 307, name: "Pañuelo Patrio", slot: "neck", minLevel: 5, price: 110, rarity: "Poco común",
+        svg: `<g><path d="M 54 114 Q 150 121 246 114 L 246 122 Q 150 129 54 122 Z" fill="#5bc0eb" stroke="rgba(0,0,0,0.2)" stroke-width="1.4"/><polygon points="116,123 184,123 150,164" fill="#5bc0eb" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/><polygon points="128,125 172,125 150,151" fill="#ffffff"/><circle cx="150" cy="135" r="4.5" fill="#f4b942"/></g>` },
+      { id: 308, name: "Corbata Ejecutiva", slot: "neck", minLevel: 6, price: 135, rarity: "Poco común",
+        svg: `<g><path d="M 55 115 Q 150 121 245 115 L 245 121 Q 150 127 55 121 Z" fill="#2c3e50"/><polygon points="143,120 157,120 154,130 146,130" fill="#c0392b" stroke="#781b12" stroke-width="1.3"/><polygon points="146,130 154,130 160,168 150,178 140,168" fill="#c0392b" stroke="#781b12" stroke-width="1.4"/></g>` },
+      { id: 309, name: "Bufanda Invernal", slot: "neck", minLevel: 8, price: 210, rarity: "Raro",
+        svg: svgScarf("#3b6e8c", "#f3e9d2") },
+      { id: 310, name: "Bufanda Bordó y Oro", slot: "neck", minLevel: 9, price: 240, rarity: "Raro",
+        svg: svgScarf("#7b1e2b", "#f4b942") },
+      { id: 311, name: "Collar con Tachas", slot: "neck", minLevel: 10, price: 270, rarity: "Raro",
+        svg: svgCollar("#222224", "#b0bec5", `<circle cx="95" cy="120" r="3" fill="#cfd8dc"/><circle cx="122" cy="122" r="3" fill="#cfd8dc"/><circle cx="178" cy="122" r="3" fill="#cfd8dc"/><circle cx="205" cy="120" r="3" fill="#cfd8dc"/>`) },
+      { id: 312, name: "Collar de Perlas", slot: "neck", minLevel: 13, price: 460, rarity: "Épico",
+        svg: `<g>${[64,78,92,106,120,135,150,165,180,194,208,222,236].map((x, i) => {
+          const y = 119 + Math.sin((i / 12) * Math.PI) * 5;
+          return `<circle cx="${x}" cy="${y.toFixed(1)}" r="6" fill="#fffdf9" stroke="#c7bfb2" stroke-width="1.4"/>`;
+        }).join("")}</g>` },
+      { id: 313, name: "Cadenita Dorada", slot: "neck", minLevel: 16, price: 640, rarity: "Épico",
+        svg: `<g><path d="M 94 120 Q 150 174 206 120" fill="none" stroke="#d49b27" stroke-width="6.5" stroke-linecap="round"/><path d="M 94 120 Q 150 174 206 120" fill="none" stroke="#ffe082" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round"/></g>` },
+      { id: 314, name: "Medalla Oro Campeón", slot: "neck", minLevel: 20, price: 1150, rarity: "Legendario",
+        svg: `<g><path d="M 114 119 L 150 156 L 186 119" fill="none" stroke="#4fc3f7" stroke-width="8" stroke-linejoin="round"/><path d="M 114 119 L 150 156 L 186 119" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round"/><circle cx="150" cy="164" r="14" fill="#f4b942" stroke="#8f5d14" stroke-width="2"/><text x="150" y="169" text-anchor="middle" font-size="14" font-weight="800" fill="#8f5d14">1</text></g>` },
+
+      // === CUERPO (body - adaptado exacto a x:56..244, y:123..238) ===
+      { id: 401, name: "Remera Celeste Lisa", slot: "body", minLevel: 1, price: 45, rarity: "Común",
+        svg: svgTshirt("#64b5f6", "#1e88e5") },
+      { id: 402, name: "Remera Marinera", slot: "body", minLevel: 2, price: 55, rarity: "Común",
+        svg: `<g><path d="M 55 123 H 245 V 235 H 55 Z" fill="#f7f4ed" stroke="rgba(0,0,0,0.2)" stroke-width="1.6"/>${[138,160,182,204,224].map(y => `<rect x="55" y="${y}" width="190" height="8" fill="#2c4257"/>`).join("")}<path d="M 122 123 Q 150 140 178 123" fill="none" stroke="#c93b2b" stroke-width="5" stroke-linecap="round"/></g>` },
+      { id: 403, name: "Camiseta Selección ARG", slot: "body", minLevel: 3, price: 80, rarity: "Común",
+        svg: `<g><path d="M 55 123 H 245 V 235 H 55 Z" fill="#ffffff" stroke="rgba(0,0,0,0.2)" stroke-width="1.6"/>${[55,103,151,199].map(x => `<rect x="${x}" y="123" width="24" height="112" fill="#6ec1e4"/>`).join("")}<path d="M 122 123 Q 150 140 178 123" fill="none" stroke="#1b3b4b" stroke-width="5" stroke-linecap="round"/><rect x="174" y="148" width="16" height="20" rx="4" fill="#f4b942" stroke="#1b3b4b" stroke-width="1.4"/><text x="182" y="144" text-anchor="middle" font-size="9" fill="#f4b942">★★★</text></g>` },
+      { id: 404, name: "Camiseta Boca Jrs", slot: "body", minLevel: 4, price: 95, rarity: "Poco común",
+        svg: `<g><path d="M 55 123 H 245 V 235 H 55 Z" fill="#103667" stroke="rgba(0,0,0,0.25)" stroke-width="1.6"/><rect x="55" y="158" width="190" height="36" fill="#f5b800"/><path d="M 122 123 Q 150 140 178 123" fill="none" stroke="#f5b800" stroke-width="5" stroke-linecap="round"/></g>` },
+      { id: 405, name: "Camiseta River Plate", slot: "body", minLevel: 4, price: 95, rarity: "Poco común",
+        svg: `<g><path d="M 55 123 H 245 V 235 H 55 Z" fill="#ffffff" stroke="rgba(0,0,0,0.2)" stroke-width="1.6"/><polygon points="55,123 95,123 245,212 245,235 205,235 55,146" fill="#d52b1e"/><path d="M 122 123 Q 150 140 178 123" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/></g>` },
+      { id: 406, name: "Jardinero de Jean", slot: "body", minLevel: 5, price: 125, rarity: "Poco común",
+        svg: `<g><rect x="74" y="123" width="18" height="34" fill="#3b6998" stroke="#1e3b59" stroke-width="1.5"/><rect x="208" y="123" width="18" height="34" fill="#3b6998" stroke="#1e3b59" stroke-width="1.5"/><path d="M 55 154 H 245 V 236 H 55 Z" fill="#4679ad" stroke="#1e3b59" stroke-width="1.6"/><circle cx="83" cy="158" r="4" fill="#f4b942"/><circle cx="217" cy="158" r="4" fill="#f4b942"/><rect x="124" y="172" width="52" height="36" rx="6" fill="#3b6998" stroke="#1e3b59" stroke-width="1.5"/></g>` },
+      { id: 407, name: "Buzo Hoodie Verde", slot: "body", minLevel: 6, price: 145, rarity: "Poco común",
+        svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#4a7c59" stroke="#284731" stroke-width="1.6"/><path d="M 104 236 L 116 196 H 184 L 196 236 Z" fill="#3b6648" stroke="#284731" stroke-width="1.5"/><path d="M 138 125 V 156 M 162 125 V 156" stroke="#f3efe6" stroke-width="3" stroke-linecap="round"/><rect x="55" y="226" width="190" height="10" fill="#365c42"/></g>` },
+      { id: 408, name: "Delantal de Asador", slot: "body", minLevel: 7, price: 165, rarity: "Poco común",
+        svg: `<g><path d="M 55 158 H 245" stroke="#5d4037" stroke-width="5"/><path d="M 96 132 H 204 L 214 235 H 86 Z" fill="#8d5b3c" stroke="#4e301e" stroke-width="1.6"/><rect x="122" y="180" width="56" height="32" rx="4" fill="#6e442b" stroke="#4e301e" stroke-width="1.4"/></g>` },
+      { id: 409, name: "Suéter Tejido Invernal", slot: "body", minLevel: 8, price: 220, rarity: "Raro",
+        svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#9c3d46" stroke="#591d23" stroke-width="1.6"/><rect x="55" y="152" width="190" height="24" fill="#f4ead5"/><path d="M 66 164 L 78 155 L 90 164 L 102 155 L 114 164 L 126 155 L 138 164 L 150 155 L 162 164 L 174 155 L 186 164 L 198 155 L 210 164 L 222 155 L 234 164" fill="none" stroke="#2f6652" stroke-width="3.5" stroke-linejoin="round"/></g>` },
+      { id: 410, name: "Vestido Lila con Volado", slot: "body", minLevel: 9, price: 250, rarity: "Raro",
+        svg: `<g><path d="M 55 123 H 245 V 228 H 55 Z" fill="#b39ddb" stroke="#5e35b1" stroke-width="1.6"/><rect x="55" y="176" width="190" height="10" fill="#7e57c2"/><path d="M 55 228 Q 71 241 87 228 Q 103 241 119 228 Q 135 241 150 228 Q 166 241 182 228 Q 198 241 214 228 Q 230 241 245 228 Z" fill="#9575cd" stroke="#5e35b1" stroke-width="1.4"/></g>` },
+      { id: 411, name: "Chaleco Inflado Naranja", slot: "body", minLevel: 10, price: 280, rarity: "Raro",
+        svg: `<g><path d="M 55 123 H 245 V 234 H 55 Z" fill="#e66c2c" stroke="#8c3b11" stroke-width="1.6"/><path d="M 55 150 H 245 M 55 178 H 245 M 55 206 H 245" stroke="#8c3b11" stroke-width="2"/><line x1="150" y1="123" x2="150" y2="234" stroke="#4a2009" stroke-width="3"/></g>` },
+      { id: 412, name: "Smoking de Gala", slot: "body", minLevel: 11, price: 320, rarity: "Raro",
+        svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#232226" stroke="#0d0c0e" stroke-width="1.6"/><polygon points="118,123 182,123 150,204" fill="#ffffff"/><polygon points="118,123 136,123 150,198 126,174" fill="#3a3840"/><polygon points="182,123 164,123 150,198 174,174" fill="#3a3840"/><circle cx="150" cy="150" r="2.8" fill="#111"/><circle cx="150" cy="168" r="2.8" fill="#111"/></g>` },
+      { id: 413, name: "Poncho Norteño", slot: "body", minLevel: 12, price: 350, rarity: "Raro",
+        svg: `<g><polygon points="56,123 244,123 256,226 150,242 44,226" fill="#b71c1c" stroke="#5c0a0a" stroke-width="1.8" stroke-linejoin="round"/><polygon points="55,142 245,142 247,156 53,156" fill="#1c1c1e"/><polygon points="47,204 253,204 255,218 45,218" fill="#1c1c1e"/></g>` },
+      { id: 414, name: "Kimono Tradicional", slot: "body", minLevel: 13, price: 470, rarity: "Épico",
+        svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#2c4a6e" stroke="#16263b" stroke-width="1.6"/><path d="M 114 123 L 166 184 M 186 123 L 134 184" stroke="#e8dfd1" stroke-width="8"/><rect x="55" y="176" width="190" height="24" fill="#d49b27" stroke="#7d580d" stroke-width="1.5"/><rect x="132" y="172" width="36" height="32" rx="4" fill="#e6b445" stroke="#7d580d" stroke-width="1.5"/></g>` },
+      { id: 415, name: "Flotador Patito", slot: "body", minLevel: 14, price: 520, rarity: "Épico",
+        svg: `<g><rect x="44" y="182" width="212" height="34" rx="17" fill="#ffd54f" stroke="#b87a28" stroke-width="2"/><circle cx="64" cy="176" r="14" fill="#ffd54f" stroke="#b87a28" stroke-width="2"/><circle cx="60" cy="173" r="2.2" fill="#111"/><polygon points="49,177 39,180 49,183" fill="#ff7043"/></g>` },
+      { id: 416, name: "Capa de Superhéroe", slot: "body", minLevel: 15, price: 600, rarity: "Épico", back: true,
+        svg: `<g><polygon points="62,124 238,124 264,244 36,244" fill="#c62828" stroke="#6e1111" stroke-width="1.8" stroke-linejoin="round"/></g>`,
+        frontSvg: `<g><path d="M 56 122 Q 150 132 244 122" fill="none" stroke="#f4b942" stroke-width="4"/><circle cx="114" cy="126" r="5" fill="#f4b942"/><circle cx="186" cy="126" r="5" fill="#f4b942"/></g>` },
+      { id: 417, name: "Armadura Caballero", slot: "body", minLevel: 17, price: 720, rarity: "Épico",
+        svg: `<g><path d="M 55 123 H 245 V 232 H 55 Z" fill="#90a4ae" stroke="#37474f" stroke-width="1.8"/><path d="M 55 162 H 245 M 55 198 H 245 M 150 123 V 232" stroke="#455a64" stroke-width="2.5"/><path d="M 50 123 H 92 Q 86 146 50 146 Z" fill="#b0bec5" stroke="#37474f" stroke-width="1.6"/><path d="M 250 123 H 208 Q 214 146 250 146 Z" fill="#b0bec5" stroke="#37474f" stroke-width="1.6"/></g>` },
+      { id: 418, name: "Alitas de Murciélago", slot: "body", minLevel: 18, price: 780, rarity: "Épico", back: true,
+        svg: `<g><path d="M 58 144 C 24 124, 6 144, 14 176 Q 26 168 34 182 Q 46 172 58 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/><path d="M 242 144 C 276 124, 294 144, 286 176 Q 274 168 266 182 Q 254 172 242 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/></g>` },
+      { id: 419, name: "Traje Astronauta", slot: "body", minLevel: 21, price: 1200, rarity: "Legendario",
+        svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#eceff1" stroke="#607d8b" stroke-width="1.8"/><rect x="122" y="144" width="56" height="36" rx="5" fill="#cfd8dc" stroke="#546e7a" stroke-width="1.5"/><circle cx="136" cy="158" r="4" fill="#e53935"/><circle cx="150" cy="158" r="4" fill="#43a047"/><circle cx="164" cy="158" r="4" fill="#1e88e5"/><rect x="55" y="198" width="190" height="12" fill="#455a64"/></g>` },
+      { id: 420, name: "Alitas de Ángel", slot: "body", minLevel: 23, price: 1450, rarity: "Legendario", back: true,
+        svg: `<g><path d="M 58 136 C 18 110, 4 140, 18 164 C 12 174, 24 184, 36 180 C 36 190, 48 194, 58 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/><path d="M 242 136 C 282 110, 296 140, 282 164 C 288 174, 276 184, 264 180 C 264 190, 252 194, 242 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/></g>` },
+
+      // === PATITAS (paws - calzadas en x:56..87, 100..131, 169..200, 213..244, y:238..269) ===
+      { id: 501, name: "Medias Rayadas", slot: "paws", minLevel: 2, price: 50, rarity: "Común",
+        svg: svgPawsSocks("#ffffff", "#e53935") },
+      { id: 502, name: "Medias Argentinas", slot: "paws", minLevel: 4, price: 90, rarity: "Poco común",
+        svg: svgPawsSocks("#6ec1e4", "#ffffff") },
+      { id: 503, name: "Polainas Pastel", slot: "paws", minLevel: 6, price: 130, rarity: "Poco común",
+        svg: svgPawsSocks("#f8bbd0", "#ce93d8") },
+      { id: 504, name: "Botitas de Lluvia", slot: "paws", minLevel: 9, price: 240, rarity: "Raro",
+        svg: svgPawsBoots("#fdd835", "#37474f") },
+      { id: 505, name: "Zapatillas Urbanas", slot: "paws", minLevel: 13, price: 460, rarity: "Épico",
+        svg: svgPawsBoots("#d32f2f", "#ffffff") },
+      { id: 506, name: "Botas de Gaucho", slot: "paws", minLevel: 17, price: 700, rarity: "Épico",
+        svg: svgPawsBoots("#6d4c41", "#3e2723") },
+
+      // === AL LADO EN EL PISO (side - apoyados en y=269 sin flotar) ===
+      { id: 601, name: "Platito con Pescado", slot: "side", minLevel: 1, price: 45, rarity: "Común",
+        svg: `<g><polygon points="6,269 48,269 43,257 11,257" fill="#4a89ac" stroke="#264b61" stroke-width="1.4"/><ellipse cx="27" cy="255" rx="11" ry="4.5" fill="#90a4ae" stroke="#37474f" stroke-width="1.2"/><polygon points="36,255 43,251 43,259" fill="#90a4ae"/></g>` },
+      { id: 602, name: "Ovillo de Lana", slot: "side", minLevel: 2, price: 55, rarity: "Común",
+        svg: `<g><path d="M 38 266 Q 52 269 62 266" fill="none" stroke="#e06d53" stroke-width="2.5" stroke-linecap="round"/><circle cx="27" cy="254" r="15" fill="#e06d53" stroke="#8c3623" stroke-width="1.5"/><path d="M 16 247 Q 27 256 38 246 M 14 257 Q 28 263 40 255 M 22 240 Q 25 255 19 267" fill="none" stroke="#8c3623" stroke-width="1.4"/></g>` },
+      { id: 603, name: "Matecito Cebado", slot: "side", minLevel: 3, price: 70, rarity: "Común",
+        svg: `<g><line x1="29" y1="246" x2="42" y2="225" stroke="#b0bec5" stroke-width="3.2" stroke-linecap="round"/><ellipse cx="43" cy="224" rx="3" ry="1.8" transform="rotate(-35 43 224)" fill="#cfd8dc"/><path d="M 15 246 H 39 C 43 255, 39 266, 33 269 H 21 C 15 266, 11 255, 15 246 Z" fill="#795548" stroke="#3e2723" stroke-width="1.5"/><rect x="14" y="244" width="26" height="4" rx="2" fill="#cfd8dc"/><path d="M 24 237 Q 21 231 25 226" fill="none" stroke="#90a4ae" stroke-width="1.6" stroke-linecap="round"/></g>` },
+      { id: 604, name: "Pelota de Fútbol", slot: "side", minLevel: 5, price: 115, rarity: "Poco común",
+        svg: `<g><circle cx="27" cy="253" r="16" fill="#ffffff" stroke="#222" stroke-width="1.6"/><polygon points="27,246 33,250 31,257 23,257 21,250" fill="#222"/><circle cx="15" cy="246" r="3" fill="#222"/><circle cx="39" cy="246" r="3" fill="#222"/><circle cx="27" cy="266" r="3" fill="#222"/></g>` },
+      { id: 605, name: "Ratón a Cuerda", slot: "side", minLevel: 7, price: 160, rarity: "Poco común",
+        svg: `<g><path d="M 12 263 Q 3 258 6 250" fill="none" stroke="#f48fb1" stroke-width="2" stroke-linecap="round"/><ellipse cx="27" cy="262" rx="15" ry="7.5" fill="#9e9e9e" stroke="#424242" stroke-width="1.4"/><circle cx="36" cy="255" r="4.5" fill="#bdbdbd" stroke="#424242" stroke-width="1.3"/><circle cx="42" cy="262" r="2" fill="#f06292"/></g>` },
+      { id: 606, name: "Maceta con Cactus", slot: "side", minLevel: 10, price: 260, rarity: "Raro",
+        svg: `<g><rect x="21" y="228" width="12" height="24" rx="6" fill="#66bb6a" stroke="#2e7d32" stroke-width="1.4"/><circle cx="27" cy="226" r="3.5" fill="#f06292"/><polygon points="15,251 39,251 36,269 18,269" fill="#c86d51" stroke="#753724" stroke-width="1.4"/><rect x="13" y="248" width="28" height="4" rx="1.5" fill="#d97b5f"/></g>` },
+      { id: 607, name: "Bandera Argentina", slot: "side", minLevel: 12, price: 340, rarity: "Raro",
+        svg: `<g><line x1="296" y1="138" x2="296" y2="269" stroke="#6d4c41" stroke-width="4" stroke-linecap="round"/><circle cx="296" cy="136" r="3.5" fill="#f4b942"/><path d="M 298 140 Q 316 135 334 140 V 164 Q 316 159 298 164 Z" fill="#6ec1e4" stroke="#2b5c73" stroke-width="1.2"/><path d="M 298 148 Q 316 143 334 148 V 156 Q 316 151 298 156 Z" fill="#ffffff"/><circle cx="316" cy="152" r="3" fill="#f4b942"/></g>` },
+      { id: 608, name: "Trofeo Dorado", slot: "side", minLevel: 18, price: 820, rarity: "Épico",
+        svg: `<g><rect x="17" y="263" width="20" height="6" rx="1.5" fill="#4e342e"/><rect x="24" y="253" width="6" height="10" fill="#f4b942"/><path d="M 15 233 H 39 L 35 253 H 19 Z" fill="#f4b942" stroke="#8f5d14" stroke-width="1.5"/><path d="M 15 237 C 8 237, 8 247, 17 247 M 39 237 C 46 237, 46 247, 37 247" fill="none" stroke="#f4b942" stroke-width="2.5"/></g>` }
+    ];
+
     const ACC_MAP = Object.fromEntries(ACCESSORIES.map(a => [a.id, a]));
 
-    // Nombres aleatorios bien argentinos y graciosos
+    // Nombres aleatorios bien argentinos
     const ARGENTINE_NAMES = [
       "Pitusa", "Carbón", "Mermelada", "Chori", "Milanesa", "Fideo", "Alfajor",
       "Facturita", "Tortafrita", "Chipa", "Matecito", "Bizcochito", "Medialuna",
@@ -861,23 +1166,34 @@
       xp: 0,
       level: 1,
       muted: false,
-      ownedAcc: [1, 2],
+      ownedAcc: [101, 301],
       cats: [
-        { id: 1, name: "Pitusa", coat: "calico", hunger: 80, happy: 85, energy: 90, bondXp: 0, bondLv: 1, equipped: { head: 1, food: 2 } },
+        { id: 1, name: "Pitusa", coat: "calico", hunger: 80, happy: 85, energy: 90, bondXp: 0, bondLv: 1, equipped: { head: 101, neck: 301 } },
         { id: 2, name: "Carbón", coat: "tuxedo", hunger: 75, happy: 80, energy: 85, bondXp: 0, bondLv: 1, equipped: {} }
       ]
     };
 
     let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || DEFAULT_STATE;
+    // Limpiar cualquier ID antiguo si venía de otra versión
+    state.ownedAcc = (state.ownedAcc || []).filter(id => Boolean(ACC_MAP[id]));
+    if (!state.ownedAcc.length) state.ownedAcc = [101, 301];
+    state.cats.forEach(cat => {
+      const cleanEq = {};
+      Object.entries(cat.equipped || {}).forEach(([slot, id]) => {
+        if (ACC_MAP[id] && ACC_MAP[id].slot === slot) cleanEq[slot] = id;
+      });
+      cat.equipped = cleanEq;
+    });
+
     let activeCatId = null;
     let currentFilter = "all";
     let searchQuery = "";
     let selectedCoat = "calico";
     let lastPetTime = 0;
     let currentPhotoBlob = null;
-    let currentPhotoFilename = "neko.png";
+    let currentPhotoFilename = "michu.png";
 
-    // --- Realista Sintetizador de Gato + Musiquita de Nivel (Web Audio API) ---
+    // --- Sintetizador de Gato + Musiquita de Nivel ---
     let audioCtx = null;
     function getAudioCtx() {
       if (!audioCtx) {
@@ -945,7 +1261,6 @@
       breathLfo.stop(now + 1.2);
     }
 
-    // Maullido realista con formantes vocales felinos (m-i-a-o-u) y vibrato natural
     function playMeow(variant = "normal") {
       if (state.muted) return;
       const ctx = getAudioCtx();
@@ -970,7 +1285,6 @@
         dur = 0.68;
       }
 
-      // Glottal source (sawtooth + pulse-like harmonic richness)
       const glottis = ctx.createOscillator();
       glottis.type = "sawtooth";
       glottis.frequency.setValueAtTime(baseF0, now);
@@ -978,7 +1292,6 @@
       glottis.frequency.exponentialRampToValueAtTime(peakF0 * 0.93, now + dur * 0.55);
       glottis.frequency.exponentialRampToValueAtTime(endF0, now + dur);
 
-      // Subtle feline vocal vibrato
       const vib = ctx.createOscillator();
       const vibGain = ctx.createGain();
       vib.type = "sine";
@@ -987,7 +1300,6 @@
       vib.connect(vibGain);
       vibGain.connect(glottis.frequency);
 
-      // Formant 1 (mouth opening: m -> a -> u)
       const f1 = ctx.createBiquadFilter();
       f1.type = "bandpass";
       f1.Q.setValueAtTime(4.2, now);
@@ -995,7 +1307,6 @@
       f1.frequency.exponentialRampToValueAtTime(1060, now + dur * 0.36);
       f1.frequency.exponentialRampToValueAtTime(470, now + dur);
 
-      // Formant 2 (nasal/palatal resonance: i -> a -> o)
       const f2 = ctx.createBiquadFilter();
       f2.type = "bandpass";
       f2.Q.setValueAtTime(5.0, now);
@@ -1008,7 +1319,6 @@
       const f2Gain = ctx.createGain();
       f2Gain.gain.setValueAtTime(0.45, now);
 
-      // Soft breathy onset noise
       const bufferSize = Math.floor(ctx.sampleRate * dur);
       const noiseBuf = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = noiseBuf.getChannelData(0);
@@ -1022,7 +1332,6 @@
       noiseGain.gain.setValueAtTime(0.018, now);
       noiseGain.gain.exponentialRampToValueAtTime(0.001, now + dur * 0.45);
 
-      // Warmth lowpass & envelope
       const warmth = ctx.createBiquadFilter();
       warmth.type = "lowpass";
       warmth.frequency.setValueAtTime(2650, now);
@@ -1056,7 +1365,6 @@
       noise.stop(now + dur + 0.03);
     }
 
-    // Pequeña musiquita alegre al subir de nivel
     function playLevelUpMusic() {
       if (state.muted) return;
       const ctx = getAudioCtx();
@@ -1064,12 +1372,12 @@
       const now = ctx.currentTime;
 
       const melody = [
-        { f: 523.25, t: 0.00, d: 0.13 }, // C5
-        { f: 659.25, t: 0.13, d: 0.13 }, // E5
-        { f: 783.99, t: 0.26, d: 0.13 }, // G5
-        { f: 1046.5, t: 0.39, d: 0.24 }, // C6
-        { f: 880.00, t: 0.65, d: 0.14 }, // A5
-        { f: 1046.5, t: 0.81, d: 0.38 }  // C6
+        { f: 523.25, t: 0.00, d: 0.13 },
+        { f: 659.25, t: 0.13, d: 0.13 },
+        { f: 783.99, t: 0.26, d: 0.13 },
+        { f: 1046.5, t: 0.39, d: 0.24 },
+        { f: 880.00, t: 0.65, d: 0.14 },
+        { f: 1046.5, t: 0.81, d: 0.38 }
       ];
 
       melody.forEach(note => {
@@ -1121,7 +1429,6 @@
         }, 3600);
       }
 
-      // También hacer bailar las tarjetas de la colección brevemente
       document.querySelectorAll(".card").forEach(card => {
         card.classList.add("cat-dance");
         setTimeout(() => card.classList.remove("cat-dance"), 3400);
@@ -1161,7 +1468,7 @@
     }
 
     function normalizeName(str) {
-      return str.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+      return str.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
     function isNameTaken(name) {
@@ -1185,7 +1492,7 @@
       return pool[Math.floor(Math.random() * pool.length)];
     }
 
-    // --- Geometría SVG Exacta + Accesorios Emoji ---
+    // --- Geometría SVG Exacta + Capas de Accesorios Adaptados ---
     function buildBaseCatSVG(cat, uid) {
       const c = COATS[cat.coat] || COATS.classic;
       const headPath = "M 56 114 A 94 94 0 0 1 244 114 Z";
@@ -1283,22 +1590,66 @@
 
     function renderCatSVG(cat, uid) {
       const eq = cat.equipped || {};
-      const renderOrder = ["flag", "food", "body", "neck", "eyes", "head"];
-      const accLayers = renderOrder.map(slot => {
-        const accId = eq[slot];
-        if (!accId || !ACC_MAP[accId]) return "";
-        const acc = ACC_MAP[accId];
-        const def = SLOT_DEFAULTS[slot];
-        const ax = acc.x ?? def.x;
-        const ay = acc.y ?? def.y;
-        const asize = acc.size ?? def.size;
-        return `<text x="${ax}" y="${ay}" font-size="${asize}" text-anchor="middle" dominant-baseline="central" style="font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;user-select:none">${acc.emoji}</text>`;
+      const slotOrder = ["paws", "body", "neck", "eyes", "head", "side"];
+
+      const backLayers = slotOrder.map(slot => {
+        const acc = ACC_MAP[eq[slot]];
+        return (acc && acc.back) ? acc.svg : "";
+      }).join("");
+
+      const frontLayers = slotOrder.map(slot => {
+        const acc = ACC_MAP[eq[slot]];
+        if (!acc) return "";
+        if (acc.back) return acc.frontSvg || "";
+        return acc.svg;
       }).join("");
 
       return `
-        <svg viewBox="-6 -36 346 322" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="-10 -44 352 330" xmlns="http://www.w3.org/2000/svg">
+          ${backLayers}
           ${buildBaseCatSVG(cat, uid)}
-          ${accLayers}
+          ${frontLayers}
+        </svg>
+      `;
+    }
+
+    // Miniatura SVG ajustada a cada zona anatómica del gato para la tienda
+    function renderAccessoryThumb(acc) {
+      const slotConfig = {
+        head: {
+          vb: "45 -38 210 112",
+          guide: `<polygon points="96,6 90,45 120,28" fill="#d9d2c5"/><polygon points="204,6 210,45 180,28" fill="#d9d2c5"/><path d="M 56 114 A 94 94 0 0 1 244 114 Z" fill="#e5dfd3"/>`
+        },
+        eyes: {
+          vb: "65 34 170 76",
+          guide: `<path d="M 56 114 A 94 94 0 0 1 244 114 Z" fill="#e5dfd3"/><circle cx="118" cy="68" r="8" fill="#b8b0a2"/><circle cx="182" cy="68" r="8" fill="#b8b0a2"/>`
+        },
+        neck: {
+          vb: "45 96 210 92",
+          guide: `<path d="M 56 114 A 94 94 0 0 1 244 114 Z" fill="#e5dfd3"/><rect x="56" y="123" width="188" height="90" fill="#e5dfd3"/>`
+        },
+        body: {
+          vb: "0 112 300 138",
+          guide: `<rect x="56" y="123" width="188" height="115" fill="#e5dfd3"/>`
+        },
+        paws: {
+          vb: "45 228 210 48",
+          guide: `<rect x="56" y="238" width="31" height="31" fill="#e5dfd3"/><rect x="100" y="238" width="31" height="31" fill="#e5dfd3"/><rect x="169" y="238" width="31" height="31" fill="#e5dfd3"/><rect x="213" y="238" width="31" height="31" fill="#e5dfd3"/>`
+        },
+        side: {
+          vb: acc.id === 607 ? "240 130 102 146" : "-2 214 76 62",
+          guide: acc.id === 607
+            ? `<rect x="230" y="140" width="20" height="98" fill="#e5dfd3"/>`
+            : `<rect x="56" y="238" width="24" height="31" fill="#e5dfd3"/>`
+        }
+      };
+
+      const cfg = slotConfig[acc.slot] || slotConfig.body;
+      return `
+        <svg viewBox="${cfg.vb}" xmlns="http://www.w3.org/2000/svg">
+          ${cfg.guide}
+          ${acc.svg}
+          ${acc.frontSvg || ""}
         </svg>
       `;
     }
@@ -1337,7 +1688,6 @@
       });
     }
 
-    // Fuente orgánica de corazones con onda y trayectoria curva
     function spawnHeartFountain(evt = null, customSet = null) {
       const stage = document.getElementById("petStage");
       const rect = stage.getBoundingClientRect();
@@ -1414,6 +1764,7 @@
       document.getElementById("barEnergy").style.width = `${en}%`;
 
       document.getElementById("ownedCount").textContent = state.ownedAcc.length;
+      document.getElementById("totalAccCount").textContent = ACCESSORIES.length;
       renderAccessories(cat);
       renderHUD();
     }
@@ -1456,7 +1807,7 @@
 
         return `
           <div class="${cls}" data-acc="${acc.id}" title="${acc.name} (${acc.rarity} · Nv.${acc.minLevel})">
-            <div class="acc-emoji">${acc.emoji}</div>
+            <div class="acc-thumb">${renderAccessoryThumb(acc)}</div>
             <div class="acc-name"><span class="rarity-dot" style="background:${RARITY_COLOR[acc.rarity]}"></span>${acc.name}</div>
             <div class="acc-tag">${tag}</div>
           </div>
@@ -1482,7 +1833,7 @@
         } else {
           cat.equipped[acc.slot] = accId;
           playMeow("happy");
-          spawnHeartFountain(null, [acc.emoji, "✨"]);
+          spawnHeartFountain(null, ["✨", "💖"]);
         }
         saveState();
         refreshCatModal();
@@ -1505,7 +1856,7 @@
       state.ownedAcc.push(accId);
       cat.equipped[acc.slot] = accId;
       playMeow("happy");
-      spawnHeartFountain(null, [acc.emoji, "✨", "🎉"]);
+      spawnHeartFountain(null, ["✨", "🎉", "💖"]);
       showToast(`✨ ¡Compraste ${acc.name}!`);
       addXp(12);
       saveState();
@@ -1520,7 +1871,6 @@
       document.getElementById("catModal").showModal();
     }
 
-    // Acariciar con fuente de corazones y ronroneo
     document.getElementById("petStage").onclick = e => {
       if (e.target.closest("#takePhotoBtn")) return;
       const cat = state.cats.find(c => c.id === activeCatId);
@@ -1541,7 +1891,6 @@
       }
     };
 
-    // Alimentar
     document.getElementById("feedBtn").onclick = () => {
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
@@ -1568,7 +1917,6 @@
       renderGrid();
     };
 
-    // Jugar
     document.getElementById("playBtn").onclick = () => {
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
@@ -1594,7 +1942,6 @@
       renderGrid();
     };
 
-    // Siesta
     document.getElementById("napBtn").onclick = () => {
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
@@ -1639,7 +1986,7 @@
       if (cat) renderAccessories(cat);
     };
 
-    // --- Sacar Foto 1080x1080 para Instagram / Redes Sociales ---
+    // --- Sacar Foto 1080x1080 con todos los accesorios vectoriales adaptados ---
     function roundRectPath(ctx, x, y, w, h, r) {
       ctx.beginPath();
       ctx.moveTo(x + r, y);
@@ -1663,11 +2010,9 @@
 
       const coat = COATS[cat.coat] || COATS.classic;
 
-      // Fondo estético estilo tarjeta Instagram
       ctx.fillStyle = coat.bg || "#f3f0ea";
       ctx.fillRect(0, 0, size, size);
 
-      // Marco interior blanco limpio
       ctx.save();
       ctx.shadowColor = "rgba(34, 31, 29, 0.08)";
       ctx.shadowBlur = 32;
@@ -1677,24 +2022,25 @@
       ctx.fill();
       ctx.restore();
 
-      // Borde sutil
       roundRectPath(ctx, 64, 64, size - 128, size - 128, 48);
       ctx.strokeStyle = "#e2dbd0";
       ctx.lineWidth = 4;
       ctx.stroke();
 
-      // Encabezado superior en la foto
       ctx.fillStyle = "#6e6961";
       ctx.font = "600 30px system-ui, -apple-system, 'Segoe UI', sans-serif";
       ctx.textAlign = "left";
       ctx.fillText(`❤️ Vínculo Nv. ${cat.bondLv}`, 114, 136);
 
       ctx.textAlign = "right";
-      ctx.fillText("Colección michus 🐾", size - 114, 136);
+      ctx.fillText("Colección Michu 🐾", size - 114, 136);
 
-      // Renderizar el SVG base del gato en alta resolución
-      const svgMarkup = `<svg viewBox="-6 -36 346 322" width="660" height="614" xmlns="http://www.w3.org/2000/svg">${buildBaseCatSVG(cat, "photo")}</svg>`;
-      const svgBlob = new Blob([svgMarkup], { type: "image/svg+xml;charset=utf-8" });
+      // Renderizar SVG completo (gato + accesorios vectoriales ajustados)
+      const fullSvg = renderCatSVG(cat, "photo").replace(
+        "<svg ",
+        '<svg width="670" height="628" '
+      );
+      const svgBlob = new Blob([fullSvg], { type: "image/svg+xml;charset=utf-8" });
       const svgUrl = URL.createObjectURL(svgBlob);
 
       const img = await new Promise((resolve, reject) => {
@@ -1705,36 +2051,8 @@
       });
       URL.revokeObjectURL(svgUrl);
 
-      const drawX = (size - 660) / 2;
-      const drawY = 178;
-      ctx.drawImage(img, drawX, drawY, 660, 614);
+      ctx.drawImage(img, (size - 670) / 2, 172, 670, 628);
 
-      // Dibujar los accesorios emoji directamente sobre el canvas para máxima nitidez
-      const eq = cat.equipped || {};
-      const renderOrder = ["flag", "food", "body", "neck", "eyes", "head"];
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      const scaleX = 660 / 346;
-      const scaleY = 614 / 322;
-
-      renderOrder.forEach(slot => {
-        const accId = eq[slot];
-        if (!accId || !ACC_MAP[accId]) return;
-        const acc = ACC_MAP[accId];
-        const def = SLOT_DEFAULTS[slot];
-        const ax = acc.x ?? def.x;
-        const ay = acc.y ?? def.y;
-        const asize = acc.size ?? def.size;
-
-        const px = drawX + (ax - (-6)) * scaleX;
-        const py = drawY + (ay - (-36)) * scaleY;
-        const psize = Math.round(asize * scaleX);
-
-        ctx.font = `${psize}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
-        ctx.fillText(acc.emoji, px, py);
-      });
-
-      // Nombre del gato y pelaje al pie de la foto
       ctx.fillStyle = "#221f1d";
       ctx.textAlign = "center";
       ctx.textBaseline = "alphabetic";
@@ -1786,21 +2104,20 @@
           await navigator.share({
             files: [file],
             title: `${cat ? cat.name : "Mi Michu"} 🐾`,
-            text: `¡Mirá a ${cat ? cat.name : "mi Michu"} en Colección Neko! 🐱✨`
+            text: `¡Mirá a ${cat ? cat.name : "mi Michu"} en Colección Michu! 🐱✨`
           });
           return;
         } catch (err) {
           if (err && err.name === "AbortError") return;
         }
       }
-      // Respaldo automático en escritorio: descarga el PNG 1080x1080 listo para subir a Instagram
       document.getElementById("downloadPhotoBtn").click();
       showToast("📸 PNG 1080×1080 descargado para subir a Instagram");
     };
 
     document.getElementById("closePhotoBtn").onclick = () => document.getElementById("photoModal").close();
 
-    // --- Modal Adoptar (Colores aleatorios + Nombres argentinos únicos) ---
+    // --- Modal Adoptar ---
     function getNextAdoptReq() {
       const count = state.cats.length;
       if (count <= 2) return { level: 1, cost: 0 };
@@ -1909,7 +2226,6 @@
       if (!state.muted) playMeow("normal");
     };
 
-    // Recuperación pasiva de energía y hambre suave
     setInterval(() => {
       let changed = false;
       state.cats.forEach(cat => {
@@ -1933,4 +2249,3 @@
   </script>
 </body>
 </html>
-
