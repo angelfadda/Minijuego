@@ -1900,7 +1900,7 @@ function calcClickGain(factor = 1) {
       document.getElementById("barEnergy").style.width = `${en}%`;
 
       document.getElementById("feedSub").textContent = `-8 🪙 · +${calcClickGain().toFixed(1)}%`;
-      document.getElementById("playSub").textContent = `-15% ⚡ · +${calcClickGain().toFixed(1)}%`;
+      document.getElementById("playSub").textContent = `-5% ⚡ · +${calcClickGain().toFixed(1)}%`;
       document.getElementById("napSub").textContent = `+${calcClickGain().toFixed(1)}% ⚡ · +8 XP`;
 
       document.getElementById("ownedCount").textContent = state.ownedAcc.length;
@@ -2161,13 +2161,13 @@ function calcClickGain(factor = 1) {
     document.getElementById("playBtn").onclick = () => {
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
-      if (cat.energy < 15) {
+      if (cat.energy < 5) {
         playMeow("soft");
         spawnHeartFountain(null, ["💤", "🌙"]);
         showToast(`${cat.name} está cansado, dale una siesta`);
         return;
       }
-      cat.energy = Math.max(0, cat.energy - 15);
+      cat.energy = Math.max(0, cat.energy - 5);
       cat.hunger = Math.max(0, cat.hunger - 8);
       cat.happy = Math.min(100, cat.happy + calcClickGain());
       const reward = 14 + cat.bondLv * 3;
