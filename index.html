@@ -32,6 +32,91 @@
       margin: 0 auto;
     }
 
+    /* === MODO WIDGET COMPACTO (?widget=...) === */
+    html.is-widget, body.widget-mode {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    body.widget-mode header,
+    body.widget-mode main,
+    body.widget-mode dialog,
+    body.widget-mode .toast {
+      display: none !important;
+    }
+
+    .widget-root {
+      display: none;
+    }
+
+    body.widget-mode .widget-root {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 6px;
+    }
+
+    .widget-root.bg-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid var(--border);
+      border-radius: 26px;
+      box-shadow: 0 6px 20px rgba(34, 31, 29, 0.12);
+    }
+
+    .widget-cat-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .widget-cat-wrap svg {
+      width: min(86vw, 76vh);
+      height: min(86vw, 76vh);
+      max-width: 100%;
+      max-height: 100%;
+      transform-origin: 50% 88%;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+    }
+
+    .widget-root.no-label .widget-cat-wrap svg {
+      width: min(94vw, 94vh);
+      height: min(94vw, 94vh);
+    }
+
+    .widget-pill {
+      margin-top: 2px;
+      margin-bottom: 4px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(221, 214, 202, 0.9);
+      color: var(--text);
+      font-size: clamp(0.72rem, 3.6vw, 0.95rem);
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      white-space: nowrap;
+      max-width: 92vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     header {
       display: flex;
       flex-wrap: wrap;
@@ -204,12 +289,77 @@
       border-radius: 8px;
     }
 
+    /* Animaciones sutiles en accesorios SVG */
+    .anim-float {
+      animation: svgFloat 2.4s ease-in-out infinite;
+    }
+    @keyframes svgFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3.5px); }
+    }
+
+    .anim-flap-l {
+      transform-box: fill-box;
+      transform-origin: 100% 50%;
+      animation: svgFlapL 1.9s ease-in-out infinite;
+    }
+    .anim-flap-r {
+      transform-box: fill-box;
+      transform-origin: 0% 50%;
+      animation: svgFlapR 1.9s ease-in-out infinite;
+    }
+    @keyframes svgFlapL {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-9deg); }
+    }
+    @keyframes svgFlapR {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(9deg); }
+    }
+
+    .anim-sway {
+      transform-box: fill-box;
+      transform-origin: 50% 100%;
+      animation: svgSway 2.6s ease-in-out infinite;
+    }
+    @keyframes svgSway {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(4deg); }
+    }
+
+    .anim-twinkle {
+      transform-box: fill-box;
+      transform-origin: 50% 50%;
+      animation: svgTwinkle 1.6s ease-in-out infinite alternate;
+    }
+    @keyframes svgTwinkle {
+      0% { opacity: 0.45; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .anim-glow {
+      animation: svgGlow 2s ease-in-out infinite alternate;
+    }
+    @keyframes svgGlow {
+      0% { opacity: 0.55; }
+      100% { opacity: 1; }
+    }
+
+    .anim-steam {
+      animation: svgSteam 2.2s ease-in-out infinite;
+    }
+    @keyframes svgSteam {
+      0% { opacity: 0.2; transform: translateY(2px); }
+      50% { opacity: 0.85; transform: translateY(-2px); }
+      100% { opacity: 0.2; transform: translateY(-5px); }
+    }
+
     /* Modals */
     dialog {
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 18px;
-      max-width: 510px;
+      max-width: 520px;
       width: calc(100% - 22px);
       margin: auto;
       background: var(--card);
@@ -253,8 +403,8 @@
     }
 
     .stage svg {
-      width: 212px;
-      height: 212px;
+      width: 214px;
+      height: 214px;
       transform-origin: 50% 88%;
       transition: transform 0.15s ease;
     }
@@ -265,10 +415,9 @@
       margin-top: 2px;
     }
 
-    .photo-trigger {
+    .stage-pill-btn {
       position: absolute;
       top: 10px;
-      left: 10px;
       padding: 5px 10px;
       font-size: 0.8rem;
       border-radius: 999px;
@@ -277,7 +426,9 @@
       z-index: 3;
     }
 
-    /* Organic Petting Bounce + Multi-Heart Fountain */
+    .photo-trigger { left: 10px; }
+    .widget-trigger { right: 10px; }
+
     @keyframes catJoyBounce {
       0% { transform: scale(1, 1) rotate(0deg); }
       22% { transform: scale(1.07, 0.92) rotate(-2.5deg); }
@@ -290,7 +441,6 @@
       animation: catJoyBounce 0.56s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Celebratory Dance Animation (Bailecito) */
     @keyframes catDance {
       0%, 100% { transform: translateY(0) rotate(0deg) scale(1, 1); }
       12.5% { transform: translateY(-10px) rotate(-8deg) scale(0.96, 1.05); }
@@ -463,11 +613,15 @@
 
     .acc-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(106px, 1fr));
       gap: 8px;
-      max-height: 265px;
+      max-height: 275px;
       overflow-y: auto;
       padding-right: 2px;
+    }
+
+    .acc-grid.sets-mode {
+      grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
     }
 
     .acc-item {
@@ -480,7 +634,7 @@
       text-align: center;
       background: var(--card);
       cursor: pointer;
-      transition: border-color 0.12s, background 0.12s;
+      transition: border-color 0.12s, background 0.12s, transform 0.1s;
     }
 
     .acc-item:hover { background: var(--bg); }
@@ -491,13 +645,13 @@
     }
 
     .acc-item.locked {
-      opacity: 0.6;
+      opacity: 0.62;
       background: #f8f7f4;
     }
 
     .acc-thumb {
-      width: 66px;
-      height: 50px;
+      width: 68px;
+      height: 52px;
       background: var(--bg);
       border-radius: 8px;
       display: flex;
@@ -507,27 +661,45 @@
       overflow: hidden;
     }
 
-    .acc-thumb svg {
+    .set-thumb {
+      width: 96px;
+      height: 92px;
+      background: var(--bg);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+
+    .acc-thumb svg, .set-thumb svg {
       width: 100%;
       height: 100%;
       display: block;
     }
 
     .acc-name {
-      font-size: 0.71rem;
-      font-weight: 600;
+      font-size: 0.72rem;
+      font-weight: 700;
       line-height: 1.15;
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
+    }
+
+    .set-meta {
+      font-size: 0.66rem;
+      color: var(--muted);
+      margin-bottom: 5px;
     }
 
     .acc-tag {
       font-size: 0.68rem;
       font-weight: 600;
-      padding: 2px 7px;
+      padding: 2px 8px;
       border-radius: 6px;
       background: var(--surface);
       color: var(--text);
@@ -624,6 +796,97 @@
       grid-column: 1 / -1;
     }
 
+    /* Widget Builder Modal */
+    .widget-sim-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      min-height: 210px;
+      background-image:
+        linear-gradient(45deg, #e5e0d8 25%, transparent 25%),
+        linear-gradient(-45deg, #e5e0d8 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e5e0d8 75%),
+        linear-gradient(-45deg, transparent 75%, #e5e0d8 75%);
+      background-size: 18px 18px;
+      background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+      background-color: #f4f1eb;
+    }
+
+    .widget-sim-card {
+      width: 176px;
+      height: 176px;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .widget-sim-card.style-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 18px rgba(34, 31, 29, 0.12);
+    }
+
+    .widget-sim-card svg {
+      width: 132px;
+      height: 132px;
+    }
+
+    .widget-sim-label {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .seg-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 0.78rem;
+      background: var(--bg);
+    }
+
+    .seg-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .url-box {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .widget-note {
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.4;
+      background: var(--bg);
+      padding: 9px 11px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
     .toast {
       position: fixed;
       bottom: 18px;
@@ -647,6 +910,9 @@
   </style>
 </head>
 <body>
+  <!-- Vista exclusiva para ?widget=... -->
+  <div id="widgetRoot" class="widget-root"></div>
+
   <header>
     <div class="brand">
       <span style="font-size:1.4rem">🐱</span>
@@ -677,7 +943,6 @@
 
   <main id="grid" class="grid"></main>
 
-  <!-- Modal Interacción & Accesorios -->
   <dialog id="catModal">
     <div class="modal-head">
       <div class="modal-title">
@@ -691,7 +956,8 @@
     </div>
 
     <div class="stage" id="petStage">
-      <button type="button" class="photo-trigger" id="takePhotoBtn" title="Sacar foto para redes">📸 Foto</button>
+      <button type="button" class="stage-pill-btn photo-trigger" id="takePhotoBtn" title="Sacar foto para redes">📸 Foto</button>
+      <button type="button" class="stage-pill-btn widget-trigger" id="openWidgetBtn" title="Generar URL para widget de escritorio">📌 Widget</button>
       <div id="mPreview"></div>
       <div class="stage-hint">👆 Toca al gato para acariciarlo</div>
     </div>
@@ -727,12 +993,13 @@
     </div>
 
     <div class="wardrobe-head">
-      <div class="wardrobe-title">🎒 Accesorios (<span id="ownedCount">0</span>/<span id="totalAccCount">0</span>)</div>
+      <div class="wardrobe-title">🎒 Vestuario (<span id="ownedCount">0</span>/<span id="totalAccCount">0</span>)</div>
       <input type="text" class="search-input" id="searchAcc" placeholder="🔍 Buscar..." />
     </div>
 
     <div class="tabs" id="catTabs">
       <button type="button" class="tab active" data-filter="all">📦 Todos</button>
+      <button type="button" class="tab" data-filter="sets">🎭 Conjuntos</button>
       <button type="button" class="tab" data-filter="owned">✅ Míos</button>
       <button type="button" class="tab" data-filter="head">👑 Cabeza</button>
       <button type="button" class="tab" data-filter="eyes">👓 Cara</button>
@@ -745,7 +1012,6 @@
     <div class="acc-grid" id="accGrid"></div>
   </dialog>
 
-  <!-- Modal Adoptar Gato -->
   <dialog id="adoptModal">
     <div class="modal-head">
       <div class="modal-title">🐾 Adoptar Nuevo Gato</div>
@@ -776,7 +1042,6 @@
     </div>
   </dialog>
 
-  <!-- Modal Foto para Instagram / Redes Sociales -->
   <dialog id="photoModal">
     <div class="modal-head">
       <div class="modal-title">📸 Foto Lista para Compartir</div>
@@ -794,12 +1059,51 @@
     </div>
   </dialog>
 
+  <dialog id="widgetModal">
+    <div class="modal-head">
+      <div class="modal-title">📌 Widget para Pantalla de Inicio</div>
+      <button type="button" id="closeWidgetBtn">✖️</button>
+    </div>
+
+    <div class="widget-sim-box">
+      <div class="widget-sim-card" id="widgetSimCard"></div>
+    </div>
+
+    <div class="field">
+      <label>Estilo de fondo del widget</label>
+      <div class="seg-group" id="widgetBgGroup">
+        <button type="button" class="seg-btn active" data-bg="transparent">✨ Transparente</button>
+        <button type="button" class="seg-btn" data-bg="card">⬜ Tarjeta blanca</button>
+        <button type="button" class="seg-btn" data-bg="coat">🎨 Color pelaje</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Etiqueta inferior</label>
+      <div class="seg-group" id="widgetLabelGroup">
+        <button type="button" class="seg-btn active" data-lbl="1">🏷️ Nombre y nivel</button>
+        <button type="button" class="seg-btn" data-lbl="0">🐱 Solo el gato</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Enlace del widget (incluye pelaje y ropa actual)</label>
+      <div class="row">
+        <input type="text" id="widgetUrlInput" class="url-box" readonly />
+        <button type="button" class="primary" id="copyWidgetUrlBtn">📋 Copiar</button>
+      </div>
+    </div>
+
+    <div class="widget-note" id="widgetNoteText">
+      <strong>Uso en Android:</strong> Subí este HTML a Vercel, copiá este enlace y pegalo en una app como <em>Web Widget</em> o <em>KWGT</em>. También podés usar la forma corta <code>?widget=NombreDelGato</code>.
+    </div>
+  </dialog>
+
   <div class="toast" id="toast"></div>
 
   <script>
     const STORAGE_KEY = "michu_collection_arg_v4";
 
-    // 18 pelajes calibrados
     const COATS = {
       classic:      { label: "Clásico Café",     bg: "#efe6dd", pattern: "spot",    body: "#79584c", mark: "#2c2b29", ear: "#864e41", tail: "#efeae1", swatch: "linear-gradient(135deg,#79584c 65%,#2c2b29 65%)" },
       calico:       { label: "Calicó Clásico",   bg: "#f2ebe1", pattern: "calico",  body: "#ddd5c7", mark: "#d97b38", mark2: "#4a4e54", ear: "#d97b38", ear2: "#4a4e54", tail: "#4a4e54", swatch: "linear-gradient(135deg,#ddd5c7 45%,#d97b38 45%,#d97b38 75%,#4a4e54 75%)" },
@@ -830,10 +1134,6 @@
       "Épico": "#754c8a",
       "Legendario": "#b87a28"
     };
-
-    // --- Helpers paramétricos para accesorios SVG perfectamente ajustados al gato ---
-    // Cabeza: arco r=94 en (150,114) | Ojos: (118,68) y (182,68) | Cuello: y=114..123, x=56..244
-    // Cuerpo: x=56..244, y=123..238 | Patas: x=56..87, 100..131, 169..200, 213..244, y=238..269
 
     function svgEarBow(main, dark, center) {
       return `
@@ -960,7 +1260,6 @@
       `).join("")}</g>`;
     }
 
-    // Catálogo completo de accesorios adaptados geométricamente al gato
     const ACCESSORIES = [
       // === CABEZA Y OREJAS (head) ===
       { id: 101, name: "Moño Oreja Rosa", slot: "head", minLevel: 1, price: 30, rarity: "Común",
@@ -970,7 +1269,7 @@
       { id: 103, name: "Moño Gigante Rojo", slot: "head", minLevel: 2, price: 45, rarity: "Común",
         svg: svgHeadBow("#e53935", "#8e1c1a", "#ffcdd2") },
       { id: 104, name: "Brote de Hojitas", slot: "head", minLevel: 1, price: 40, rarity: "Común",
-        svg: `<g><path d="M 150 21 Q 148 5 153 -4" fill="none" stroke="#4e8c44" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="141" cy="-2" rx="11" ry="6" transform="rotate(-24 141 -2)" fill="#66bb6a" stroke="#38703a" stroke-width="1.4"/><ellipse cx="163" cy="-5" rx="11" ry="6" transform="rotate(20 163 -5)" fill="#81c784" stroke="#38703a" stroke-width="1.4"/></g>` },
+        svg: `<g class="anim-sway"><path d="M 150 21 Q 148 5 153 -4" fill="none" stroke="#4e8c44" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="141" cy="-2" rx="11" ry="6" transform="rotate(-24 141 -2)" fill="#66bb6a" stroke="#38703a" stroke-width="1.4"/><ellipse cx="163" cy="-5" rx="11" ry="6" transform="rotate(20 163 -5)" fill="#81c784" stroke="#38703a" stroke-width="1.4"/></g>` },
       { id: 105, name: "Flor de Cerezo", slot: "head", minLevel: 2, price: 50, rarity: "Común",
         svg: `<g transform="translate(150, 21)"><circle cx="0" cy="-9" r="7" fill="#f8bbd0"/><circle cx="9" cy="-3" r="7" fill="#f8bbd0"/><circle cx="6" cy="7" r="7" fill="#f8bbd0"/><circle cx="-6" cy="7" r="7" fill="#f8bbd0"/><circle cx="-9" cy="-3" r="7" fill="#f8bbd0"/><circle cx="0" cy="0" r="4.5" fill="#f06292"/></g>` },
       { id: 106, name: "Gorra Azul", slot: "head", minLevel: 3, price: 65, rarity: "Común",
@@ -978,7 +1277,7 @@
       { id: 107, name: "Gorra Roja", slot: "head", minLevel: 3, price: 65, rarity: "Común",
         svg: svgCap("#c93b2b", "#8a2217", "#ffffff") },
       { id: 108, name: "Bonete Cumpleaños", slot: "head", minLevel: 4, price: 85, rarity: "Poco común",
-        svg: `<g><polygon points="126,27 174,27 150,-28" fill="#5c6bc0" stroke="#283593" stroke-width="1.6" stroke-linejoin="round"/><path d="M 134 11 H 166 M 141 -4 H 159" stroke="#ffd54f" stroke-width="4"/><circle cx="150" cy="-31" r="7" fill="#ff7043"/></g>` },
+        svg: `<g><polygon points="126,27 174,27 150,-28" fill="#5c6bc0" stroke="#283593" stroke-width="1.6" stroke-linejoin="round"/><path d="M 134 11 H 166 M 141 -4 H 159" stroke="#ffd54f" stroke-width="4"/><circle class="anim-twinkle" cx="150" cy="-31" r="7" fill="#ff7043"/></g>` },
       { id: 109, name: "Gorro Lana Bordó", slot: "head", minLevel: 4, price: 95, rarity: "Poco común",
         svg: svgBeanie("#8e2438", "#f4d06f", "#f4d06f") },
       { id: 110, name: "Gorro Lana Celeste", slot: "head", minLevel: 5, price: 105, rarity: "Poco común",
@@ -989,26 +1288,36 @@
         svg: `<g transform="translate(146, 17) rotate(-8)"><ellipse cx="0" cy="0" rx="44" ry="16" fill="#9c273b" stroke="#59121e" stroke-width="1.6"/><path d="M 0 -15 Q 6 -24 12 -21" fill="none" stroke="#59121e" stroke-width="3" stroke-linecap="round"/></g>` },
       { id: 113, name: "Gorro de Chef", slot: "head", minLevel: 7, price: 150, rarity: "Poco común",
         svg: `<g><rect x="115" y="11" width="70" height="17" rx="3" fill="#ffffff" stroke="#b8b2a6" stroke-width="1.6"/><path d="M 113 13 C 96 6, 102 -18, 125 -16 C 132 -29, 168 -29, 175 -16 C 198 -18, 204 6, 187 13 Z" fill="#ffffff" stroke="#b8b2a6" stroke-width="1.6"/></g>` },
+      { id: 124, name: "Sombrero Gaucho", slot: "head", minLevel: 7, price: 165, rarity: "Poco común",
+        svg: `<g><path d="M 118 24 L 122 2 Q 150 6 178 2 L 182 24 Z" fill="#4e342e" stroke="#261714" stroke-width="1.6"/><rect x="120" y="17" width="60" height="5" fill="#d49b27"/><ellipse cx="150" cy="25" rx="64" ry="8.5" fill="#5d4037" stroke="#261714" stroke-width="1.6"/></g>` },
+      { id: 128, name: "Antenitas de Abeja", slot: "head", minLevel: 7, price: 170, rarity: "Poco común",
+        svg: `<g class="anim-sway"><path d="M 134 22 Q 124 2 118 -8" fill="none" stroke="#222" stroke-width="3.2" stroke-linecap="round"/><circle cx="118" cy="-10" r="6" fill="#fdd835" stroke="#222" stroke-width="1.5"/><path d="M 166 22 Q 176 2 182 -8" fill="none" stroke="#222" stroke-width="3.2" stroke-linecap="round"/><circle cx="182" cy="-10" r="6" fill="#fdd835" stroke="#222" stroke-width="1.5"/></g>` },
       { id: 114, name: "Corona de Flores", slot: "head", minLevel: 8, price: 210, rarity: "Raro",
         svg: `<g><path d="M 80 48 Q 150 20 220 48" fill="none" stroke="#4f8a4b" stroke-width="5" stroke-linecap="round"/><circle cx="94" cy="41" r="7" fill="#f48fb1"/><circle cx="122" cy="31" r="7.5" fill="#fff176"/><circle cx="150" cy="28" r="8" fill="#ff8a65"/><circle cx="178" cy="31" r="7.5" fill="#ce93d8"/><circle cx="206" cy="41" r="7" fill="#81d4fa"/></g>` },
       { id: 115, name: "Auriculares Gamer", slot: "head", minLevel: 9, price: 245, rarity: "Raro",
-        svg: `<g><path d="M 55 74 A 96 96 0 0 1 245 74" fill="none" stroke="#2d3138" stroke-width="8" stroke-linecap="round"/><path d="M 96 27 A 96 96 0 0 1 204 27" fill="none" stroke="#00e5ff" stroke-width="3"/><rect x="46" y="56" width="16" height="36" rx="8" fill="#2d3138" stroke="#00e5ff" stroke-width="2"/><rect x="238" y="56" width="16" height="36" rx="8" fill="#2d3138" stroke="#00e5ff" stroke-width="2"/></g>` },
+        svg: `<g><path d="M 55 74 A 96 96 0 0 1 245 74" fill="none" stroke="#2d3138" stroke-width="8" stroke-linecap="round"/><path class="anim-glow" d="M 96 27 A 96 96 0 0 1 204 27" fill="none" stroke="#00e5ff" stroke-width="3"/><rect x="46" y="56" width="16" height="36" rx="8" fill="#2d3138" stroke="#00e5ff" stroke-width="2"/><rect x="238" y="56" width="16" height="36" rx="8" fill="#2d3138" stroke="#00e5ff" stroke-width="2"/></g>` },
       { id: 116, name: "Galera Elegante", slot: "head", minLevel: 10, price: 280, rarity: "Raro",
         svg: `<g><rect x="116" y="-22" width="68" height="48" rx="4" fill="#242226" stroke="#0e0d0f" stroke-width="1.6"/><rect x="116" y="13" width="68" height="8" fill="#b9382c"/><path d="M 96 26 Q 150 35 204 26 L 198 20 Q 150 28 102 20 Z" fill="#242226" stroke="#0e0d0f" stroke-width="1.6"/></g>` },
       { id: 117, name: "Sombrero Vaquero", slot: "head", minLevel: 11, price: 310, rarity: "Raro",
         svg: `<g><path d="M 116 24 L 123 -6 Q 150 2 177 -6 L 184 24 Z" fill="#8d5b3c" stroke="#52321e" stroke-width="1.6"/><rect x="118" y="15" width="64" height="5" fill="#3d2415"/><path d="M 88 18 Q 112 34 150 31 Q 188 34 212 18 Q 198 28 150 24 Q 102 28 88 18 Z" fill="#a36b48" stroke="#52321e" stroke-width="1.6"/></g>` },
+      { id: 126, name: "Sombrero Pirata", slot: "head", minLevel: 12, price: 350, rarity: "Raro",
+        svg: `<g><path d="M 88 28 Q 118 -14 150 2 Q 182 -14 212 28 Q 150 34 88 28 Z" fill="#262429" stroke="#f4b942" stroke-width="2"/><circle cx="150" cy="14" r="5" fill="#eceff1"/><rect x="147" y="17" width="6" height="4" rx="1" fill="#eceff1"/></g>` },
       { id: 118, name: "Sombrero de Bruja", slot: "head", minLevel: 13, price: 450, rarity: "Épico",
-        svg: `<g><path d="M 114 25 L 146 -32 L 176 -16 L 164 -10 L 186 25 Z" fill="#3c2a4d" stroke="#1f1429" stroke-width="1.6" stroke-linejoin="round"/><path d="M 117 17 Q 150 23 183 17 L 185 24 Q 150 30 115 24 Z" fill="#f5b041"/><rect x="144" y="16" width="12" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2"/><ellipse cx="150" cy="26" rx="60" ry="9" fill="#3c2a4d" stroke="#1f1429" stroke-width="1.6"/></g>` },
+        svg: `<g><path d="M 114 25 L 146 -32 L 176 -16 L 164 -10 L 186 25 Z" fill="#3c2a4d" stroke="#1f1429" stroke-width="1.6" stroke-linejoin="round"/><path d="M 117 17 Q 150 23 183 17 L 185 24 Q 150 30 115 24 Z" fill="#f5b041"/><rect x="144" y="16" width="12" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2"/><ellipse cx="150" cy="26" rx="60" ry="9" fill="#3c2a4d" stroke="#1f1429" stroke-width="1.6"/><circle class="anim-twinkle" cx="134" cy="4" r="2.2" fill="#ffd54f"/><circle class="anim-twinkle" cx="164" cy="8" r="2.5" fill="#ffd54f"/></g>` },
       { id: 119, name: "Casco Vikingo", slot: "head", minLevel: 14, price: 510, rarity: "Épico",
         svg: `<g><path d="M 106 30 A 48 36 0 0 1 194 30 Z" fill="#8e99a4" stroke="#454d54" stroke-width="1.6"/><path d="M 112 16 Q 82 6 88 -18 Q 98 2 116 6 Z" fill="#f5efe6" stroke="#5c5346" stroke-width="1.5"/><path d="M 188 16 Q 218 6 212 -18 Q 202 2 184 6 Z" fill="#f5efe6" stroke="#5c5346" stroke-width="1.5"/><rect x="104" y="25" width="92" height="6" rx="3" fill="#c99e48"/></g>` },
       { id: 120, name: "Cuernitos Diablito", slot: "head", minLevel: 15, price: 580, rarity: "Épico",
-        svg: `<g><path d="M 118 27 Q 108 6 122 -8 Q 128 8 132 23 Z" fill="#c92a2a" stroke="#6e1111" stroke-width="1.5"/><path d="M 182 27 Q 192 6 178 -8 Q 172 8 168 23 Z" fill="#c92a2a" stroke="#6e1111" stroke-width="1.5"/></g>` },
+        svg: `<g class="anim-glow"><path d="M 118 27 Q 108 6 122 -8 Q 128 8 132 23 Z" fill="#d32f2f" stroke="#6e1111" stroke-width="1.5"/><path d="M 182 27 Q 192 6 178 -8 Q 172 8 168 23 Z" fill="#d32f2f" stroke="#6e1111" stroke-width="1.5"/></g>` },
+      { id: 125, name: "Yelmo con Pluma", slot: "head", minLevel: 16, price: 650, rarity: "Épico",
+        svg: `<g><path class="anim-sway" d="M 150 -2 Q 168 -24 186 -16 Q 174 -2 150 2 Z" fill="#d32f2f" stroke="#781b12" stroke-width="1.3"/><path d="M 104 31 A 48 36 0 0 1 196 31 Z" fill="#90a4ae" stroke="#37474f" stroke-width="1.6"/><rect x="102" y="25" width="96" height="7" rx="3" fill="#cfd8dc" stroke="#37474f" stroke-width="1.4"/></g>` },
       { id: 121, name: "Aureola Angelical", slot: "head", minLevel: 17, price: 720, rarity: "Épico",
-        svg: `<g><ellipse cx="150" cy="-12" rx="34" ry="8" fill="none" stroke="#ffd54f" stroke-width="5"/><ellipse cx="150" cy="-12" rx="34" ry="8" fill="none" stroke="#fff9c4" stroke-width="1.8"/></g>` },
+        svg: `<g class="anim-float"><ellipse cx="150" cy="-12" rx="34" ry="8" fill="none" stroke="#ffd54f" stroke-width="5"/><ellipse cx="150" cy="-12" rx="34" ry="8" fill="none" stroke="#fff9c4" stroke-width="1.8"/></g>` },
       { id: 122, name: "Cuerno Unicornio", slot: "head", minLevel: 19, price: 960, rarity: "Legendario",
-        svg: `<g><polygon points="139,24 161,24 150,-32" fill="#ffd54f" stroke="#b87a28" stroke-width="1.6" stroke-linejoin="round"/><path d="M 142 12 L 158 7 M 144 0 L 156 -5 M 147 -12 L 153 -16" stroke="#f06292" stroke-width="2.6" stroke-linecap="round"/><circle cx="137" cy="24" r="5" fill="#f48fb1"/><circle cx="163" cy="24" r="5" fill="#81d4fa"/></g>` },
+        svg: `<g><polygon points="139,24 161,24 150,-32" fill="#ffd54f" stroke="#b87a28" stroke-width="1.6" stroke-linejoin="round"/><path d="M 142 12 L 158 7 M 144 0 L 156 -5 M 147 -12 L 153 -16" stroke="#f06292" stroke-width="2.6" stroke-linecap="round"/><circle cx="137" cy="24" r="5" fill="#f48fb1"/><circle cx="163" cy="24" r="5" fill="#81d4fa"/><circle class="anim-twinkle" cx="128" cy="-14" r="3" fill="#ffd54f"/><circle class="anim-twinkle" cx="172" cy="-20" r="2.5" fill="#81d4fa"/></g>` },
+      { id: 127, name: "Casco Espacial", slot: "head", minLevel: 20, price: 1120, rarity: "Legendario",
+        svg: `<g><line x1="150" y1="-32" x2="150" y2="-42" stroke="#78909c" stroke-width="3"/><circle class="anim-glow" cx="150" cy="-44" r="4.5" fill="#ff7043"/><path d="M 52 115 A 105 105 0 1 1 248 115 Q 150 124 52 115 Z" fill="#b2ebf2" fill-opacity="0.22" stroke="#78909c" stroke-width="3.5"/><path class="anim-float" d="M 86 24 A 72 72 0 0 1 134 -12" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7"/></g>` },
       { id: 123, name: "Corona Real Dorada", slot: "head", minLevel: 21, price: 1250, rarity: "Legendario",
-        svg: `<g><path d="M 114 26 L 110 -6 L 131 11 L 150 -14 L 169 11 L 190 -6 L 186 26 Q 150 32 114 26 Z" fill="#f4b942" stroke="#8f5d14" stroke-width="1.8" stroke-linejoin="round"/><circle cx="150" cy="14" r="4" fill="#d32f2f"/><circle cx="128" cy="16" r="3" fill="#1976d2"/><circle cx="172" cy="16" r="3" fill="#388e3c"/></g>` },
+        svg: `<g><path d="M 114 26 L 110 -6 L 131 11 L 150 -14 L 169 11 L 190 -6 L 186 26 Q 150 32 114 26 Z" fill="#f4b942" stroke="#8f5d14" stroke-width="1.8" stroke-linejoin="round"/><circle class="anim-twinkle" cx="150" cy="14" r="4" fill="#d32f2f"/><circle class="anim-twinkle" cx="128" cy="16" r="3" fill="#1976d2"/><circle class="anim-twinkle" cx="172" cy="16" r="3" fill="#388e3c"/></g>` },
 
       // === CARA Y OJOS (eyes) ===
       { id: 201, name: "Mejillas Sonrojadas", slot: "eyes", minLevel: 1, price: 30, rarity: "Común",
@@ -1036,15 +1345,15 @@
       { id: 212, name: "Gafas Steampunk", slot: "eyes", minLevel: 16, price: 620, rarity: "Épico",
         svg: `<g><path d="M 68 65 H 95 M 205 65 H 232 M 141 66 H 159" stroke="#5d4037" stroke-width="5"/><circle cx="118" cy="68" r="22" fill="#80deea" fill-opacity="0.45" stroke="#b87a28" stroke-width="5"/><circle cx="182" cy="68" r="22" fill="#80deea" fill-opacity="0.45" stroke="#b87a28" stroke-width="5"/><circle cx="118" cy="68" r="17" fill="none" stroke="#6d4c41" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="182" cy="68" r="17" fill="none" stroke="#6d4c41" stroke-width="1.5" stroke-dasharray="3 3"/></g>` },
       { id: 213, name: "Visor Cyber Neón", slot: "eyes", minLevel: 20, price: 1100, rarity: "Legendario",
-        svg: `<g><path d="M 72 56 Q 150 50 228 56 L 222 78 Q 150 84 78 78 Z" fill="#00e5ff" fill-opacity="0.62" stroke="#00838f" stroke-width="2.5"/><path d="M 88 62 L 130 72 M 170 62 L 212 72" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/></g>` },
+        svg: `<g><path d="M 72 56 Q 150 50 228 56 L 222 78 Q 150 84 78 78 Z" fill="#00e5ff" fill-opacity="0.62" stroke="#00838f" stroke-width="2.5"/><path class="anim-glow" d="M 84 65 H 216" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="18 10" stroke-linecap="round"/></g>` },
 
       // === CUELLO (neck) ===
       { id: 301, name: "Collar Rojo Cascabel", slot: "neck", minLevel: 1, price: 35, rarity: "Común",
-        svg: svgCollar("#c93b2b", "#f4b942", `<circle cx="150" cy="131" r="8.5" fill="#f4b942" stroke="#8f5d14" stroke-width="1.5"/><circle cx="150" cy="132" r="2.2" fill="#5c3a09"/>`) },
+        svg: svgCollar("#c93b2b", "#f4b942", `<g class="anim-sway"><circle cx="150" cy="131" r="8.5" fill="#f4b942" stroke="#8f5d14" stroke-width="1.5"/><circle cx="150" cy="132" r="2.2" fill="#5c3a09"/></g>`) },
       { id: 302, name: "Collar Celeste Chapita", slot: "neck", minLevel: 1, price: 40, rarity: "Común",
         svg: svgCollar("#3b82a6", "#cfd8dc", `<ellipse cx="150" cy="133" rx="9" ry="5.5" fill="#eceff1" stroke="#607d8b" stroke-width="1.4"/><polygon points="158,133 164,129 164,137" fill="#eceff1" stroke="#607d8b" stroke-width="1.2"/>`) },
       { id: 303, name: "Collar Violeta Estrella", slot: "neck", minLevel: 2, price: 50, rarity: "Común",
-        svg: svgCollar("#754c8a", "#ffd54f", `<polygon points="150,124 153,130 160,131 155,135 156,142 150,138 144,142 145,135 140,131 147,130" fill="#ffd54f" stroke="#8f5d14" stroke-width="1.2"/>`) },
+        svg: svgCollar("#754c8a", "#ffd54f", `<polygon class="anim-twinkle" points="150,124 153,130 160,131 155,135 156,142 150,138 144,142 145,135 140,131 147,130" fill="#ffd54f" stroke="#8f5d14" stroke-width="1.2"/>`) },
       { id: 304, name: "Moñito Smoking Negro", slot: "neck", minLevel: 3, price: 60, rarity: "Común",
         svg: svgBowtie("#262426", "#000000") },
       { id: 305, name: "Moñito Rojo Gala", slot: "neck", minLevel: 3, price: 60, rarity: "Común",
@@ -1071,7 +1380,7 @@
       { id: 314, name: "Medalla Oro Campeón", slot: "neck", minLevel: 20, price: 1150, rarity: "Legendario",
         svg: `<g><path d="M 114 119 L 150 156 L 186 119" fill="none" stroke="#4fc3f7" stroke-width="8" stroke-linejoin="round"/><path d="M 114 119 L 150 156 L 186 119" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round"/><circle cx="150" cy="164" r="14" fill="#f4b942" stroke="#8f5d14" stroke-width="2"/><text x="150" y="169" text-anchor="middle" font-size="14" font-weight="800" fill="#8f5d14">1</text></g>` },
 
-      // === CUERPO (body - adaptado exacto a x:56..244, y:123..238) ===
+      // === CUERPO (body) ===
       { id: 401, name: "Remera Celeste Lisa", slot: "body", minLevel: 1, price: 45, rarity: "Común",
         svg: svgTshirt("#64b5f6", "#1e88e5") },
       { id: 402, name: "Remera Marinera", slot: "body", minLevel: 2, price: 55, rarity: "Común",
@@ -1088,6 +1397,9 @@
         svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#4a7c59" stroke="#284731" stroke-width="1.6"/><path d="M 104 236 L 116 196 H 184 L 196 236 Z" fill="#3b6648" stroke="#284731" stroke-width="1.5"/><path d="M 138 125 V 156 M 162 125 V 156" stroke="#f3efe6" stroke-width="3" stroke-linecap="round"/><rect x="55" y="226" width="190" height="10" fill="#365c42"/></g>` },
       { id: 408, name: "Delantal de Asador", slot: "body", minLevel: 7, price: 165, rarity: "Poco común",
         svg: `<g><path d="M 55 158 H 245" stroke="#5d4037" stroke-width="5"/><path d="M 96 132 H 204 L 214 235 H 86 Z" fill="#8d5b3c" stroke="#4e301e" stroke-width="1.6"/><rect x="122" y="180" width="56" height="32" rx="4" fill="#6e442b" stroke="#4e301e" stroke-width="1.4"/></g>` },
+      { id: 425, name: "Traje Abejita con Alitas", slot: "body", minLevel: 7, price: 185, rarity: "Poco común", back: true,
+        svg: `<g><ellipse class="anim-flap-l" cx="38" cy="158" rx="22" ry="14" transform="rotate(-18 38 158)" fill="#ffffff" fill-opacity="0.88" stroke="#90a4ae" stroke-width="1.6"/><ellipse class="anim-flap-r" cx="262" cy="158" rx="22" ry="14" transform="rotate(18 262 158)" fill="#ffffff" fill-opacity="0.88" stroke="#90a4ae" stroke-width="1.6"/></g>`,
+        frontSvg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#fdd835" stroke="#222" stroke-width="1.6"/><rect x="55" y="144" width="190" height="14" fill="#222"/><rect x="55" y="176" width="190" height="14" fill="#222"/><rect x="55" y="208" width="190" height="14" fill="#222"/></g>` },
       { id: 409, name: "Suéter Tejido Invernal", slot: "body", minLevel: 8, price: 220, rarity: "Raro",
         svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#9c3d46" stroke="#591d23" stroke-width="1.6"/><rect x="55" y="152" width="190" height="24" fill="#f4ead5"/><path d="M 66 164 L 78 155 L 90 164 L 102 155 L 114 164 L 126 155 L 138 164 L 150 155 L 162 164 L 174 155 L 186 164 L 198 155 L 210 164 L 222 155 L 234 164" fill="none" stroke="#2f6652" stroke-width="3.5" stroke-linejoin="round"/></g>` },
       { id: 410, name: "Vestido Lila con Volado", slot: "body", minLevel: 9, price: 250, rarity: "Raro",
@@ -1096,25 +1408,34 @@
         svg: `<g><path d="M 55 123 H 245 V 234 H 55 Z" fill="#e66c2c" stroke="#8c3b11" stroke-width="1.6"/><path d="M 55 150 H 245 M 55 178 H 245 M 55 206 H 245" stroke="#8c3b11" stroke-width="2"/><line x1="150" y1="123" x2="150" y2="234" stroke="#4a2009" stroke-width="3"/></g>` },
       { id: 412, name: "Smoking de Gala", slot: "body", minLevel: 11, price: 320, rarity: "Raro",
         svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#232226" stroke="#0d0c0e" stroke-width="1.6"/><polygon points="118,123 182,123 150,204" fill="#ffffff"/><polygon points="118,123 136,123 150,198 126,174" fill="#3a3840"/><polygon points="182,123 164,123 150,198 174,174" fill="#3a3840"/><circle cx="150" cy="150" r="2.8" fill="#111"/><circle cx="150" cy="168" r="2.8" fill="#111"/></g>` },
+      { id: 422, name: "Casaca Pirata", slot: "body", minLevel: 12, price: 350, rarity: "Raro",
+        svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#b71c1c" stroke="#5c0a0a" stroke-width="1.6"/><rect x="136" y="123" width="28" height="113" fill="#eceff1"/><polygon points="62,123 238,214 238,232 62,141" fill="#3e2723"/><rect x="140" y="168" width="20" height="18" rx="3" fill="none" stroke="#f4b942" stroke-width="3.2"/></g>` },
       { id: 413, name: "Poncho Norteño", slot: "body", minLevel: 12, price: 350, rarity: "Raro",
         svg: `<g><polygon points="56,123 244,123 256,226 150,242 44,226" fill="#b71c1c" stroke="#5c0a0a" stroke-width="1.8" stroke-linejoin="round"/><polygon points="55,142 245,142 247,156 53,156" fill="#1c1c1e"/><polygon points="47,204 253,204 255,218 45,218" fill="#1c1c1e"/></g>` },
+      { id: 421, name: "Túnica Estrellada Mago", slot: "body", minLevel: 13, price: 470, rarity: "Épico",
+        svg: `<g><path d="M 55 123 H 245 V 237 H 55 Z" fill="#2c214a" stroke="#150f26" stroke-width="1.6"/><rect x="55" y="226" width="190" height="11" fill="#f4b942"/><circle class="anim-twinkle" cx="92" cy="154" r="3.5" fill="#ffd54f"/><circle class="anim-twinkle" cx="206" cy="162" r="4" fill="#ffd54f"/><circle class="anim-twinkle" cx="122" cy="196" r="3" fill="#ffd54f"/><circle class="anim-twinkle" cx="178" cy="192" r="3.5" fill="#ffd54f"/></g>` },
       { id: 414, name: "Kimono Tradicional", slot: "body", minLevel: 13, price: 470, rarity: "Épico",
         svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#2c4a6e" stroke="#16263b" stroke-width="1.6"/><path d="M 114 123 L 166 184 M 186 123 L 134 184" stroke="#e8dfd1" stroke-width="8"/><rect x="55" y="176" width="190" height="24" fill="#d49b27" stroke="#7d580d" stroke-width="1.5"/><rect x="132" y="172" width="36" height="32" rx="4" fill="#e6b445" stroke="#7d580d" stroke-width="1.5"/></g>` },
       { id: 415, name: "Flotador Patito", slot: "body", minLevel: 14, price: 520, rarity: "Épico",
         svg: `<g><rect x="44" y="182" width="212" height="34" rx="17" fill="#ffd54f" stroke="#b87a28" stroke-width="2"/><circle cx="64" cy="176" r="14" fill="#ffd54f" stroke="#b87a28" stroke-width="2"/><circle cx="60" cy="173" r="2.2" fill="#111"/><polygon points="49,177 39,180 49,183" fill="#ff7043"/></g>` },
       { id: 416, name: "Capa de Superhéroe", slot: "body", minLevel: 15, price: 600, rarity: "Épico", back: true,
-        svg: `<g><polygon points="62,124 238,124 264,244 36,244" fill="#c62828" stroke="#6e1111" stroke-width="1.8" stroke-linejoin="round"/></g>`,
+        svg: `<g class="anim-sway"><polygon points="62,124 238,124 264,244 36,244" fill="#c62828" stroke="#6e1111" stroke-width="1.8" stroke-linejoin="round"/></g>`,
         frontSvg: `<g><path d="M 56 122 Q 150 132 244 122" fill="none" stroke="#f4b942" stroke-width="4"/><circle cx="114" cy="126" r="5" fill="#f4b942"/><circle cx="186" cy="126" r="5" fill="#f4b942"/></g>` },
+      { id: 423, name: "Traje Diablito y Alas", slot: "body", minLevel: 16, price: 680, rarity: "Épico", back: true,
+        svg: `<g><path class="anim-flap-l" d="M 58 144 C 24 124, 6 144, 14 176 Q 26 168 34 182 Q 46 172 58 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/><path class="anim-flap-r" d="M 242 144 C 276 124, 294 144, 286 176 Q 274 168 266 182 Q 254 172 242 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/><g class="anim-sway"><path d="M 56 218 Q 28 216 26 196" fill="none" stroke="#b71c1c" stroke-width="4.5" stroke-linecap="round"/><polygon points="26,188 19,200 33,200" fill="#b71c1c"/></g></g>`,
+        frontSvg: `<g><path d="M 55 123 H 245 V 235 H 55 Z" fill="#8e1c1a" stroke="#4a0c0b" stroke-width="1.6"/><polygon points="122,123 178,123 150,185" fill="#2b2629"/></g>` },
       { id: 417, name: "Armadura Caballero", slot: "body", minLevel: 17, price: 720, rarity: "Épico",
         svg: `<g><path d="M 55 123 H 245 V 232 H 55 Z" fill="#90a4ae" stroke="#37474f" stroke-width="1.8"/><path d="M 55 162 H 245 M 55 198 H 245 M 150 123 V 232" stroke="#455a64" stroke-width="2.5"/><path d="M 50 123 H 92 Q 86 146 50 146 Z" fill="#b0bec5" stroke="#37474f" stroke-width="1.6"/><path d="M 250 123 H 208 Q 214 146 250 146 Z" fill="#b0bec5" stroke="#37474f" stroke-width="1.6"/></g>` },
       { id: 418, name: "Alitas de Murciélago", slot: "body", minLevel: 18, price: 780, rarity: "Épico", back: true,
-        svg: `<g><path d="M 58 144 C 24 124, 6 144, 14 176 Q 26 168 34 182 Q 46 172 58 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/><path d="M 242 144 C 276 124, 294 144, 286 176 Q 274 168 266 182 Q 254 172 242 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/></g>` },
+        svg: `<g><path class="anim-flap-l" d="M 58 144 C 24 124, 6 144, 14 176 Q 26 168 34 182 Q 46 172 58 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/><path class="anim-flap-r" d="M 242 144 C 276 124, 294 144, 286 176 Q 274 168 266 182 Q 254 172 242 184 Z" fill="#4a2c6b" stroke="#231236" stroke-width="1.8"/></g>` },
+      { id: 424, name: "Chaqueta Cyber Neón", slot: "body", minLevel: 19, price: 980, rarity: "Legendario",
+        svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#1e242b" stroke="#0d1117" stroke-width="1.6"/><path class="anim-glow" d="M 76 123 V 190 L 96 210 V 236 M 224 123 V 190 L 204 210 V 236" fill="none" stroke="#00e5ff" stroke-width="3.5"/><rect x="118" y="148" width="64" height="6" rx="3" fill="#ff4081" class="anim-glow"/></g>` },
       { id: 419, name: "Traje Astronauta", slot: "body", minLevel: 21, price: 1200, rarity: "Legendario",
         svg: `<g><path d="M 55 123 H 245 V 236 H 55 Z" fill="#eceff1" stroke="#607d8b" stroke-width="1.8"/><rect x="122" y="144" width="56" height="36" rx="5" fill="#cfd8dc" stroke="#546e7a" stroke-width="1.5"/><circle cx="136" cy="158" r="4" fill="#e53935"/><circle cx="150" cy="158" r="4" fill="#43a047"/><circle cx="164" cy="158" r="4" fill="#1e88e5"/><rect x="55" y="198" width="190" height="12" fill="#455a64"/></g>` },
       { id: 420, name: "Alitas de Ángel", slot: "body", minLevel: 23, price: 1450, rarity: "Legendario", back: true,
-        svg: `<g><path d="M 58 136 C 18 110, 4 140, 18 164 C 12 174, 24 184, 36 180 C 36 190, 48 194, 58 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/><path d="M 242 136 C 282 110, 296 140, 282 164 C 288 174, 276 184, 264 180 C 264 190, 252 194, 242 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/></g>` },
+        svg: `<g><path class="anim-flap-l" d="M 58 136 C 18 110, 4 140, 18 164 C 12 174, 24 184, 36 180 C 36 190, 48 194, 58 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/><path class="anim-flap-r" d="M 242 136 C 282 110, 296 140, 282 164 C 288 174, 276 184, 264 180 C 264 190, 252 194, 242 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/></g>` },
 
-      // === PATITAS (paws - calzadas en x:56..87, 100..131, 169..200, 213..244, y:238..269) ===
+      // === PATITAS (paws) ===
       { id: 501, name: "Medias Rayadas", slot: "paws", minLevel: 2, price: 50, rarity: "Común",
         svg: svgPawsSocks("#ffffff", "#e53935") },
       { id: 502, name: "Medias Argentinas", slot: "paws", minLevel: 4, price: 90, rarity: "Poco común",
@@ -1125,31 +1446,59 @@
         svg: svgPawsBoots("#fdd835", "#37474f") },
       { id: 505, name: "Zapatillas Urbanas", slot: "paws", minLevel: 13, price: 460, rarity: "Épico",
         svg: svgPawsBoots("#d32f2f", "#ffffff") },
+      { id: 508, name: "Pezuñas Carmesí", slot: "paws", minLevel: 15, price: 560, rarity: "Épico",
+        svg: svgPawsBoots("#8e1c1a", "#1c1c1e") },
+      { id: 507, name: "Grebas de Acero", slot: "paws", minLevel: 16, price: 620, rarity: "Épico",
+        svg: svgPawsBoots("#90a4ae", "#455a64") },
       { id: 506, name: "Botas de Gaucho", slot: "paws", minLevel: 17, price: 700, rarity: "Épico",
         svg: svgPawsBoots("#6d4c41", "#3e2723") },
+      { id: 509, name: "Botas Lunares", slot: "paws", minLevel: 20, price: 1050, rarity: "Legendario",
+        svg: svgPawsBoots("#eceff1", "#ff7043") },
 
-      // === AL LADO EN EL PISO (side - apoyados en y=269 sin flotar) ===
+      // === AL LADO EN EL PISO (side) ===
       { id: 601, name: "Platito con Pescado", slot: "side", minLevel: 1, price: 45, rarity: "Común",
         svg: `<g><polygon points="6,269 48,269 43,257 11,257" fill="#4a89ac" stroke="#264b61" stroke-width="1.4"/><ellipse cx="27" cy="255" rx="11" ry="4.5" fill="#90a4ae" stroke="#37474f" stroke-width="1.2"/><polygon points="36,255 43,251 43,259" fill="#90a4ae"/></g>` },
       { id: 602, name: "Ovillo de Lana", slot: "side", minLevel: 2, price: 55, rarity: "Común",
         svg: `<g><path d="M 38 266 Q 52 269 62 266" fill="none" stroke="#e06d53" stroke-width="2.5" stroke-linecap="round"/><circle cx="27" cy="254" r="15" fill="#e06d53" stroke="#8c3623" stroke-width="1.5"/><path d="M 16 247 Q 27 256 38 246 M 14 257 Q 28 263 40 255 M 22 240 Q 25 255 19 267" fill="none" stroke="#8c3623" stroke-width="1.4"/></g>` },
       { id: 603, name: "Matecito Cebado", slot: "side", minLevel: 3, price: 70, rarity: "Común",
-        svg: `<g><line x1="29" y1="246" x2="42" y2="225" stroke="#b0bec5" stroke-width="3.2" stroke-linecap="round"/><ellipse cx="43" cy="224" rx="3" ry="1.8" transform="rotate(-35 43 224)" fill="#cfd8dc"/><path d="M 15 246 H 39 C 43 255, 39 266, 33 269 H 21 C 15 266, 11 255, 15 246 Z" fill="#795548" stroke="#3e2723" stroke-width="1.5"/><rect x="14" y="244" width="26" height="4" rx="2" fill="#cfd8dc"/><path d="M 24 237 Q 21 231 25 226" fill="none" stroke="#90a4ae" stroke-width="1.6" stroke-linecap="round"/></g>` },
+        svg: `<g><line x1="29" y1="246" x2="42" y2="225" stroke="#b0bec5" stroke-width="3.2" stroke-linecap="round"/><ellipse cx="43" cy="224" rx="3" ry="1.8" transform="rotate(-35 43 224)" fill="#cfd8dc"/><path d="M 15 246 H 39 C 43 255, 39 266, 33 269 H 21 C 15 266, 11 255, 15 246 Z" fill="#795548" stroke="#3e2723" stroke-width="1.5"/><rect x="14" y="244" width="26" height="4" rx="2" fill="#cfd8dc"/><path class="anim-steam" d="M 24 237 Q 21 231 25 226" fill="none" stroke="#90a4ae" stroke-width="1.8" stroke-linecap="round"/></g>` },
       { id: 604, name: "Pelota de Fútbol", slot: "side", minLevel: 5, price: 115, rarity: "Poco común",
         svg: `<g><circle cx="27" cy="253" r="16" fill="#ffffff" stroke="#222" stroke-width="1.6"/><polygon points="27,246 33,250 31,257 23,257 21,250" fill="#222"/><circle cx="15" cy="246" r="3" fill="#222"/><circle cx="39" cy="246" r="3" fill="#222"/><circle cx="27" cy="266" r="3" fill="#222"/></g>` },
       { id: 605, name: "Ratón a Cuerda", slot: "side", minLevel: 7, price: 160, rarity: "Poco común",
         svg: `<g><path d="M 12 263 Q 3 258 6 250" fill="none" stroke="#f48fb1" stroke-width="2" stroke-linecap="round"/><ellipse cx="27" cy="262" rx="15" ry="7.5" fill="#9e9e9e" stroke="#424242" stroke-width="1.4"/><circle cx="36" cy="255" r="4.5" fill="#bdbdbd" stroke="#424242" stroke-width="1.3"/><circle cx="42" cy="262" r="2" fill="#f06292"/></g>` },
       { id: 606, name: "Maceta con Cactus", slot: "side", minLevel: 10, price: 260, rarity: "Raro",
         svg: `<g><rect x="21" y="228" width="12" height="24" rx="6" fill="#66bb6a" stroke="#2e7d32" stroke-width="1.4"/><circle cx="27" cy="226" r="3.5" fill="#f06292"/><polygon points="15,251 39,251 36,269 18,269" fill="#c86d51" stroke="#753724" stroke-width="1.4"/><rect x="13" y="248" width="28" height="4" rx="1.5" fill="#d97b5f"/></g>` },
+      { id: 611, name: "Cofre del Tesoro", slot: "side", minLevel: 11, price: 310, rarity: "Raro",
+        svg: `<g><rect x="10" y="250" width="34" height="19" rx="2" fill="#795548" stroke="#3e2723" stroke-width="1.5"/><path d="M 10 250 Q 27 240 44 250 Z" fill="#8d6e63" stroke="#3e2723" stroke-width="1.5"/><rect x="24" y="248" width="6" height="8" rx="1" fill="#f4b942"/><circle class="anim-twinkle" cx="19" cy="245" r="2.2" fill="#ffd54f"/><circle class="anim-twinkle" cx="35" cy="245" r="2.2" fill="#ffd54f"/></g>` },
       { id: 607, name: "Bandera Argentina", slot: "side", minLevel: 12, price: 340, rarity: "Raro",
-        svg: `<g><line x1="296" y1="138" x2="296" y2="269" stroke="#6d4c41" stroke-width="4" stroke-linecap="round"/><circle cx="296" cy="136" r="3.5" fill="#f4b942"/><path d="M 298 140 Q 316 135 334 140 V 164 Q 316 159 298 164 Z" fill="#6ec1e4" stroke="#2b5c73" stroke-width="1.2"/><path d="M 298 148 Q 316 143 334 148 V 156 Q 316 151 298 156 Z" fill="#ffffff"/><circle cx="316" cy="152" r="3" fill="#f4b942"/></g>` },
+        svg: `<g><line x1="296" y1="138" x2="296" y2="269" stroke="#6d4c41" stroke-width="4" stroke-linecap="round"/><circle cx="296" cy="136" r="3.5" fill="#f4b942"/><g class="anim-sway"><path d="M 298 140 Q 316 135 334 140 V 164 Q 316 159 298 164 Z" fill="#6ec1e4" stroke="#2b5c73" stroke-width="1.2"/><path d="M 298 148 Q 316 143 334 148 V 156 Q 316 151 298 156 Z" fill="#ffffff"/><circle cx="316" cy="152" r="3" fill="#f4b942"/></g></g>` },
+      { id: 610, name: "Caldero Burbujeante", slot: "side", minLevel: 13, price: 430, rarity: "Épico",
+        svg: `<g><ellipse cx="27" cy="248" rx="13" ry="3.5" fill="#76ff03"/><circle class="anim-float" cx="22" cy="238" r="3" fill="#b2ff59"/><circle class="anim-float" cx="31" cy="233" r="2.3" fill="#76ff03"/><path d="M 13 249 C 11 260, 15 269, 27 269 C 39 269, 43 260, 41 249 Z" fill="#263238" stroke="#111" stroke-width="1.5"/></g>` },
+      { id: 609, name: "Espada y Escudo", slot: "side", minLevel: 16, price: 610, rarity: "Épico",
+        svg: `<g><rect x="25" y="218" width="4" height="36" fill="#cfd8dc" stroke="#455a64" stroke-width="1.2"/><rect x="19" y="246" width="16" height="4" rx="1.5" fill="#f4b942"/><path d="M 15 244 H 39 V 257 Q 27 269 27 269 Q 27 269 15 257 Z" fill="#1e88e5" stroke="#f4b942" stroke-width="2"/></g>` },
       { id: 608, name: "Trofeo Dorado", slot: "side", minLevel: 18, price: 820, rarity: "Épico",
-        svg: `<g><rect x="17" y="263" width="20" height="6" rx="1.5" fill="#4e342e"/><rect x="24" y="253" width="6" height="10" fill="#f4b942"/><path d="M 15 233 H 39 L 35 253 H 19 Z" fill="#f4b942" stroke="#8f5d14" stroke-width="1.5"/><path d="M 15 237 C 8 237, 8 247, 17 247 M 39 237 C 46 237, 46 247, 37 247" fill="none" stroke="#f4b942" stroke-width="2.5"/></g>` }
+        svg: `<g><rect x="17" y="263" width="20" height="6" rx="1.5" fill="#4e342e"/><rect x="24" y="253" width="6" height="10" fill="#f4b942"/><path d="M 15 233 H 39 L 35 253 H 19 Z" fill="#f4b942" stroke="#8f5d14" stroke-width="1.5"/><path d="M 15 237 C 8 237, 8 247, 17 247 M 39 237 C 46 237, 46 247, 37 247" fill="none" stroke="#f4b942" stroke-width="2.5"/></g>` },
+      { id: 612, name: "Cohete Miniatura", slot: "side", minLevel: 20, price: 1080, rarity: "Legendario",
+        svg: `<g><polygon points="16,269 21,254 21,265" fill="#e53935"/><polygon points="38,269 33,254 33,265" fill="#e53935"/><path d="M 21 264 V 242 Q 27 224 33 242 V 264 Z" fill="#eceff1" stroke="#455a64" stroke-width="1.4"/><circle cx="27" cy="246" r="3.5" fill="#4fc3f7" stroke="#263238" stroke-width="1.2"/></g>` }
     ];
 
     const ACC_MAP = Object.fromEntries(ACCESSORIES.map(a => [a.id, a]));
 
-    // Nombres aleatorios bien argentinos
+    const COSTUME_SETS = [
+      { id: "campeon", name: "Campeón Mundial", icon: "🏆", items: { head: 111, eyes: 207, body: 403, paws: 502, side: 608 } },
+      { id: "gaucho", name: "Gaucho Argentino", icon: "🧉", items: { head: 124, neck: 307, body: 413, paws: 506, side: 603 } },
+      { id: "chef", name: "Chef Asador", icon: "👨‍🍳", items: { head: 113, eyes: 205, neck: 305, body: 408, side: 601 } },
+      { id: "abeja", name: "Abejita Zumbadora", icon: "🐝", items: { head: 128, eyes: 201, body: 425, paws: 501 } },
+      { id: "pirata", name: "Pirata Corsario", icon: "🏴‍☠️", items: { head: 126, eyes: 208, neck: 306, body: 422, side: 611 } },
+      { id: "mago", name: "Mago Arcano", icon: "🔮", items: { head: 118, eyes: 203, neck: 310, body: 421, side: 610 } },
+      { id: "diablito", name: "Diablito Travieso", icon: "😈", items: { head: 120, body: 423, paws: 508 } },
+      { id: "caballero", name: "Caballero Real", icon: "⚔️", items: { head: 125, body: 417, paws: 507, side: 609 } },
+      { id: "unicornio", name: "Unicornio Mágico", icon: "🦄", items: { head: 122, eyes: 206, body: 410, paws: 503 } },
+      { id: "cyber", name: "Ciber Michu 2099", icon: "🤖", items: { head: 115, eyes: 213, neck: 311, body: 424, paws: 505 } },
+      { id: "astronauta", name: "Astronauta Lunar", icon: "🚀", items: { head: 127, body: 419, paws: 509, side: 612 } },
+      { id: "angel", name: "Ángel Celestial", icon: "😇", items: { head: 121, eyes: 201, neck: 312, body: 420 } }
+    ];
+
     const ARGENTINE_NAMES = [
       "Pitusa", "Carbón", "Mermelada", "Chori", "Milanesa", "Fideo", "Alfajor",
       "Facturita", "Tortafrita", "Chipa", "Matecito", "Bizcochito", "Medialuna",
@@ -1174,7 +1523,6 @@
     };
 
     let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || DEFAULT_STATE;
-    // Limpiar cualquier ID antiguo si venía de otra versión
     state.ownedAcc = (state.ownedAcc || []).filter(id => Boolean(ACC_MAP[id]));
     if (!state.ownedAcc.length) state.ownedAcc = [101, 301];
     state.cats.forEach(cat => {
@@ -1192,8 +1540,9 @@
     let lastPetTime = 0;
     let currentPhotoBlob = null;
     let currentPhotoFilename = "michu.png";
+    let widgetBgStyle = "transparent";
+    let widgetShowLabel = "1";
 
-    // --- Sintetizador de Gato + Musiquita de Nivel ---
     let audioCtx = null;
     function getAudioCtx() {
       if (!audioCtx) {
@@ -1492,7 +1841,6 @@
       return pool[Math.floor(Math.random() * pool.length)];
     }
 
-    // --- Geometría SVG Exacta + Capas de Accesorios Adaptados ---
     function buildBaseCatSVG(cat, uid) {
       const c = COATS[cat.coat] || COATS.classic;
       const headPath = "M 56 114 A 94 94 0 0 1 244 114 Z";
@@ -1543,39 +1891,33 @@
           <clipPath id="tc-${uid}"><path d="${tailPath}" /></clipPath>
         </defs>
 
-        <!-- Orejas -->
         <polygon points="96,6 90,45 120,28" fill="${c.ear}" />
         <polygon points="98,13 94,43 115,29" fill="rgba(0,0,0,0.12)" />
         <polygon points="204,6 210,45 180,28" fill="${rightEarColor}" />
         <polygon points="202,13 206,43 185,29" fill="rgba(0,0,0,0.12)" />
 
-        <!-- Cabeza semicircular -->
         <g clip-path="url(#hc-${uid})">
           <path d="${headPath}" fill="${c.body}" />
           ${headMarks}
         </g>
 
-        <!-- Ojos, nariz y boca -->
         <circle cx="118" cy="68" r="9" fill="#080808" />
         <circle cx="182" cy="68" r="9" fill="#080808" />
         <path d="M 144 80 C 144 75, 156 75, 156 80 C 156 85, 152 88, 150 88 C 148 88, 144 85, 144 80 Z" fill="#080808" />
         <path d="M 119 90 C 124 102, 145 102, 150 87 C 155 102, 176 102, 181 90"
               fill="none" stroke="#080808" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" />
 
-        <!-- Cola curva -->
         <g clip-path="url(#tc-${uid})">
           <path d="${tailPath}" fill="${c.body}" />
           <rect x="258" y="145" width="32" height="18" fill="${c.tail}" />
           <rect x="244" y="197" width="4" height="28" fill="rgba(0,0,0,0.08)" />
         </g>
 
-        <!-- Cuerpo rectangular -->
         <g clip-path="url(#bc-${uid})">
           <path d="${bodyPath}" fill="${c.body}" />
           ${bodyMarks}
         </g>
 
-        <!-- 4 Patas -->
         <rect x="56" y="238" width="31" height="31" fill="${c.body}" />
         <rect x="100" y="238" width="31" height="31" fill="${c.body}" />
         <rect x="100" y="238" width="31" height="31" fill="rgba(0,0,0,0.07)" />
@@ -1605,7 +1947,7 @@
       }).join("");
 
       return `
-        <svg viewBox="-10 -44 352 330" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="-12 -52 356 338" xmlns="http://www.w3.org/2000/svg">
           ${backLayers}
           ${buildBaseCatSVG(cat, uid)}
           ${frontLayers}
@@ -1613,11 +1955,10 @@
       `;
     }
 
-    // Miniatura SVG ajustada a cada zona anatómica del gato para la tienda
     function renderAccessoryThumb(acc) {
       const slotConfig = {
         head: {
-          vb: "45 -38 210 112",
+          vb: "42 -48 216 122",
           guide: `<polygon points="96,6 90,45 120,28" fill="#d9d2c5"/><polygon points="204,6 210,45 180,28" fill="#d9d2c5"/><path d="M 56 114 A 94 94 0 0 1 244 114 Z" fill="#e5dfd3"/>`
         },
         eyes: {
@@ -1688,8 +2029,8 @@
       });
     }
 
-    function spawnHeartFountain(evt = null, customSet = null) {
-      const stage = document.getElementById("petStage");
+    function spawnHeartFountain(evt = null, customSet = null, containerEl = null) {
+      const stage = containerEl || document.getElementById("petStage");
       const rect = stage.getBoundingClientRect();
       const cx = evt ? (evt.clientX - rect.left) : rect.width * 0.5;
       const cy = evt ? (evt.clientY - rect.top) : rect.height * 0.45;
@@ -1727,8 +2068,8 @@
       }
     }
 
-    function triggerCatBounce() {
-      const svg = document.querySelector("#mPreview svg");
+    function triggerCatBounce(selector = "#mPreview svg") {
+      const svg = document.querySelector(selector);
       if (!svg) return;
       svg.classList.remove("cat-joy");
       void svg.offsetWidth;
@@ -1769,8 +2110,108 @@
       renderHUD();
     }
 
+    function renderCostumeSets(cat) {
+      const accGrid = document.getElementById("accGrid");
+      accGrid.classList.add("sets-mode");
+      const q = searchQuery.toLowerCase().trim();
+      const eq = cat.equipped || {};
+
+      const filtered = COSTUME_SETS.filter(set => {
+        if (!q) return true;
+        return set.name.toLowerCase().includes(q);
+      });
+
+      if (!filtered.length) {
+        accGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:20px;font-size:0.84rem">Sin conjuntos encontrados</div>`;
+        return;
+      }
+
+      accGrid.innerHTML = filtered.map(set => {
+        const entries = Object.entries(set.items);
+        const ids = entries.map(([, id]) => id);
+        const missingIds = ids.filter(id => !state.ownedAcc.includes(id));
+        const missingCost = missingIds.reduce((sum, id) => sum + (ACC_MAP[id]?.price || 0), 0);
+        const reqLevel = Math.max(...ids.map(id => ACC_MAP[id]?.minLevel || 1));
+        const allEquipped = entries.every(([slot, id]) => eq[slot] === id);
+        const unlocked = state.level >= reqLevel;
+
+        let tag = "";
+        let cls = "acc-item";
+        if (allEquipped) {
+          cls += " equipped";
+          tag = "Equipado";
+        } else if (missingIds.length === 0) {
+          tag = "Equipar todo";
+        } else if (!unlocked) {
+          cls += " locked";
+          tag = `🔒 Nv. ${reqLevel}`;
+        } else {
+          tag = `🪙 ${missingCost}`;
+        }
+
+        const previewCat = { coat: cat.coat, equipped: set.items };
+        return `
+          <div class="${cls}" data-set="${set.id}" title="Conjunto ${set.name} (${ids.length} piezas · Nv.${reqLevel})">
+            <div class="set-thumb">${renderCatSVG(previewCat, `set-${set.id}`)}</div>
+            <div class="acc-name">${set.icon} ${set.name}</div>
+            <div class="set-meta">${ids.length} piezas · ${missingIds.length === 0 ? "Completo" : `Faltan ${missingIds.length}`}</div>
+            <div class="acc-tag">${tag}</div>
+          </div>
+        `;
+      }).join("");
+
+      accGrid.querySelectorAll(".acc-item").forEach(el => {
+        el.onclick = () => handleSetClick(el.dataset.set);
+      });
+    }
+
+    function handleSetClick(setId) {
+      const cat = state.cats.find(c => c.id === activeCatId);
+      const set = COSTUME_SETS.find(s => s.id === setId);
+      if (!cat || !set) return;
+
+      const entries = Object.entries(set.items);
+      const ids = entries.map(([, id]) => id);
+      const missingIds = ids.filter(id => !state.ownedAcc.includes(id));
+      const missingCost = missingIds.reduce((sum, id) => sum + (ACC_MAP[id]?.price || 0), 0);
+      const reqLevel = Math.max(...ids.map(id => ACC_MAP[id]?.minLevel || 1));
+
+      if (missingIds.length > 0) {
+        if (state.level < reqLevel) {
+          showToast(`🔒 El conjunto requiere Nivel ${reqLevel}`);
+          return;
+        }
+        if (state.coins < missingCost) {
+          showToast(`🪙 Necesitas ${missingCost} monedas para completar el conjunto`);
+          return;
+        }
+        state.coins -= missingCost;
+        missingIds.forEach(id => {
+          if (!state.ownedAcc.includes(id)) state.ownedAcc.push(id);
+        });
+        addXp(missingIds.length * 10);
+        showToast(`${set.icon} ¡Conjunto ${set.name} desbloqueado y equipado!`);
+      } else {
+        showToast(`${set.icon} ¡${cat.name} estrenó ${set.name}!`);
+      }
+
+      cat.equipped = { ...set.items };
+      playMeow("happy");
+      spawnHeartFountain(null, [set.icon, "✨", "🎉"]);
+      saveState();
+      refreshCatModal();
+      triggerCatBounce();
+      renderGrid();
+    }
+
     function renderAccessories(cat) {
       const accGrid = document.getElementById("accGrid");
+      if (currentFilter === "sets") {
+        renderCostumeSets(cat);
+        return;
+      }
+      accGrid.classList.remove("sets-mode");
+
       const q = searchQuery.toLowerCase().trim();
       const eq = cat.equipped || {};
 
@@ -1872,7 +2313,7 @@
     }
 
     document.getElementById("petStage").onclick = e => {
-      if (e.target.closest("#takePhotoBtn")) return;
+      if (e.target.closest(".stage-pill-btn")) return;
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
       playPurr();
@@ -1986,7 +2427,92 @@
       if (cat) renderAccessories(cat);
     };
 
-    // --- Sacar Foto 1080x1080 con todos los accesorios vectoriales adaptados ---
+    // === CONFIGURADOR DE WIDGET POR URL ===
+    function buildWidgetUrl(cat) {
+      const url = new URL(window.location.href);
+      url.search = "";
+      url.hash = "";
+      url.searchParams.set("widget", cat.name);
+      url.searchParams.set("c", cat.coat);
+      const eqIds = Object.values(cat.equipped || {}).filter(Boolean);
+      if (eqIds.length) url.searchParams.set("e", eqIds.join(","));
+      url.searchParams.set("b", String(cat.bondLv || 1));
+      url.searchParams.set("bg", widgetBgStyle);
+      url.searchParams.set("label", widgetShowLabel);
+      return url.toString();
+    }
+
+    function updateWidgetBuilder() {
+      const cat = state.cats.find(c => c.id === activeCatId);
+      if (!cat) return;
+
+      const simCard = document.getElementById("widgetSimCard");
+      const coatObj = COATS[cat.coat] || COATS.classic;
+      simCard.className = "widget-sim-card";
+      simCard.style.background = "";
+      simCard.style.borderRadius = "24px";
+
+      if (widgetBgStyle === "card") {
+        simCard.classList.add("style-card");
+      } else if (widgetBgStyle === "coat") {
+        simCard.style.background = coatObj.bg;
+        simCard.style.border = "1px solid rgba(0,0,0,0.08)";
+        simCard.style.boxShadow = "0 6px 18px rgba(34, 31, 29, 0.1)";
+      }
+
+      simCard.innerHTML = `
+        ${renderCatSVG(cat, "widget-sim")}
+        ${widgetShowLabel === "1" ? `<div class="widget-sim-label">${cat.name} · ❤️ Nv.${cat.bondLv}</div>` : ""}
+      `;
+
+      document.getElementById("widgetUrlInput").value = buildWidgetUrl(cat);
+
+      const noteEl = document.getElementById("widgetNoteText");
+      if (window.location.protocol === "file:") {
+        noteEl.innerHTML = `⚠️ Estás abriendo el archivo localmente (<code>file://</code>). Subilo primero a <strong>Vercel</strong> para obtener una URL <code>https://...</code> que Android pueda cargar en el widget.`;
+      } else {
+        noteEl.innerHTML = `<strong>Uso en Android:</strong> Copiá este enlace y pegalo en una app de escritorio como <em>Web Widget</em> o <em>KWGT</em> (con fondo transparente activado). También funciona la URL corta <code>?widget=${encodeURIComponent(cat.name)}</code>.`;
+      }
+    }
+
+    document.getElementById("openWidgetBtn").onclick = () => {
+      updateWidgetBuilder();
+      document.getElementById("widgetModal").showModal();
+    };
+
+    document.getElementById("closeWidgetBtn").onclick = () => document.getElementById("widgetModal").close();
+
+    document.getElementById("widgetBgGroup").querySelectorAll(".seg-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll("#widgetBgGroup .seg-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        widgetBgStyle = btn.dataset.bg;
+        updateWidgetBuilder();
+      };
+    });
+
+    document.getElementById("widgetLabelGroup").querySelectorAll(".seg-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll("#widgetLabelGroup .seg-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        widgetShowLabel = btn.dataset.lbl;
+        updateWidgetBuilder();
+      };
+    });
+
+    document.getElementById("copyWidgetUrlBtn").onclick = async () => {
+      const input = document.getElementById("widgetUrlInput");
+      input.select();
+      try {
+        await navigator.clipboard.writeText(input.value);
+        showToast("📋 Enlace del widget copiado");
+      } catch {
+        document.execCommand("copy");
+        showToast("📋 Enlace seleccionado y copiado");
+      }
+    };
+
+    // === EXPORTAR FOTO PARA REDES ===
     function roundRectPath(ctx, x, y, w, h, r) {
       ctx.beginPath();
       ctx.moveTo(x + r, y);
@@ -2035,7 +2561,6 @@
       ctx.textAlign = "right";
       ctx.fillText("Colección Michu 🐾", size - 114, 136);
 
-      // Renderizar SVG completo (gato + accesorios vectoriales ajustados)
       const fullSvg = renderCatSVG(cat, "photo").replace(
         "<svg ",
         '<svg width="670" height="628" '
@@ -2117,7 +2642,7 @@
 
     document.getElementById("closePhotoBtn").onclick = () => document.getElementById("photoModal").close();
 
-    // --- Modal Adoptar ---
+    // === ADOPCIÓN ===
     function getNextAdoptReq() {
       const count = state.cats.length;
       if (count <= 2) return { level: 1, cost: 0 };
@@ -2226,26 +2751,93 @@
       if (!state.muted) playMeow("normal");
     };
 
-    setInterval(() => {
-      let changed = false;
-      state.cats.forEach(cat => {
-        if (cat.energy < 100) {
-          cat.energy = Math.min(100, cat.energy + 2);
-          changed = true;
-        }
-        if (cat.hunger > 10) {
-          cat.hunger = Math.max(10, cat.hunger - 0.5);
-          changed = true;
-        }
-      });
-      if (changed) {
-        saveState();
-        if (document.getElementById("catModal").open) refreshCatModal();
-        else renderGrid();
-      }
-    }, 8000);
+    // === DETECCIÓN E INICIO DE MODO WIDGET POR URL (?widget=...) ===
+    function initWidgetModeIfRequested() {
+      const params = new URLSearchParams(window.location.search);
+      if (!params.has("widget")) return false;
 
-    renderGrid();
+      document.documentElement.classList.add("is-widget");
+      document.body.classList.add("widget-mode");
+
+      const rawName = (params.get("widget") || "").trim();
+      const targetNorm = normalizeName(rawName);
+      const localCat = state.cats.find(c => normalizeName(c.name) === targetNorm || String(c.id) === rawName) || state.cats[0];
+
+      const coatParam = params.get("c");
+      const validCoat = (coatParam && COATS[coatParam]) ? coatParam : (localCat ? localCat.coat : "calico");
+
+      let equipped = {};
+      if (params.has("e")) {
+        (params.get("e") || "").split(",").forEach(rawId => {
+          const id = Number(rawId);
+          const acc = ACC_MAP[id];
+          if (acc) equipped[acc.slot] = id;
+        });
+      } else if (localCat) {
+        equipped = { ...(localCat.equipped || {}) };
+      }
+
+      const widgetCat = {
+        name: rawName || (localCat ? localCat.name : "Michu"),
+        coat: validCoat,
+        bondLv: Number(params.get("b")) || (localCat ? localCat.bondLv : 1),
+        equipped
+      };
+
+      const bgMode = params.get("bg") || "transparent";
+      const showLabel = params.get("label") !== "0";
+
+      const root = document.getElementById("widgetRoot");
+      if (bgMode === "card") {
+        root.classList.add("bg-card");
+      } else if (bgMode === "coat") {
+        const coatBg = (COATS[validCoat] || COATS.classic).bg;
+        document.documentElement.style.background = coatBg;
+        document.body.style.background = coatBg;
+      }
+
+      if (!showLabel) root.classList.add("no-label");
+
+      root.innerHTML = `
+        <div class="widget-cat-wrap">${renderCatSVG(widgetCat, "widget-live")}</div>
+        ${showLabel ? `<div class="widget-pill">${widgetCat.name} · ❤️ Nv.${widgetCat.bondLv}</div>` : ""}
+      `;
+
+      root.onclick = e => {
+        playPurr();
+        triggerCatBounce(".widget-cat-wrap svg");
+        spawnHeartFountain(e, null, root);
+        if (localCat) {
+          localCat.happy = Math.min(100, localCat.happy + 3);
+          saveState();
+        }
+      };
+
+      return true;
+    }
+
+    if (!initWidgetModeIfRequested()) {
+      setInterval(() => {
+        let changed = false;
+        state.cats.forEach(cat => {
+          if (cat.energy < 100) {
+            cat.energy = Math.min(100, cat.energy + 2);
+            changed = true;
+          }
+          if (cat.hunger > 10) {
+            cat.hunger = Math.max(10, cat.hunger - 0.5);
+            changed = true;
+          }
+        });
+        if (changed) {
+          saveState();
+          if (document.getElementById("catModal").open) refreshCatModal();
+          else renderGrid();
+        }
+      }, 8000);
+
+      renderGrid();
+    }
   </script>
 </body>
 </html>
