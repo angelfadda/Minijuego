@@ -296,6 +296,7 @@
       font-size: 1.1rem;
       font-weight: 700;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 8px;
     }
@@ -762,6 +763,7 @@
       <div class="modal-title">
         <span id="mName">Pitusa</span>
         <span class="pill" style="font-size:0.75rem;padding:2px 9px" id="mBond">❤️ Nv. 1</span>
+        <span class="pill" style="font-size:0.72rem;padding:2px 9px;color:var(--muted)" id="mCreated">🕐 --:--</span>
       </div>
       <div class="row">
         <button type="button" id="unequipAllBtn" title="Quitar accesorios">🧹</button>
@@ -793,15 +795,15 @@
     <div class="care-actions">
       <button type="button" id="feedBtn">
         <span>🐟 Alimentar</span>
-        <span class="care-sub">-8 🪙 · +14 XP</span>
+        <span class="care-sub" id="feedSub">-8 🪙 · +28%</span>
       </button>
       <button type="button" id="playBtn">
         <span>🧶 Jugar</span>
-        <span class="care-sub">-15% ⚡ · +🪙 +XP</span>
+        <span class="care-sub" id="playSub">-15% ⚡ · +24%</span>
       </button>
       <button type="button" id="napBtn">
         <span>💤 Siesta</span>
-        <span class="care-sub">+35% ⚡ · +8 XP</span>
+        <span class="care-sub" id="napSub">+35% ⚡ · +8 XP</span>
       </button>
     </div>
 
@@ -876,6 +878,8 @@
 
   <script>
     const STORAGE_KEY = "michu_collection_arg_v4";
+    const HUNGER_DECAY_PER_HOUR = 6;
+    const ENERGY_DECAY_PER_HOUR = 5;
 
     const AUDIO_FILES = {
       meow: "maullido.mp3",
@@ -1282,6 +1286,7 @@
       "Vigilante", "Chimichurri", "Provoleta", "Patacón", "Canelón"
     ];
 
+    const NOW_INIT = Date.now();
     const DEFAULT_STATE = {
       coins: 90,
       xp: 0,
@@ -1289,8 +1294,8 @@
       muted: false,
       ownedAcc: [101, 301],
       cats: [
-        { id: 1, name: "Pitusa", coat: "calico", hunger: 80, happy: 85, energy: 90, bondXp: 0, bondLv: 1, equipped: { head: 101, neck: 301 } },
-        { id: 2, name: "Carbón", coat: "tuxedo", hunger: 75, happy: 80, energy: 85, bondXp: 0, bondLv: 1, equipped: {} }
+        { id: 1, createdAt: NOW_INIT, lastDecayAt: NOW_INIT, name: "Pitusa", coat: "calico", hunger: 80, happy: 85, energy: 90, bondXp: 0, bondLv: 1, equipped: { head: 101, neck: 301 } },
+        { id: 2, createdAt: NOW_INIT, lastDecayAt: NOW_INIT, name: "Carbón", coat: "tuxedo", hunger: 75, happy: 80, energy: 85, bondXp: 0, bondLv: 1, equipped: {} }
       ]
     };
 
@@ -1298,12 +1303,59 @@
     state.ownedAcc = (state.ownedAcc || []).filter(id => Boolean(ACC_MAP[id]));
     if (!state.ownedAcc.length) state.ownedAcc = [101, 301];
     state.cats.forEach(cat => {
+      if (!cat.createdAt) cat.createdAt = Date.now();
+      if (!cat.lastDecayAt) cat.lastDecayAt = cat.createdAt;
       const cleanEq = {};
       Object.entries(cat.equipped || {}).forEach(([slot, id]) => {
         if (ACC_MAP[id] && ACC_MAP[id].slot === slot) cleanEq[slot] = id;
       });
       cat.equipped = cleanEq;
     });
+
+    function getLevelGainMultiplier() {
+      return Math.max(0.2, Math.pow(0.98, Math.max(0, state.level - 1)));
+    }
+
+    function calcScaledGain(baseAmount) {
+      return Math.max(1, Math.round(baseAmount * getLevelGainMultiplier() * 10) / 10);
+    }
+
+    function formatCreationTime(ts) {
+      const d = new Date(ts);
+      const now = new Date();
+      const timeStr = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      if (d.toDateString() === now.toDateString()) return `🕐 ${timeStr}`;
+      const dateStr = d.toLocaleDateString([], { day: "2-digit", month: "2-digit" });
+      return `🕐 ${dateStr} ${timeStr}`;
+    }
+
+    function applyTimeDecay() {
+      const now = Date.now();
+      let changed = false;
+      state.cats.forEach(cat => {
+        if (!cat.createdAt) {
+          cat.createdAt = now;
+          changed = true;
+        }
+        if (!cat.lastDecayAt) {
+          cat.lastDecayAt = cat.createdAt;
+          changed = true;
+        }
+        const elapsedHours = (now - cat.lastDecayAt) / 3600000;
+        if (elapsedHours > 0) {
+          const prevHunger = cat.hunger;
+          const prevEnergy = cat.energy;
+          cat.hunger = Math.max(0, cat.hunger - elapsedHours * HUNGER_DECAY_PER_HOUR);
+          cat.energy = Math.max(0, cat.energy - elapsedHours * ENERGY_DECAY_PER_HOUR);
+          cat.lastDecayAt = now;
+          if (cat.hunger !== prevHunger || cat.energy !== prevEnergy) {
+            changed = true;
+          }
+        }
+      });
+      if (changed) saveState();
+      return changed;
+    }
 
     let activeCatId = null;
     let currentFilter = "all";
@@ -1832,6 +1884,7 @@
 
       document.getElementById("mName").textContent = cat.name;
       document.getElementById("mBond").textContent = `❤️ Nv. ${cat.bondLv}`;
+      document.getElementById("mCreated").textContent = formatCreationTime(cat.createdAt);
       document.getElementById("mPreview").innerHTML = renderCatSVG(cat, "modal");
 
       const h = Math.round(cat.hunger);
@@ -1843,6 +1896,10 @@
       document.getElementById("barHappy").style.width = `${hp}%`;
       document.getElementById("valEnergy").textContent = `${en}%`;
       document.getElementById("barEnergy").style.width = `${en}%`;
+
+      document.getElementById("feedSub").textContent = `-8 🪙 · +${calcScaledGain(28)}%`;
+      document.getElementById("playSub").textContent = `-15% ⚡ · +${calcScaledGain(24)}%`;
+      document.getElementById("napSub").textContent = `+${calcScaledGain(35)}% ⚡ · +8 XP`;
 
       document.getElementById("ownedCount").textContent = state.ownedAcc.length;
       document.getElementById("totalAccCount").textContent = ACCESSORIES.length;
@@ -2047,6 +2104,7 @@
     }
 
     function openCatModal(id) {
+      applyTimeDecay();
       activeCatId = id;
       refreshCatModal();
       document.getElementById("catModal").showModal();
@@ -2062,7 +2120,7 @@
       const now = Date.now();
       if (now - lastPetTime > 3200) {
         lastPetTime = now;
-        cat.happy = Math.min(100, cat.happy + 5);
+        cat.happy = Math.min(100, cat.happy + calcScaledGain(5));
         state.coins += 2;
         addCatBond(cat, 4);
         addXp(4);
@@ -2075,7 +2133,7 @@
     document.getElementById("feedBtn").onclick = () => {
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
-      if (cat.hunger >= 96) {
+      if (cat.hunger >= 99) {
         playMeow("soft");
         spawnHeartFountain(null, ["🐟", "✨"]);
         showToast(`${cat.name} ya está satisfecho`);
@@ -2086,8 +2144,8 @@
         return;
       }
       state.coins -= 8;
-      cat.hunger = Math.min(100, cat.hunger + 28);
-      cat.energy = Math.min(100, cat.energy + 10);
+      cat.hunger = Math.min(100, cat.hunger + calcScaledGain(28));
+      cat.energy = Math.min(100, cat.energy + calcScaledGain(10));
       addCatBond(cat, 8);
       if (cat.hunger >= 85) playPurr(); else playMeow("normal");
       spawnHeartFountain(null, ["🐟", "🍣", "💕"]);
@@ -2109,7 +2167,7 @@
       }
       cat.energy = Math.max(0, cat.energy - 15);
       cat.hunger = Math.max(0, cat.hunger - 8);
-      cat.happy = Math.min(100, cat.happy + 24);
+      cat.happy = Math.min(100, cat.happy + calcScaledGain(24));
       const reward = 14 + cat.bondLv * 3;
       state.coins += reward;
       addCatBond(cat, 12);
@@ -2126,11 +2184,11 @@
     document.getElementById("napBtn").onclick = () => {
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
-      if (cat.energy >= 95) {
+      if (cat.energy >= 99) {
         showToast(`${cat.name} ya tiene toda la energía`);
         return;
       }
-      cat.energy = Math.min(100, cat.energy + 35);
+      cat.energy = Math.min(100, cat.energy + calcScaledGain(35));
       cat.hunger = Math.max(0, cat.hunger - 5);
       playPurr();
       spawnHeartFountain(null, ["💤", "⭐", "🌙"]);
@@ -2381,8 +2439,11 @@
       }
       state.coins -= req.cost;
       const name = document.getElementById("adoptName").value.trim();
+      const createdAt = Date.now();
       state.cats.push({
-        id: Date.now(),
+        id: createdAt,
+        createdAt,
+        lastDecayAt: createdAt,
         name,
         coat: selectedCoat,
         hunger: 85,
@@ -2409,24 +2470,13 @@
     };
 
     setInterval(() => {
-      let changed = false;
-      state.cats.forEach(cat => {
-        if (cat.energy < 100) {
-          cat.energy = Math.min(100, cat.energy + 2);
-          changed = true;
-        }
-        if (cat.hunger > 10) {
-          cat.hunger = Math.max(10, cat.hunger - 0.5);
-          changed = true;
-        }
-      });
-      if (changed) {
-        saveState();
+      if (applyTimeDecay()) {
         if (document.getElementById("catModal").open) refreshCatModal();
         else renderGrid();
       }
-    }, 8000);
+    }, 30000);
 
+    applyTimeDecay();
     renderGrid();
   </script>
 </body>
