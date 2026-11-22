@@ -878,8 +878,8 @@
 
   <script>
     const STORAGE_KEY = "michu_collection_arg_v4";
-    const HUNGER_DECAY_PER_HOUR = 6;
-    const ENERGY_DECAY_PER_HOUR = 5;
+    const HUNGER_DECAY_PER_HOUR = 20;
+    const ENERGY_DECAY_PER_HOUR = 10;
 
     const AUDIO_FILES = {
       meow: "maullido.mp3",
@@ -1313,7 +1313,7 @@
     });
 
     function getLevelGainMultiplier() {
-      return Math.max(0.2, Math.pow(0.98, Math.max(0, state.level - 1)));
+      return Math.max(0.8, Math.pow(0.98, Math.max(0, state.level - 1)));
     }
 
     function calcScaledGain(baseAmount) {
