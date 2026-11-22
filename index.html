@@ -1314,7 +1314,8 @@
     let currentPhotoFilename = "michu.png";
 
     let audioCtx = null;
-    let activePurr = null;
+    let activeCatAudio = null;
+    let activeSoundType = null;
 
     function getAudioCtx() {
       if (!audioCtx) {
@@ -1323,6 +1324,15 @@
       }
       if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
       return audioCtx;
+    }
+
+    function stopCatAudio() {
+      if (activeCatAudio) {
+        activeCatAudio.pause();
+        activeCatAudio.currentTime = 0;
+        activeCatAudio = null;
+        activeSoundType = null;
+      }
     }
 
     function playSynthPurr() {
@@ -1403,26 +1413,49 @@
 
     function playPurr() {
       if (state.muted) return;
-      if (activePurr) {
-        activePurr.pause();
-        activePurr.currentTime = 0;
+      if (activeCatAudio && !activeCatAudio.paused && activeSoundType === "purr") {
+        return;
       }
+      stopCatAudio();
       const audio = new Audio(AUDIO_FILES.purr);
       audio.volume = 0.85;
-      activePurr = audio;
-      audio.play().catch(() => playSynthPurr());
+      activeCatAudio = audio;
+      activeSoundType = "purr";
+      audio.onended = () => {
+        if (activeCatAudio === audio) {
+          activeCatAudio = null;
+          activeSoundType = null;
+        }
+      };
+      audio.play().catch(() => {
+        stopCatAudio();
+        playSynthPurr();
+      });
     }
 
     function playMeow(variant = "normal") {
       if (state.muted) return;
+      stopCatAudio();
       const audio = new Audio(AUDIO_FILES.meow);
       audio.volume = 0.9;
       audio.playbackRate = variant === "happy" ? 1.12 : variant === "soft" ? 0.9 : 1.0;
-      audio.play().catch(() => playSynthMeow(variant));
+      activeCatAudio = audio;
+      activeSoundType = "meow";
+      audio.onended = () => {
+        if (activeCatAudio === audio) {
+          activeCatAudio = null;
+          activeSoundType = null;
+        }
+      };
+      audio.play().catch(() => {
+        stopCatAudio();
+        playSynthMeow(variant);
+      });
     }
 
     function playLevelUpMusic() {
       if (state.muted) return;
+      stopCatAudio();
       const ctx = getAudioCtx();
       if (!ctx) return;
       const now = ctx.currentTime;
@@ -2116,7 +2149,10 @@
       renderGrid();
     };
 
-    document.getElementById("closeCatBtn").onclick = () => document.getElementById("catModal").close();
+    document.getElementById("closeCatBtn").onclick = () => {
+      stopCatAudio();
+      document.getElementById("catModal").close();
+    };
 
     document.getElementById("catTabs").querySelectorAll(".tab").forEach(btn => {
       btn.onclick = () => {
@@ -2366,10 +2402,7 @@
 
     document.getElementById("muteBtn").onclick = () => {
       state.muted = !state.muted;
-      if (state.muted && activePurr) {
-        activePurr.pause();
-        activePurr.currentTime = 0;
-      }
+      if (state.muted) stopCatAudio();
       saveState();
       renderHUD();
       if (!state.muted) playMeow("normal");
