@@ -204,7 +204,6 @@
       border-radius: 8px;
     }
 
-    /* Animaciones sutiles en accesorios SVG */
     .anim-float {
       animation: svgFloat 2.4s ease-in-out infinite;
     }
@@ -269,7 +268,6 @@
       100% { opacity: 0.2; transform: translateY(-5px); }
     }
 
-    /* Modals */
     dialog {
       border: 1px solid var(--border);
       border-radius: 18px;
@@ -475,7 +473,6 @@
       font-weight: 500;
     }
 
-    /* Wardrobe / Shop */
     .wardrobe-head {
       display: flex;
       justify-content: space-between;
@@ -631,7 +628,6 @@
       margin-right: 3px;
     }
 
-    /* Adopt Modal */
     .field { margin-bottom: 12px; }
     .field label {
       display: block;
@@ -679,7 +675,6 @@
       flex-shrink: 0;
     }
 
-    /* Photo Share Modal */
     .photo-preview-wrap {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -882,6 +877,11 @@
   <script>
     const STORAGE_KEY = "michu_collection_arg_v4";
 
+    const AUDIO_FILES = {
+      meow: "maullido.mp3",
+      purr: "ronroneo.mp3"
+    };
+
     const COATS = {
       classic:      { label: "Clásico Café",     bg: "#efe6dd", pattern: "spot",    body: "#79584c", mark: "#2c2b29", ear: "#864e41", tail: "#efeae1", swatch: "linear-gradient(135deg,#79584c 65%,#2c2b29 65%)" },
       calico:       { label: "Calicó Clásico",   bg: "#f2ebe1", pattern: "calico",  body: "#ddd5c7", mark: "#d97b38", mark2: "#4a4e54", ear: "#d97b38", ear2: "#4a4e54", tail: "#4a4e54", swatch: "linear-gradient(135deg,#ddd5c7 45%,#d97b38 45%,#d97b38 75%,#4a4e54 75%)" },
@@ -1038,9 +1038,7 @@
       `).join("")}</g>`;
     }
 
-    // Catálogo de accesorios vectoriales adaptados y con detalles animados
     const ACCESSORIES = [
-      // === CABEZA Y OREJAS (head) ===
       { id: 101, name: "Moño Oreja Rosa", slot: "head", minLevel: 1, price: 30, rarity: "Común",
         svg: svgEarBow("#f06292", "#9c2754", "#fce4ec") },
       { id: 102, name: "Moño Oreja Celeste", slot: "head", minLevel: 1, price: 35, rarity: "Común",
@@ -1098,7 +1096,6 @@
       { id: 123, name: "Corona Real Dorada", slot: "head", minLevel: 21, price: 1250, rarity: "Legendario",
         svg: `<g><path d="M 114 26 L 110 -6 L 131 11 L 150 -14 L 169 11 L 190 -6 L 186 26 Q 150 32 114 26 Z" fill="#f4b942" stroke="#8f5d14" stroke-width="1.8" stroke-linejoin="round"/><circle class="anim-twinkle" cx="150" cy="14" r="4" fill="#d32f2f"/><circle class="anim-twinkle" cx="128" cy="16" r="3" fill="#1976d2"/><circle class="anim-twinkle" cx="172" cy="16" r="3" fill="#388e3c"/></g>` },
 
-      // === CARA Y OJOS (eyes) ===
       { id: 201, name: "Mejillas Sonrojadas", slot: "eyes", minLevel: 1, price: 30, rarity: "Común",
         svg: `<g opacity="0.72"><ellipse cx="86" cy="84" rx="13" ry="7.5" fill="#f2849e"/><ellipse cx="214" cy="84" rx="13" ry="7.5" fill="#f2849e"/><path d="M 81 86 L 85 81 M 87 86 L 91 81 M 209 86 L 213 81 M 215 86 L 219 81" stroke="#d84367" stroke-width="1.8" stroke-linecap="round"/></g>` },
       { id: 202, name: "Curita en Mejilla", slot: "eyes", minLevel: 1, price: 35, rarity: "Común",
@@ -1126,7 +1123,6 @@
       { id: 213, name: "Visor Cyber Neón", slot: "eyes", minLevel: 20, price: 1100, rarity: "Legendario",
         svg: `<g><path d="M 72 56 Q 150 50 228 56 L 222 78 Q 150 84 78 78 Z" fill="#00e5ff" fill-opacity="0.62" stroke="#00838f" stroke-width="2.5"/><path class="anim-glow" d="M 84 65 H 216" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="18 10" stroke-linecap="round"/></g>` },
 
-      // === CUELLO (neck) ===
       { id: 301, name: "Collar Rojo Cascabel", slot: "neck", minLevel: 1, price: 35, rarity: "Común",
         svg: svgCollar("#c93b2b", "#f4b942", `<g class="anim-sway"><circle cx="150" cy="131" r="8.5" fill="#f4b942" stroke="#8f5d14" stroke-width="1.5"/><circle cx="150" cy="132" r="2.2" fill="#5c3a09"/></g>`) },
       { id: 302, name: "Collar Celeste Chapita", slot: "neck", minLevel: 1, price: 40, rarity: "Común",
@@ -1159,7 +1155,6 @@
       { id: 314, name: "Medalla Oro Campeón", slot: "neck", minLevel: 20, price: 1150, rarity: "Legendario",
         svg: `<g><path d="M 114 119 L 150 156 L 186 119" fill="none" stroke="#4fc3f7" stroke-width="8" stroke-linejoin="round"/><path d="M 114 119 L 150 156 L 186 119" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round"/><circle cx="150" cy="164" r="14" fill="#f4b942" stroke="#8f5d14" stroke-width="2"/><text x="150" y="169" text-anchor="middle" font-size="14" font-weight="800" fill="#8f5d14">1</text></g>` },
 
-      // === CUERPO (body) ===
       { id: 401, name: "Remera Celeste Lisa", slot: "body", minLevel: 1, price: 45, rarity: "Común",
         svg: svgTshirt("#64b5f6", "#1e88e5") },
       { id: 402, name: "Remera Marinera", slot: "body", minLevel: 2, price: 55, rarity: "Común",
@@ -1214,7 +1209,6 @@
       { id: 420, name: "Alitas de Ángel", slot: "body", minLevel: 23, price: 1450, rarity: "Legendario", back: true,
         svg: `<g><path class="anim-flap-l" d="M 58 136 C 18 110, 4 140, 18 164 C 12 174, 24 184, 36 180 C 36 190, 48 194, 58 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/><path class="anim-flap-r" d="M 242 136 C 282 110, 296 140, 282 164 C 288 174, 276 184, 264 180 C 264 190, 252 194, 242 186 Z" fill="#ffffff" stroke="#b0bec5" stroke-width="1.8"/></g>` },
 
-      // === PATITAS (paws) ===
       { id: 501, name: "Medias Rayadas", slot: "paws", minLevel: 2, price: 50, rarity: "Común",
         svg: svgPawsSocks("#ffffff", "#e53935") },
       { id: 502, name: "Medias Argentinas", slot: "paws", minLevel: 4, price: 90, rarity: "Poco común",
@@ -1234,7 +1228,6 @@
       { id: 509, name: "Botas Lunares", slot: "paws", minLevel: 20, price: 1050, rarity: "Legendario",
         svg: svgPawsBoots("#eceff1", "#ff7043") },
 
-      // === AL LADO EN EL PISO (side) ===
       { id: 601, name: "Platito con Pescado", slot: "side", minLevel: 1, price: 45, rarity: "Común",
         svg: `<g><polygon points="6,269 48,269 43,257 11,257" fill="#4a89ac" stroke="#264b61" stroke-width="1.4"/><ellipse cx="27" cy="255" rx="11" ry="4.5" fill="#90a4ae" stroke="#37474f" stroke-width="1.2"/><polygon points="36,255 43,251 43,259" fill="#90a4ae"/></g>` },
       { id: 602, name: "Ovillo de Lana", slot: "side", minLevel: 2, price: 55, rarity: "Común",
@@ -1263,7 +1256,6 @@
 
     const ACC_MAP = Object.fromEntries(ACCESSORIES.map(a => [a.id, a]));
 
-    // Disfraces temáticos completos (conjuntos combinados)
     const COSTUME_SETS = [
       { id: "campeon", name: "Campeón Mundial", icon: "🏆", items: { head: 111, eyes: 207, body: 403, paws: 502, side: 608 } },
       { id: "gaucho", name: "Gaucho Argentino", icon: "🧉", items: { head: 124, neck: 307, body: 413, paws: 506, side: 603 } },
@@ -1322,6 +1314,8 @@
     let currentPhotoFilename = "michu.png";
 
     let audioCtx = null;
+    let activePurr = null;
+
     function getAudioCtx() {
       if (!audioCtx) {
         const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -1331,18 +1325,14 @@
       return audioCtx;
     }
 
-    function playPurr() {
-      if (state.muted) return;
+    function playSynthPurr() {
       const ctx = getAudioCtx();
       if (!ctx) return;
       const now = ctx.currentTime;
-
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
       const lfo = ctx.createOscillator();
       const lfoGain = ctx.createGain();
-      const breathLfo = ctx.createOscillator();
-      const breathGain = ctx.createGain();
       const filter = ctx.createBiquadFilter();
       const mainGain = ctx.createGain();
 
@@ -1350,28 +1340,18 @@
       osc1.frequency.setValueAtTime(26, now);
       osc2.type = "triangle";
       osc2.frequency.setValueAtTime(52, now);
-
       lfo.type = "sine";
       lfo.frequency.setValueAtTime(25, now);
       lfoGain.gain.setValueAtTime(16, now);
-
-      breathLfo.type = "sine";
-      breathLfo.frequency.setValueAtTime(1.4, now);
-      breathGain.gain.setValueAtTime(0.035, now);
-
       filter.type = "lowpass";
       filter.frequency.setValueAtTime(145, now);
 
       mainGain.gain.setValueAtTime(0.001, now);
       mainGain.gain.linearRampToValueAtTime(0.11, now + 0.14);
-      mainGain.gain.setValueAtTime(0.10, now + 0.85);
-      mainGain.gain.exponentialRampToValueAtTime(0.001, now + 1.18);
+      mainGain.gain.exponentialRampToValueAtTime(0.001, now + 1.15);
 
       lfo.connect(lfoGain);
       lfoGain.connect(osc1.frequency);
-      breathLfo.connect(breathGain);
-      breathGain.connect(mainGain.gain);
-
       osc1.connect(filter);
       osc2.connect(filter);
       filter.connect(mainGain);
@@ -1380,116 +1360,65 @@
       osc1.start(now);
       osc2.start(now);
       lfo.start(now);
-      breathLfo.start(now);
+      osc1.stop(now + 1.18);
+      osc2.stop(now + 1.18);
+      lfo.stop(now + 1.18);
+    }
 
-      osc1.stop(now + 1.2);
-      osc2.stop(now + 1.2);
-      lfo.stop(now + 1.2);
-      breathLfo.stop(now + 1.2);
+    function playSynthMeow(variant = "normal") {
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const baseF0 = variant === "happy" ? 490 : variant === "soft" ? 380 : 430;
+      const peakF0 = variant === "happy" ? 810 : variant === "soft" ? 540 : 690;
+      const endF0 = variant === "happy" ? 440 : variant === "soft" ? 320 : 360;
+      const dur = 0.6;
+
+      const osc = ctx.createOscillator();
+      const filter = ctx.createBiquadFilter();
+      const env = ctx.createGain();
+
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(baseF0, now);
+      osc.frequency.exponentialRampToValueAtTime(peakF0, now + dur * 0.35);
+      osc.frequency.exponentialRampToValueAtTime(endF0, now + dur);
+
+      filter.type = "bandpass";
+      filter.Q.setValueAtTime(4.2, now);
+      filter.frequency.setValueAtTime(420, now);
+      filter.frequency.exponentialRampToValueAtTime(1060, now + dur * 0.36);
+      filter.frequency.exponentialRampToValueAtTime(470, now + dur);
+
+      env.gain.setValueAtTime(0.001, now);
+      env.gain.linearRampToValueAtTime(0.22, now + dur * 0.16);
+      env.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+      osc.connect(filter);
+      filter.connect(env);
+      env.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + dur + 0.03);
+    }
+
+    function playPurr() {
+      if (state.muted) return;
+      if (activePurr) {
+        activePurr.pause();
+        activePurr.currentTime = 0;
+      }
+      const audio = new Audio(AUDIO_FILES.purr);
+      audio.volume = 0.85;
+      activePurr = audio;
+      audio.play().catch(() => playSynthPurr());
     }
 
     function playMeow(variant = "normal") {
       if (state.muted) return;
-      const ctx = getAudioCtx();
-      if (!ctx) return;
-      const now = ctx.currentTime;
-
-      const jitter = (Math.random() - 0.5) * 40;
-      let baseF0 = 430 + jitter;
-      let peakF0 = 690 + jitter;
-      let endF0 = 360 + jitter;
-      let dur = 0.62;
-
-      if (variant === "happy") {
-        baseF0 = 490 + jitter;
-        peakF0 = 810 + jitter;
-        endF0 = 440 + jitter;
-        dur = 0.56;
-      } else if (variant === "soft") {
-        baseF0 = 380 + jitter;
-        peakF0 = 540 + jitter;
-        endF0 = 320 + jitter;
-        dur = 0.68;
-      }
-
-      const glottis = ctx.createOscillator();
-      glottis.type = "sawtooth";
-      glottis.frequency.setValueAtTime(baseF0, now);
-      glottis.frequency.exponentialRampToValueAtTime(peakF0, now + dur * 0.34);
-      glottis.frequency.exponentialRampToValueAtTime(peakF0 * 0.93, now + dur * 0.55);
-      glottis.frequency.exponentialRampToValueAtTime(endF0, now + dur);
-
-      const vib = ctx.createOscillator();
-      const vibGain = ctx.createGain();
-      vib.type = "sine";
-      vib.frequency.setValueAtTime(5.8, now);
-      vibGain.gain.setValueAtTime(9, now);
-      vib.connect(vibGain);
-      vibGain.connect(glottis.frequency);
-
-      const f1 = ctx.createBiquadFilter();
-      f1.type = "bandpass";
-      f1.Q.setValueAtTime(4.2, now);
-      f1.frequency.setValueAtTime(420, now);
-      f1.frequency.exponentialRampToValueAtTime(1060, now + dur * 0.36);
-      f1.frequency.exponentialRampToValueAtTime(470, now + dur);
-
-      const f2 = ctx.createBiquadFilter();
-      f2.type = "bandpass";
-      f2.Q.setValueAtTime(5.0, now);
-      f2.frequency.setValueAtTime(1450, now);
-      f2.frequency.exponentialRampToValueAtTime(2380, now + dur * 0.32);
-      f2.frequency.exponentialRampToValueAtTime(1180, now + dur);
-
-      const f1Gain = ctx.createGain();
-      f1Gain.gain.setValueAtTime(0.75, now);
-      const f2Gain = ctx.createGain();
-      f2Gain.gain.setValueAtTime(0.45, now);
-
-      const bufferSize = Math.floor(ctx.sampleRate * dur);
-      const noiseBuf = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = noiseBuf.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-      const noise = ctx.createBufferSource();
-      noise.buffer = noiseBuf;
-      const noiseFilter = ctx.createBiquadFilter();
-      noiseFilter.type = "bandpass";
-      noiseFilter.frequency.setValueAtTime(1800, now);
-      const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.018, now);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + dur * 0.45);
-
-      const warmth = ctx.createBiquadFilter();
-      warmth.type = "lowpass";
-      warmth.frequency.setValueAtTime(2650, now);
-
-      const env = ctx.createGain();
-      env.gain.setValueAtTime(0.001, now);
-      env.gain.linearRampToValueAtTime(0.24, now + dur * 0.16);
-      env.gain.setValueAtTime(0.21, now + dur * 0.52);
-      env.gain.exponentialRampToValueAtTime(0.001, now + dur);
-
-      glottis.connect(f1);
-      glottis.connect(f2);
-      f1.connect(f1Gain);
-      f2.connect(f2Gain);
-      f1Gain.connect(warmth);
-      f2Gain.connect(warmth);
-
-      noise.connect(noiseFilter);
-      noiseFilter.connect(noiseGain);
-      noiseGain.connect(warmth);
-
-      warmth.connect(env);
-      env.connect(ctx.destination);
-
-      glottis.start(now);
-      vib.start(now);
-      noise.start(now);
-
-      glottis.stop(now + dur + 0.03);
-      vib.stop(now + dur + 0.03);
-      noise.stop(now + dur + 0.03);
+      const audio = new Audio(AUDIO_FILES.meow);
+      audio.volume = 0.9;
+      audio.playbackRate = variant === "happy" ? 1.12 : variant === "soft" ? 0.9 : 1.0;
+      audio.play().catch(() => playSynthMeow(variant));
     }
 
     function playLevelUpMusic() {
@@ -2437,6 +2366,10 @@
 
     document.getElementById("muteBtn").onclick = () => {
       state.muted = !state.muted;
+      if (state.muted && activePurr) {
+        activePurr.pause();
+        activePurr.currentTime = 0;
+      }
       saveState();
       renderHUD();
       if (!state.muted) playMeow("normal");
