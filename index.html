@@ -32,91 +32,6 @@
       margin: 0 auto;
     }
 
-    /* === MODO WIDGET COMPACTO (?widget=...) === */
-    html.is-widget, body.widget-mode {
-      width: 100%;
-      height: 100%;
-      max-width: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: transparent;
-    }
-
-    body.widget-mode header,
-    body.widget-mode main,
-    body.widget-mode dialog,
-    body.widget-mode .toast {
-      display: none !important;
-    }
-
-    .widget-root {
-      display: none;
-    }
-
-    body.widget-mode .widget-root {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      padding: 6px;
-    }
-
-    .widget-root.bg-card {
-      background: rgba(255, 255, 255, 0.94);
-      border: 1.5px solid var(--border);
-      border-radius: 26px;
-      box-shadow: 0 6px 20px rgba(34, 31, 29, 0.12);
-    }
-
-    .widget-cat-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .widget-cat-wrap svg {
-      width: min(86vw, 76vh);
-      height: min(86vw, 76vh);
-      max-width: 100%;
-      max-height: 100%;
-      transform-origin: 50% 88%;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
-    }
-
-    .widget-root.no-label .widget-cat-wrap svg {
-      width: min(94vw, 94vh);
-      height: min(94vw, 94vh);
-    }
-
-    .widget-pill {
-      margin-top: 2px;
-      margin-bottom: 4px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(221, 214, 202, 0.9);
-      color: var(--text);
-      font-size: clamp(0.72rem, 3.6vw, 0.95rem);
-      font-weight: 700;
-      padding: 3px 12px;
-      border-radius: 999px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      white-space: nowrap;
-      max-width: 92vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     header {
       display: flex;
       flex-wrap: wrap;
@@ -415,9 +330,10 @@
       margin-top: 2px;
     }
 
-    .stage-pill-btn {
+    .photo-trigger {
       position: absolute;
       top: 10px;
+      left: 10px;
       padding: 5px 10px;
       font-size: 0.8rem;
       border-radius: 999px;
@@ -425,9 +341,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
       z-index: 3;
     }
-
-    .photo-trigger { left: 10px; }
-    .widget-trigger { right: 10px; }
 
     @keyframes catJoyBounce {
       0% { transform: scale(1, 1) rotate(0deg); }
@@ -796,97 +709,6 @@
       grid-column: 1 / -1;
     }
 
-    /* Widget Builder Modal */
-    .widget-sim-box {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-      min-height: 210px;
-      background-image:
-        linear-gradient(45deg, #e5e0d8 25%, transparent 25%),
-        linear-gradient(-45deg, #e5e0d8 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #e5e0d8 75%),
-        linear-gradient(-45deg, transparent 75%, #e5e0d8 75%);
-      background-size: 18px 18px;
-      background-position: 0 0, 0 9px, 9px -9px, -9px 0;
-      background-color: #f4f1eb;
-    }
-
-    .widget-sim-card {
-      width: 176px;
-      height: 176px;
-      border-radius: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 8px;
-      transition: background 0.2s, box-shadow 0.2s;
-    }
-
-    .widget-sim-card.style-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      box-shadow: 0 6px 18px rgba(34, 31, 29, 0.12);
-    }
-
-    .widget-sim-card svg {
-      width: 132px;
-      height: 132px;
-    }
-
-    .widget-sim-label {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 2px 10px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      margin-top: 2px;
-    }
-
-    .seg-group {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .seg-btn {
-      flex: 1;
-      padding: 6px 8px;
-      font-size: 0.78rem;
-      background: var(--bg);
-    }
-
-    .seg-btn.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .url-box {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.76rem;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    .widget-note {
-      font-size: 0.76rem;
-      color: var(--muted);
-      line-height: 1.4;
-      background: var(--bg);
-      padding: 9px 11px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
     .toast {
       position: fixed;
       bottom: 18px;
@@ -910,9 +732,6 @@
   </style>
 </head>
 <body>
-  <!-- Vista exclusiva para ?widget=... -->
-  <div id="widgetRoot" class="widget-root"></div>
-
   <header>
     <div class="brand">
       <span style="font-size:1.4rem">🐱</span>
@@ -956,8 +775,7 @@
     </div>
 
     <div class="stage" id="petStage">
-      <button type="button" class="stage-pill-btn photo-trigger" id="takePhotoBtn" title="Sacar foto para redes">📸 Foto</button>
-      <button type="button" class="stage-pill-btn widget-trigger" id="openWidgetBtn" title="Generar URL para widget de escritorio">📌 Widget</button>
+      <button type="button" class="photo-trigger" id="takePhotoBtn" title="Sacar foto para redes">📸 Foto</button>
       <div id="mPreview"></div>
       <div class="stage-hint">👆 Toca al gato para acariciarlo</div>
     </div>
@@ -1056,46 +874,6 @@
       <button type="button" class="primary full" id="nativeShareBtn">📲 Publicar / Compartir en Instagram o Redes</button>
       <button type="button" id="downloadPhotoBtn">⬇️ Descargar PNG (1080×1080)</button>
       <button type="button" id="copyPhotoBtn">📋 Copiar imagen</button>
-    </div>
-  </dialog>
-
-  <dialog id="widgetModal">
-    <div class="modal-head">
-      <div class="modal-title">📌 Widget para Pantalla de Inicio</div>
-      <button type="button" id="closeWidgetBtn">✖️</button>
-    </div>
-
-    <div class="widget-sim-box">
-      <div class="widget-sim-card" id="widgetSimCard"></div>
-    </div>
-
-    <div class="field">
-      <label>Estilo de fondo del widget</label>
-      <div class="seg-group" id="widgetBgGroup">
-        <button type="button" class="seg-btn active" data-bg="transparent">✨ Transparente</button>
-        <button type="button" class="seg-btn" data-bg="card">⬜ Tarjeta blanca</button>
-        <button type="button" class="seg-btn" data-bg="coat">🎨 Color pelaje</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Etiqueta inferior</label>
-      <div class="seg-group" id="widgetLabelGroup">
-        <button type="button" class="seg-btn active" data-lbl="1">🏷️ Nombre y nivel</button>
-        <button type="button" class="seg-btn" data-lbl="0">🐱 Solo el gato</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Enlace del widget (incluye pelaje y ropa actual)</label>
-      <div class="row">
-        <input type="text" id="widgetUrlInput" class="url-box" readonly />
-        <button type="button" class="primary" id="copyWidgetUrlBtn">📋 Copiar</button>
-      </div>
-    </div>
-
-    <div class="widget-note" id="widgetNoteText">
-      <strong>Uso en Android:</strong> Subí este HTML a Vercel, copiá este enlace y pegalo en una app como <em>Web Widget</em> o <em>KWGT</em>. También podés usar la forma corta <code>?widget=NombreDelGato</code>.
     </div>
   </dialog>
 
@@ -1260,6 +1038,7 @@
       `).join("")}</g>`;
     }
 
+    // Catálogo de accesorios vectoriales adaptados y con detalles animados
     const ACCESSORIES = [
       // === CABEZA Y OREJAS (head) ===
       { id: 101, name: "Moño Oreja Rosa", slot: "head", minLevel: 1, price: 30, rarity: "Común",
@@ -1484,6 +1263,7 @@
 
     const ACC_MAP = Object.fromEntries(ACCESSORIES.map(a => [a.id, a]));
 
+    // Disfraces temáticos completos (conjuntos combinados)
     const COSTUME_SETS = [
       { id: "campeon", name: "Campeón Mundial", icon: "🏆", items: { head: 111, eyes: 207, body: 403, paws: 502, side: 608 } },
       { id: "gaucho", name: "Gaucho Argentino", icon: "🧉", items: { head: 124, neck: 307, body: 413, paws: 506, side: 603 } },
@@ -1540,8 +1320,6 @@
     let lastPetTime = 0;
     let currentPhotoBlob = null;
     let currentPhotoFilename = "michu.png";
-    let widgetBgStyle = "transparent";
-    let widgetShowLabel = "1";
 
     let audioCtx = null;
     function getAudioCtx() {
@@ -2029,8 +1807,8 @@
       });
     }
 
-    function spawnHeartFountain(evt = null, customSet = null, containerEl = null) {
-      const stage = containerEl || document.getElementById("petStage");
+    function spawnHeartFountain(evt = null, customSet = null) {
+      const stage = document.getElementById("petStage");
       const rect = stage.getBoundingClientRect();
       const cx = evt ? (evt.clientX - rect.left) : rect.width * 0.5;
       const cy = evt ? (evt.clientY - rect.top) : rect.height * 0.45;
@@ -2068,8 +1846,8 @@
       }
     }
 
-    function triggerCatBounce(selector = "#mPreview svg") {
-      const svg = document.querySelector(selector);
+    function triggerCatBounce() {
+      const svg = document.querySelector("#mPreview svg");
       if (!svg) return;
       svg.classList.remove("cat-joy");
       void svg.offsetWidth;
@@ -2313,7 +2091,7 @@
     }
 
     document.getElementById("petStage").onclick = e => {
-      if (e.target.closest(".stage-pill-btn")) return;
+      if (e.target.closest("#takePhotoBtn")) return;
       const cat = state.cats.find(c => c.id === activeCatId);
       if (!cat) return;
       playPurr();
@@ -2427,92 +2205,6 @@
       if (cat) renderAccessories(cat);
     };
 
-    // === CONFIGURADOR DE WIDGET POR URL ===
-    function buildWidgetUrl(cat) {
-      const url = new URL(window.location.href);
-      url.search = "";
-      url.hash = "";
-      url.searchParams.set("widget", cat.name);
-      url.searchParams.set("c", cat.coat);
-      const eqIds = Object.values(cat.equipped || {}).filter(Boolean);
-      if (eqIds.length) url.searchParams.set("e", eqIds.join(","));
-      url.searchParams.set("b", String(cat.bondLv || 1));
-      url.searchParams.set("bg", widgetBgStyle);
-      url.searchParams.set("label", widgetShowLabel);
-      return url.toString();
-    }
-
-    function updateWidgetBuilder() {
-      const cat = state.cats.find(c => c.id === activeCatId);
-      if (!cat) return;
-
-      const simCard = document.getElementById("widgetSimCard");
-      const coatObj = COATS[cat.coat] || COATS.classic;
-      simCard.className = "widget-sim-card";
-      simCard.style.background = "";
-      simCard.style.borderRadius = "24px";
-
-      if (widgetBgStyle === "card") {
-        simCard.classList.add("style-card");
-      } else if (widgetBgStyle === "coat") {
-        simCard.style.background = coatObj.bg;
-        simCard.style.border = "1px solid rgba(0,0,0,0.08)";
-        simCard.style.boxShadow = "0 6px 18px rgba(34, 31, 29, 0.1)";
-      }
-
-      simCard.innerHTML = `
-        ${renderCatSVG(cat, "widget-sim")}
-        ${widgetShowLabel === "1" ? `<div class="widget-sim-label">${cat.name} · ❤️ Nv.${cat.bondLv}</div>` : ""}
-      `;
-
-      document.getElementById("widgetUrlInput").value = buildWidgetUrl(cat);
-
-      const noteEl = document.getElementById("widgetNoteText");
-      if (window.location.protocol === "file:") {
-        noteEl.innerHTML = `⚠️ Estás abriendo el archivo localmente (<code>file://</code>). Subilo primero a <strong>Vercel</strong> para obtener una URL <code>https://...</code> que Android pueda cargar en el widget.`;
-      } else {
-        noteEl.innerHTML = `<strong>Uso en Android:</strong> Copiá este enlace y pegalo en una app de escritorio como <em>Web Widget</em> o <em>KWGT</em> (con fondo transparente activado). También funciona la URL corta <code>?widget=${encodeURIComponent(cat.name)}</code>.`;
-      }
-    }
-
-    document.getElementById("openWidgetBtn").onclick = () => {
-      updateWidgetBuilder();
-      document.getElementById("widgetModal").showModal();
-    };
-
-    document.getElementById("closeWidgetBtn").onclick = () => document.getElementById("widgetModal").close();
-
-    document.getElementById("widgetBgGroup").querySelectorAll(".seg-btn").forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll("#widgetBgGroup .seg-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        widgetBgStyle = btn.dataset.bg;
-        updateWidgetBuilder();
-      };
-    });
-
-    document.getElementById("widgetLabelGroup").querySelectorAll(".seg-btn").forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll("#widgetLabelGroup .seg-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        widgetShowLabel = btn.dataset.lbl;
-        updateWidgetBuilder();
-      };
-    });
-
-    document.getElementById("copyWidgetUrlBtn").onclick = async () => {
-      const input = document.getElementById("widgetUrlInput");
-      input.select();
-      try {
-        await navigator.clipboard.writeText(input.value);
-        showToast("📋 Enlace del widget copiado");
-      } catch {
-        document.execCommand("copy");
-        showToast("📋 Enlace seleccionado y copiado");
-      }
-    };
-
-    // === EXPORTAR FOTO PARA REDES ===
     function roundRectPath(ctx, x, y, w, h, r) {
       ctx.beginPath();
       ctx.moveTo(x + r, y);
@@ -2642,7 +2334,6 @@
 
     document.getElementById("closePhotoBtn").onclick = () => document.getElementById("photoModal").close();
 
-    // === ADOPCIÓN ===
     function getNextAdoptReq() {
       const count = state.cats.length;
       if (count <= 2) return { level: 1, cost: 0 };
@@ -2751,93 +2442,26 @@
       if (!state.muted) playMeow("normal");
     };
 
-    // === DETECCIÓN E INICIO DE MODO WIDGET POR URL (?widget=...) ===
-    function initWidgetModeIfRequested() {
-      const params = new URLSearchParams(window.location.search);
-      if (!params.has("widget")) return false;
-
-      document.documentElement.classList.add("is-widget");
-      document.body.classList.add("widget-mode");
-
-      const rawName = (params.get("widget") || "").trim();
-      const targetNorm = normalizeName(rawName);
-      const localCat = state.cats.find(c => normalizeName(c.name) === targetNorm || String(c.id) === rawName) || state.cats[0];
-
-      const coatParam = params.get("c");
-      const validCoat = (coatParam && COATS[coatParam]) ? coatParam : (localCat ? localCat.coat : "calico");
-
-      let equipped = {};
-      if (params.has("e")) {
-        (params.get("e") || "").split(",").forEach(rawId => {
-          const id = Number(rawId);
-          const acc = ACC_MAP[id];
-          if (acc) equipped[acc.slot] = id;
-        });
-      } else if (localCat) {
-        equipped = { ...(localCat.equipped || {}) };
-      }
-
-      const widgetCat = {
-        name: rawName || (localCat ? localCat.name : "Michu"),
-        coat: validCoat,
-        bondLv: Number(params.get("b")) || (localCat ? localCat.bondLv : 1),
-        equipped
-      };
-
-      const bgMode = params.get("bg") || "transparent";
-      const showLabel = params.get("label") !== "0";
-
-      const root = document.getElementById("widgetRoot");
-      if (bgMode === "card") {
-        root.classList.add("bg-card");
-      } else if (bgMode === "coat") {
-        const coatBg = (COATS[validCoat] || COATS.classic).bg;
-        document.documentElement.style.background = coatBg;
-        document.body.style.background = coatBg;
-      }
-
-      if (!showLabel) root.classList.add("no-label");
-
-      root.innerHTML = `
-        <div class="widget-cat-wrap">${renderCatSVG(widgetCat, "widget-live")}</div>
-        ${showLabel ? `<div class="widget-pill">${widgetCat.name} · ❤️ Nv.${widgetCat.bondLv}</div>` : ""}
-      `;
-
-      root.onclick = e => {
-        playPurr();
-        triggerCatBounce(".widget-cat-wrap svg");
-        spawnHeartFountain(e, null, root);
-        if (localCat) {
-          localCat.happy = Math.min(100, localCat.happy + 3);
-          saveState();
+    setInterval(() => {
+      let changed = false;
+      state.cats.forEach(cat => {
+        if (cat.energy < 100) {
+          cat.energy = Math.min(100, cat.energy + 2);
+          changed = true;
         }
-      };
-
-      return true;
-    }
-
-    if (!initWidgetModeIfRequested()) {
-      setInterval(() => {
-        let changed = false;
-        state.cats.forEach(cat => {
-          if (cat.energy < 100) {
-            cat.energy = Math.min(100, cat.energy + 2);
-            changed = true;
-          }
-          if (cat.hunger > 10) {
-            cat.hunger = Math.max(10, cat.hunger - 0.5);
-            changed = true;
-          }
-        });
-        if (changed) {
-          saveState();
-          if (document.getElementById("catModal").open) refreshCatModal();
-          else renderGrid();
+        if (cat.hunger > 10) {
+          cat.hunger = Math.max(10, cat.hunger - 0.5);
+          changed = true;
         }
-      }, 8000);
+      });
+      if (changed) {
+        saveState();
+        if (document.getElementById("catModal").open) refreshCatModal();
+        else renderGrid();
+      }
+    }, 8000);
 
-      renderGrid();
-    }
+    renderGrid();
   </script>
 </body>
 </html>
